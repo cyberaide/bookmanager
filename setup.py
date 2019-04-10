@@ -108,7 +108,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'bookmanager = bookmanager.install.installer:main',
+            'bookmanager = bookmanager.generator:main',
         ],
     }
 )
