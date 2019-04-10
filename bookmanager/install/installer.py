@@ -155,5 +155,9 @@ def main():
 
     config = Config(config_path=arguments["YAML"])
 
+    d = config.data
+    print (config)
+
+    print (d)
 if __name__ == '__main__':
     main()
