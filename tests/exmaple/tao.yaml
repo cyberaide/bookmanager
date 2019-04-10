@@ -1,0 +1,15 @@
+---
+
+git: https://github.com/cloudmesh-community/book/blob/master/
+
+book:
+  - title: Example book
+  - author: Gregor von Laszewski
+  - email: laszewski@gmail.com
+
+contents:
+  - chapter: Preface
+    - preface: {git}/chapters/preface/preface.md
+  - chapter: Introduction
+
+    - chapter: Sub Introduction
