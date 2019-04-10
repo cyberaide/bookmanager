@@ -1,0 +1,21 @@
+dist: xenial
+
+sudo: required
+
+language: python
+
+python:
+  - "3.7"
+#  - "3.8-dev"  # 3.8 development branch
+#  - "nightly"  # nightly build
+
+install:
+  - pwd
+  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
+  - pip install .
+  - ls
+  - pwd
+  - python --version
+
+script: pytest -v tests/test_installer.py
