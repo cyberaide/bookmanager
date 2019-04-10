@@ -26,16 +26,19 @@ cloudmesh:
             url: "{manager}/other.md"
 
 
-- BOOK:
-  - {b516}/preface.md
-  - INTRODUCTION:
-    - {manager}/other.md
-  - CLOUD:
-    - {manager}/other-preface-without-header.md
-    - {manager}/other.md
-    - AWS:
-      - {manager}/other.md
-
+- [x] h BOOK:
+  - [ ] l {b516}/preface.md
+  - [x] h INTRODUCTION:
+    - [x] l {manager}/other.md
+  - [x] h CLOUD:
+    - [x] l {manager}/other-preface-without-header.md
+    - [ ] l {manager}/other.md
+    - [x] h AWS:
+      - [x] l {manager}/other.md
+      - [x] r {manager}
+      - [x] p {manager}/test.py
+  - [ ] i {manager}/img.png
+  -
 creates tree
 
 dist/
@@ -54,4 +57,14 @@ dist/
 modify the indentation
 
 concatenate all of them and run pandoc
+
+
+boookmanager generate git/../toc.yaml
+
+
+boookmanager generate [-fetch]
+boookmanager generate [-header]
+boookmanager generate [-pandoc]
+boookmanager generate [-latex]
+boookmanager generate [-word]
 

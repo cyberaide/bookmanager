@@ -1,10 +1,12 @@
-
+---
 - BOOK:
   - "{b516}/preface.md"
   - INTRODUCTION:
     - "{manager}/other.md"
   - CLOUD:
-    - "{manager}/other-preface-without-header.md"
     - "{manager}/other.md"
     - AWS:
       - "{manager}/other.md"
+      - "i {manager}"
+      - "r {manager}"
+      - "p {manager}/test.py"
