@@ -1,0 +1,17 @@
+---
+
+b516: "https://raw.githubusercontent.com/cloudmesh-community/book/blob/master"
+manager: "https://raw.githubusercontent.com/cyberaide/bookmanager/master/tests/exmaple/other.md"
+
+book:
+  - title: Example book
+  - author: Gregor von Laszewski
+  - email: laszewski@gmail.com
+
+contents:
+  - chapter: "Preface"
+    - preface: "{git}/chapters/preface/preface.md"
+  - chapter: "Introduction"
+
+    - chapter: "Sub Introduction"
+        - first: {manager}/

@@ -108,7 +108,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'cyberaide-installer = bookmanager.install.installer:main',
+            'bookmanager = bookmanager.install.installer:main',
         ],
     }
 )
