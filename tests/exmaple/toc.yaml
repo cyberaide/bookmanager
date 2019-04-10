@@ -6,12 +6,52 @@ cloudmesh:
   default:
     directory: .
   book:
-    book:
+    meta:
       title: Example book
       author: Gregor von Laszewski
       email: laszewski@gmail.com
     contents:
-      chapter1: "Preface"
-      preface: "{b516}/preface/preface.md"
-      chapter2: "Introduction"
-      first: "{manager}/other.md"
+      Preface:
+        - section: "About"
+          url: "{b516}/preface/preface.md"
+        - section: "Introduction"
+          url: "{manager}/other.md"
+      Introduction:
+        - section: "Intro"
+          url: "{b516}/preface/preface.md"
+        - section: "Other"
+          url: "{manager}/other.md"
+        - Details:
+          - section: "Other"
+            url: "{manager}/other.md"
+
+
+- BOOK:
+  - {b516}/preface.md
+  - INTRODUCTION:
+    - {manager}/other.md
+  - CLOUD:
+    - {manager}/other-preface-without-header.md
+    - {manager}/other.md
+    - AWS:
+      - {manager}/other.md
+
+creates tree
+
+dist/
+
+/BOOK/.heading.md
+/BOOK/preface.md
+/BOOK/INTRODUCTION/.heading.md
+/BOOK/INTRODUCTION/other.md
+/BOOK/INTRODUCTION/CLOUD/.heading.md
+/BOOK/INTRODUCTION/CLOUD/other-preface-without-header.md
+/BOOK/INTRODUCTION/CLOUD/other.md
+/BOOK/INTRODUCTION/CLOUD/AWS.heading.md
+/BOOK/INTRODUCTION/CLOUD/AWS/other.md
+
+
+modify the indentation
+
+concatenate all of them and run pandoc
+

@@ -152,12 +152,21 @@ def main():
     arguments = docopt(__doc__)
 
     pprint(arguments)
+    with open(arguments["YAML"], 'r') as stream:
+        try:
+            d = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
 
+    pprint(d)
+
+    '''
     config = Config(config_path=arguments["YAML"])
 
     d = config.data
     print (config)
 
     print (d)
+    '''
 if __name__ == '__main__':
     main()
