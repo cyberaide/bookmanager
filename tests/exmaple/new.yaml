@@ -10,3 +10,10 @@
       - "i {manager}"
       - "r {manager}"
       - "p {manager}/test.py"
+  - DEVOPS:
+    - "{manager}/other.md"
+    - ANSIBLE:
+      - "{manager}/other.md"
+      - "i {manager}"
+      - "r {manager}"
+      - "p {manager}/test.py"
