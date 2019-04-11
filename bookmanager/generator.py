@@ -27,7 +27,9 @@ from pprint import pprint
 from tabulate import tabulate
 from cloudmesh.management.configuration.config import Config
 from cloudmesh.common.FlatDict import FlatDict
-from .yaml_parser import find_sources
+from bookmanager.yaml_parser import find_sources
+from bookmanager.yaml_parser import flatten_json
+from cloudmesh.common.util import readfile
 
 import oyaml as yaml
 import requests
@@ -51,9 +53,12 @@ def main():
     pprint(d)
 
 
+    pprint(flatten_json(d))
+
+    sys.exit()
 
 
-    sources, headings = find_sources(d)
+    sources, headings, all = new_find_sources(d)
 
     print("Sources")
     print()
@@ -63,9 +68,45 @@ def main():
     print()
     print('\n'.join(headings))
     print()
+    print("ALL")
+    print()
+    print('\n'.join(all))
+    print()
 
 
 
+    sources, headings, all = find_sources(d, output = "{parent}")
+
+    print("Sources")
+    print()
+    print('\n'.join(sources))
+    print()
+    print("HEADINGS")
+    print()
+    print('\n'.join(headings))
+    print()
+    print("ALL")
+    print()
+    print('\n'.join(all))
+    print()
+
+    sources, headings, all = find_sources(d, output = "- [ ] {parent}")
+
+    print("Sources")
+    print()
+    print('\n'.join(sources))
+    print()
+    print("HEADINGS")
+    print()
+    print('\n'.join(headings))
+    print()
+    print("ALL")
+    print()
+    print('\n'.join(all))
+    print()
+
+    r = readfile(arguments["YAML"])
+    print(r)
     '''
     config = Config(config_path=arguments["YAML"])
 
