@@ -1,4 +1,6 @@
 import oyaml as yaml
+from pprint import pprint
+
 
 def process_image(link):
     pass
@@ -16,6 +18,7 @@ counter = -1
 def flatten_json(data, output="{counter} {parent}/{key}"):
 
     global counter
+    counter=-1
     r = len(yaml.dump(data).split("\n"))
 
     out = ['undefined'] * r
@@ -29,7 +32,7 @@ def flatten_json(data, output="{counter} {parent}/{key}"):
                 #key = a.keys()[0]
 
                 display = output.format(**locals(), counter=counter)
-                out[counter] = (counter, display)
+                out[counter] = display
                 flatten(x[a], parent=f"{parent}/{a}", name=f"{name}{a}/", output=output)
         elif type(x) is list:
             i = 0
@@ -51,101 +54,8 @@ def flatten_json(data, output="{counter} {parent}/{key}"):
             key = x
 
             display =  output.format(**locals(), counter=counter)
-            out[counter] = (counter, display)
+            out[counter] = display
 
     flatten(data)
 
     return out[:counter+1]
-
-def new_find_sources(d,
-                 parent='',
-                 sep='/',
-                 sources=None,
-                 headings=None,
-                 output="{indent} {parent}"):
-    sources = []
-    headings = []
-    all = []
-
-    def _flatten(d, parent='', indent=0, sep='/', output=output):
-        if type(d) == list:
-            for entry in d:
-                _flatten(entry, indent=indent + 1, parent=parent)
-        elif type(d) == dict:
-            key = list(d.keys())[0]
-            child = d[key]
-            parent = f"{parent}{sep}{key}"
-            _flatten(child, parent=parent, indent=indent)
-            headings.append(output.format(indent=indent,
-                                          parent=parent))
-            all.append(output.format(indent=indent,
-                                          parent=parent))
-
-        else:
-            if d.startswith("i "):
-                d = d.replace("i ", "")
-                process_image(d)
-            elif d.startswith("p "):
-                d = d.replace("p ", "")
-                process_program(d)
-            elif d.startswith("r "):
-                d = d.replace("r ", "")
-                process_dir(d)
-            #sources.append(f"{indent} {parent}/{d}")
-
-
-            line = output.format(indent=indent,
-                                 parent=parent) + f"/{d}"
-            sources.append(line)
-            all.append(line)
-
-    _flatten(d, parent='', sep='/')
-
-    return sources, reversed(headings), reversed(all)
-
-
-def find_sources(d,
-                 parent='',
-                 sep='/',
-                 sources=None,
-                 headings=None,
-                 output="{indent} {parent}"):
-    sources = []
-    headings = []
-    all = []
-
-    def _flatten(d, parent='', indent=0, sep='/', output=output):
-        if type(d) == list:
-            for entry in d:
-                _flatten(entry, indent=indent + 1, parent=parent)
-        elif type(d) == dict:
-            key = list(d.keys())[0]
-            child = d[key]
-            parent = f"{parent}{sep}{key}"
-            _flatten(child, parent=parent, indent=indent)
-            headings.append(output.format(indent=indent,
-                                          parent=parent))
-            all.append(output.format(indent=indent,
-                                          parent=parent))
-
-        else:
-            if d.startswith("i "):
-                d = d.replace("i ", "")
-                process_image(d)
-            elif d.startswith("p "):
-                d = d.replace("p ", "")
-                process_program(d)
-            elif d.startswith("r "):
-                d = d.replace("r ", "")
-                process_dir(d)
-            #sources.append(f"{indent} {parent}/{d}")
-
-
-            line = output.format(indent=indent,
-                                 parent=parent) + f"/{d}"
-            sources.append(line)
-            all.append(line)
-
-    _flatten(d, parent='', sep='/')
-
-    return sources, reversed(headings), reversed(all)
