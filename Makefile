@@ -30,7 +30,8 @@ clean:
 
 readme:
 	bookmanager --help > README-manual.md
-	cat README-prefix.md README-postfix.md README-manual.md README-postfix.md > README.md
+	cat README-prefix.md README-manual.md README-postfix.md > README.md
+	git commit -am "Generating the README"
 
 ######################################################################
 # PYPI
@@ -47,7 +48,7 @@ dist:
 requirements_dev:
 	pip install -r  requirements-dev.txt
 
-patch: clean requirements_dev
+patch: clean requirements_dev readme
 	$(call banner, "build")
 	bump2version --no-tag patch
 	python setup.py sdist

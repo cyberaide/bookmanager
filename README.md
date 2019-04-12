@@ -24,13 +24,6 @@ $ pip install cyberaide-bookmanager
 ```
 
 ## Usage
-```
-
-## Refernces
-
-* Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
-* Home page: <https://github.com/cyberaide/bookmanager>
- 
 bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
