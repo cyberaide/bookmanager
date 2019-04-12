@@ -32,6 +32,7 @@ readme:
 	bookmanager --help > README-manual.md
 	cat README-prefix.md README-manual.md README-postfix.md > README.md
 	git commit -am "Generating the README"
+	git push
 
 ######################################################################
 # PYPI
