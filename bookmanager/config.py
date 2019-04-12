@@ -1,19 +1,13 @@
-from os import mkdir
-from os.path import isfile, expanduser, join, dirname, realpath, exists
+from os.path import dirname
 from pathlib import Path
-from shutil import copyfile
+
+import oyaml as yaml
+from bookmanager.yaml_parser import json_flatten
+from cloudmesh.common.FlatDict import flatten as dict_flatten
 # from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.util import path_expand
 from munch import munchify
-import re
-import oyaml as yaml
-from cloudmesh.common.dotdict import dotdict
-from cloudmesh.shell.variables import Variables
-from pprint import pprint
-from cloudmesh.DEBUG import VERBOSE
-import sys
-from cloudmesh.common.FlatDict import flatten
-import collections
+
 
 # noinspection PyPep8
 class Config(object):
@@ -70,13 +64,13 @@ class Config(object):
             self.flat = munchify(self.variables)
 
             self.book = self.spec_replace(self.book, self.variables)
-            self.variables = flatten(self.variables, sep=".")
+            self.variables = dict_flatten(self.variables, sep=".")
 
     def spec_replace(self,
                      book,
                      variables):
 
-        vars = flatten(variables, sep=".")
+        vars = dict_flatten(variables, sep=".")
 
         spec = yaml.dump(book)
 
@@ -87,6 +81,14 @@ class Config(object):
 
         output = yaml.load(spec, Loader=yaml.SafeLoader)
         return output
+
+    def flatten(self,
+                output="{parent}/{key}",
+                header = "{parent}/{key}",
+                indent=""):
+        result = json_flatten(self.book, output=output, header=header, indent_level=0, indent=indent)
+        result = "\n".join(result)
+        return result
 
     def dict(self):
         return self.data

@@ -15,28 +15,11 @@ Description:
     TBD
 
 """
-import os
-import re
-import shutil
-import subprocess
-import sys
-import textwrap
-import webbrowser
-from pathlib import Path
-from pprint import pprint
-from tabulate import tabulate
 from bookmanager.config import Config
-from cloudmesh.common.FlatDict import FlatDict
-from bookmanager.yaml_parser import flatten_json
-from cloudmesh.common.util import readfile, writefile
-from bookmanager.util import readyaml
-import oyaml as yaml
-import requests
-from docopt import docopt
-import colorama
-from colorama import Fore, Style
-from cloudmesh.common.dotdict import dotdict
 from cloudmesh.DEBUG import VERBOSE
+from cloudmesh.common.dotdict import dotdict
+from docopt import docopt
+
 debug = False
 
 
@@ -50,13 +33,22 @@ def main():
     VERBOSE(config.book)
     VERBOSE(config.variables)
 
-    print()
-    pprint(flatten_json(config.book, output="{parent}/{key}"))
-    print()
-    pprint(flatten_json(config.book, output="{counter} {parent}/{key}"))
-    print()
-    pprint(flatten_json(config.book, output="- [ ] {parent}/{key}"))
-    print()
+    # print(config.flatten(output="{path}/{name}"))
+
+    # print()
+    # print(config.flatten(output="{parent}/{key} "))
+    # print()
+    # print(config.flatten(output="{counter} {parent}/{key} "))
+    # print()
+
+    print(
+        config.flatten(
+            output="{indent}- [ ] [{topic}]({url}) {level} {headding}",
+            header="{indent}- [ ] {topic} {level} {headding}",
+            indent=".."
+        )
+    )
+    # print()
 
     '''
     print (config)

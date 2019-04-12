@@ -22,6 +22,7 @@ class Git(object):
                 except Exception as e:
                     print(e)
             else:
+                # noinspection PyPep8
                 print(Fore.RED + "         ERROR: not downlaoded as repo already exists.")
 
     @staticmethod
