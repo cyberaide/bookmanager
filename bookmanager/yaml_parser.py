@@ -20,7 +20,7 @@ counter = 1
 def json_flatten(data,
                  book="BOOK",
                  title="{title}",
-                 output="{counter} {path} {url} {line}",
+                 section="{counter} {path} {url} {line}",
                  header = "{counter} {path} {url} {line}",
                  indent_level=0,
                  indent=""):
@@ -45,7 +45,7 @@ def json_flatten(data,
 
     def _flatten(entry,
                  book=book,
-                 title=title, path='', name='', output=output, header=header, level=0, indent_level = indent_level, indent=indent):
+                 title=title, path='', name='', section=section, header=header, level=0, indent_level = indent_level, indent=indent):
         global counter
         if type(entry) is dict:
             for a in entry:
@@ -82,7 +82,7 @@ def json_flatten(data,
                          title=title,
                          path=f"{path}/{a}",
                          name=f"{name}{a}/",
-                         output=output,
+                         section=section,
                          header=header,
                          indent_level=indent_level,
                          level=level,
@@ -96,7 +96,7 @@ def json_flatten(data,
                          title=title,
                          path=f"{path}",
                          name=f"{name}{i}/",
-                         output=output,
+                         section=section,
                          header=header,
                          indent_level=indent_level,
                          level=level,
@@ -122,7 +122,7 @@ def json_flatten(data,
 
             d = {
                 "title": title,
-                "output": output,
+                "output": section,
                 "kind": "section",
                 "url": location,
                 "line": entry,
@@ -145,7 +145,7 @@ def json_flatten(data,
             data,
             book=book,
             title=title,
-            output=output,
+            section=section,
             header=header,
             indent_level=indent_level,
             indent=indent)

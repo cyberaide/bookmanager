@@ -86,10 +86,10 @@ class Config(object):
     def flatten(self,
                 book="BOOK",
                 title="{book}",
-                output="{parent}/{key}",
+                section="{parent}/{key}",
                 header = "{parent}/{key}",
                 indent=""):
-        result = json_flatten(self.book, book=book, title=title, output=output, header=header, indent_level=0, indent=indent)
+        result = json_flatten(self.book, book=book, title=title, section=section, header=header, indent_level=0, indent=indent)
         return result
 
     def dict(self):

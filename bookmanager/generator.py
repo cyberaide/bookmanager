@@ -45,7 +45,7 @@ def main():
         config.flatten(
             book="My Book",
             title="- {book}",
-            output="{indent}- [ ] [{topic}]({url}) {level}",
+            section="{indent}- [ ] [{topic}]({url}) {level}",
             header="{indent}- [ ] {topic} {level}",
             indent="  "
         )
