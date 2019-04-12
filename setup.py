@@ -49,10 +49,10 @@ with open('README.md') as f:
 
 
 NAME = "cyberaide-bookmanager"
-DESCRIPTION = "A dynamic extensible CMD based command shell"
+DESCRIPTION = "Creating Books from content in different git and other cloud services."
 AUTHOR = "Gregor von Laszewski"
 AUTHOR_EMAIL = "laszewski@gmail.com"
-URL = "https://github.com/cloudmesh/cyberaide-installer"
+URL = "https://github.com/cyberaide/bookmanager"
 
 
 setup(

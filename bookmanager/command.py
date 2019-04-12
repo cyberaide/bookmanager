@@ -50,6 +50,19 @@ Description:
 
     book.epup, book.pdf, and the dir html
 
+  YAML Table of Contents format
+
+    The table of contents for the book can be controled with a simple yaml file
+    that has some specific contectual enhancements. THis include the creation of
+    a BOOK section that has the sections outlined in hierarchical form, and
+    contains chapter and section headers without links that are automatically
+    generated.
+
+    Here is an example of a simple TOC yaml file:
+
+    * <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
+
+
 """
 from bookmanager.config import Config
 from cloudmesh.DEBUG import VERBOSE
