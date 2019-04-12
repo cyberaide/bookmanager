@@ -1,10 +1,11 @@
 """bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
-  bookmanager url download [YAML] [--format=FORMAT]
-  bookmanager url check [YAML] [--format=FORMAT]
-  bookmanager url list [YAML] [--format=FORMAT]
-  bookmanager list [YAML] [--format=FORMAT]
+  bookmanager url download YAML [--format=FORMAT]
+  bookmanager url check YAML [--format=FORMAT]
+  bookmanager url list YAML [--format=FORMAT]
+  bookmanager list YAML [--format=FORMAT]
+  bookmanager epub YAML
   bookmanager info
 
 
@@ -17,19 +18,19 @@ Options:
 
 Description:
 
-  bookmanager url download [YAML] [--format=FORMAT]
+  bookmanager url download YAML [--format=FORMAT]
 
     downloads the urls into the ./dist directory for local processing
 
-  bookmanager url check [YAML] [--format=FORMAT]
+  bookmanager url check YAML [--format=FORMAT]
 
     checks if the urls in the yaml file exist
 
-  bookmanager url list [YAML] [--format=FORMAT]
+  bookmanager url list YAML [--format=FORMAT]
 
     lists all urls of the yaml file
 
-  bookmanager list [YAML] [--format=FORMAT]
+  bookmanager list YAML [--format=FORMAT]
 
     lists the yaml file
 
@@ -52,7 +53,7 @@ Description:
 """
 from bookmanager.config import Config
 from cloudmesh.DEBUG import VERBOSE
-from cloudmesh.common.util import banner
+from cloudmesh.common.util import banner, path_expand
 from cloudmesh.shell.command import map_parameters
 from cloudmesh.common.dotdict import dotdict
 from docopt import docopt
@@ -146,11 +147,7 @@ def main():
                 path = entry["path"]
                 path = f"./dist{path}"
                 download(url, path)
-            #url = entry["url"]
-            #if "path" in entry:
-            #    path = "./dist/{path}".format(**entry)
-            ##    if url.startswith("http"):
-            #        download(url, path)
+
 
 
     elif arguments.url and arguments.list:
@@ -176,6 +173,39 @@ def main():
 
         print('\n'.join(config.output(result, kind="url")))
 
+
+    elif arguments.epub:
+
+        banner("Creating Epub")
+
+        result = \
+            config.flatten(
+                book="",
+                title="",
+                section="{url}",
+                header="",
+                indent=""
+            )
+
+        files = []
+        for entry in result:
+            if entry["kind"] == "section":
+                url = entry["url"]
+                path = entry["path"]
+                basename=entry["basename"]
+                local = path_expand(f"./dist{path}/{basename}")
+                entry["local"] = local
+                files.append(local)
+
+        banner("Finding Contents")
+
+        print ("Number of included Sections:",  len(result))
+
+        banner("Creating Command")
+
+        files = " ".join(files)
+        command = f"pandoc {files}"
+        print(command)
 
 
 
