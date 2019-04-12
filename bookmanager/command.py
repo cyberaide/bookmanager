@@ -59,6 +59,7 @@ from cloudmesh.common.dotdict import dotdict
 from docopt import docopt
 from pprint import pprint
 from bookmanager.util import download
+import os
 
 import requests
 
@@ -204,8 +205,12 @@ def main():
         banner("Creating Command")
 
         files = " ".join(files)
-        command = f"pandoc {files}"
+        title = "Example"
+        metadata = "./template/epub/metadata.txt"
+        options = "--toc --number-sections"
+        command = f"pandoc {options} -o ./dist/book.epub --title={title} {files} {metadata}"
         print(command)
+        os.system(command)
 
 
 

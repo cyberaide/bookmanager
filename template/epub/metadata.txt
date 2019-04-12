@@ -6,8 +6,8 @@ creator:
 description: Big Data Applications
 rights: (c) Gregor von Laszewski, 2018
 language: en-US
-stylesheet: template/epub.css
-cover-image: cover/cover.jpg
+stylesheet: template/epub/epub.css
+cover-image: template/epub/cover/cover.jpg
 figureTitle: Figure
 figPrefix: Figure
 eqnPrefix: Equation
