@@ -19,9 +19,9 @@ from bookmanager.config import Config
 from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.dotdict import dotdict
 from docopt import docopt
+from pprint import pprint
 
 debug = False
-
 
 def main():
     arguments = dotdict(docopt(__doc__))
@@ -41,14 +41,23 @@ def main():
     # print(config.flatten(output="{counter} {parent}/{key} "))
     # print()
 
-    print(
+    result = \
         config.flatten(
-            output="{indent}- [ ] [{topic}]({url}) {level} {headding}",
-            header="{indent}- [ ] {topic} {level} {headding}",
-            indent=".."
+            book="My Book",
+            title="- {book}",
+            output="{indent}- [ ] [{topic}]({url}) {level}",
+            header="{indent}- [ ] {topic} {level}",
+            indent="  "
         )
-    )
-    # print()
+
+    #print("\n".join(result))
+
+    pprint (result)
+
+    print (len(result))
+
+    print(config.output(result, kind="text"))
+    print(config.output(result, kind="list"))
 
     '''
     print (config)

@@ -31,17 +31,7 @@ def json_flatten(data,
     r = len(yaml.dump(data).split("\n"))
 
     out = ['undefined'] * r
-    out[0] = {
-        "url": "",
-        "topic": book,
-        "title": title,
-        "book": book,
-        "output": title,
-        "header": header,
-        "level": indent_level,
-        "indent": indent,
-        "kind": "title"
-    }
+    out[0] = title.format(**locals())
 
     def _flatten(entry,
                  book=book,
@@ -58,8 +48,7 @@ def json_flatten(data,
                 d = {
                     "title": title,
                     "name": a,
-                    "kind": "header",
-                    "output": header,
+                    "headding": True,
                     "url": "",
                     "line": key,
                     "basename": "",
@@ -73,10 +62,8 @@ def json_flatten(data,
                 if verbose:
                     print("-----", d)
 
-                #display = header.format(**d)
-                #out[counter] = display
-                out[counter] = d
-
+                display = header.format(**d)
+                out[counter] = display
                 _flatten(entry[a],
                          book=book,
                          title=title,
@@ -122,8 +109,7 @@ def json_flatten(data,
 
             d = {
                 "title": title,
-                "output": output,
-                "kind": "section",
+                "headding": False,
                 "url": location,
                 "line": entry,
                 "basename": basename,
@@ -137,9 +123,9 @@ def json_flatten(data,
             if verbose:
                 print("     >>>>>", d)
 
-            #result = output.format(**d)
-            #out[counter] = result
-            out[counter] = d
+            result = output.format(**d)
+            out[counter] = result
+
     try:
         _flatten(
             data,

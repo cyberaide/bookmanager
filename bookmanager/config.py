@@ -2,6 +2,7 @@ from os.path import dirname
 from pathlib import Path
 
 import oyaml as yaml
+#from bookmanager.yaml_parser_ok import json_flatten
 from bookmanager.yaml_parser import json_flatten
 from cloudmesh.common.FlatDict import flatten as dict_flatten
 # from cloudmesh.DEBUG import VERBOSE
@@ -83,15 +84,27 @@ class Config(object):
         return output
 
     def flatten(self,
+                book="BOOK",
+                title="{book}",
                 output="{parent}/{key}",
                 header = "{parent}/{key}",
                 indent=""):
-        result = json_flatten(self.book, output=output, header=header, indent_level=0, indent=indent)
-        result = "\n".join(result)
+        result = json_flatten(self.book, book=book, title=title, output=output, header=header, indent_level=0, indent=indent)
         return result
 
     def dict(self):
         return self.data
+
+    def output(self, result, kind="text"):
+        content = []
+        for entry in result:
+            text = entry["output"].format(**entry)
+            content.append(text)
+        if "text" in kind:
+            return '\n'.join(content)
+        else:
+            return content
+
 
     def __str__(self):
         return yaml.dump(self.data, default_flow_style=False, indent=2)
