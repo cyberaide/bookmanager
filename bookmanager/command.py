@@ -2,7 +2,6 @@
 
 Usage:
   bookmanager url download [YAML] [--format=FORMAT]
-
   bookmanager url check [YAML] [--format=FORMAT]
   bookmanager url list [YAML] [--format=FORMAT]
   bookmanager list [YAML] [--format=FORMAT]
@@ -18,7 +17,37 @@ Options:
 
 Description:
 
-    TBD
+  bookmanager url download [YAML] [--format=FORMAT]
+
+    downloads the urls into the ./dist directory for local processing
+
+  bookmanager url check [YAML] [--format=FORMAT]
+
+    checks if the urls in the yaml file exist
+
+  bookmanager url list [YAML] [--format=FORMAT]
+
+    lists all urls of the yaml file
+
+  bookmanager list [YAML] [--format=FORMAT]
+
+    lists the yaml file
+
+  Creation of a book:
+
+    1) create a yaml file book.yml
+    2) check:    bookmanager url check book.yml
+    3) download: bookmanager download check book.yml
+
+    NOt implemented yet the output
+
+    4} epub: bookmanager epub book.yml
+    5) html: bookmanager html book.yml
+    6) pdf:  bookmanager pdf book.yml
+
+    will be written into the ./dist directory with the names
+
+    book.epup, book.pdf, and the dir html
 
 """
 from bookmanager.config import Config
