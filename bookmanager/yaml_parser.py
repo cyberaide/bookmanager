@@ -25,7 +25,7 @@ def json_flatten(data,
                  indent_level=0,
                  indent=""):
 
-    verbose = True
+    verbose = False
     global counter
     counter = 0
     r = len(yaml.dump(data).split("\n"))

@@ -4,6 +4,20 @@ import colorama
 from colorama import Fore, Style
 import sys
 import shutil
+import requests
+import os
+import pathlib
+
+
+def download(url, name):
+    name = os.path.basename(name)
+    directory = os.path.dirname(name)
+
+    path = pathlib.Path(directory)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    r = requests.get(url, allow_redirects=True)
+    open(f"{name}", 'wb').write(r.content)
 
 
 def run(command):

@@ -63,7 +63,6 @@ class Config(object):
 
             self.book = list(self.data['BOOK'])
             self.flat = munchify(self.variables)
-
             self.book = self.spec_replace(self.book, self.variables)
             self.variables = dict_flatten(self.variables, sep=".")
 
@@ -89,7 +88,13 @@ class Config(object):
                 section="{parent}/{key}",
                 header = "{parent}/{key}",
                 indent=""):
-        result = json_flatten(self.book, book=book, title=title, section=section, header=header, indent_level=0, indent=indent)
+        result = json_flatten(self.book,
+                              book=book,
+                              title=title,
+                              section=section,
+                              header=header,
+                              indent_level=0,
+                              indent=indent)
         return result
 
     def dict(self):
@@ -100,8 +105,18 @@ class Config(object):
         for entry in result:
             text = entry["output"].format(**entry)
             content.append(text)
-        if "text" in kind:
+
+        if kind in ["text"]:
             return '\n'.join(content)
+
+        if kind in ['url']:
+            out = []
+            for entry in content:
+                print (entry)
+                if entry != "":
+                    out.append(entry)
+            return out
+
         else:
             return content
 
