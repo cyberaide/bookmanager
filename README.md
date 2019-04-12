@@ -1,111 +1,79 @@
 
-# Cloudmehs Installer 
+# Bookmanager
 
-This is an experimental installer that is most usefull during the development of
-cloudmesh components form source. Once cloudmehs is released, you can use the
-packages hosted at pypi.
+Bookmanager is a tool to create a publication from a number of sources on the
+internet. It is especially useful to create customized books, lecture notes, or
+handouts. Content is best integrated in markdown format as it is very fast to
+produce the output. At present we only produce epubs, but it will be easy to
+also create pdf, html, work, odt and others. As we use pandoc we can support the
+formats supported by it.
 
-This command can be installed with 
+Planed enhancements:
+
+* customized title page
+* integration of Refernces
+* proper indentation management based on the indentation in teh yaml file
+* automated image management
+* font management for epubs
+
+If you like to help get in contagt with Gregor von Laszewski
+<laszewski@gmail.com>
 
 ```bash
-$ pip install cloudmesh-installer
+$ pip install cyberaide-bookmanager
 ```
 
 ## Usage
 ```
-cloudmesh-installer -- a helper to install cloudmesh from source for developers.
+bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
-  cloudmesh-installer git key [LOCATION]
-  cloudmesh-installer git [clone|pull|status] [BUNDLE]
-  cloudmesh-installer install [BUNDLE] [-e]
-  cloudmesh-installer list
-  cloudmesh-installer info
-  cloudmesh-installer local purge DIR [--force]
-  cloudmesh-installer pyenv purge ENV [--force]
+  bookmanager url download YAML [--format=FORMAT]
+  bookmanager url check YAML [--format=FORMAT]
+  bookmanager url list YAML [--format=FORMAT]
+  bookmanager list YAML [--format=FORMAT]
+  bookmanager epub YAML
+  bookmanager info
 
-A convenient program called `cloudmesh-installer` to ownload and install cloudmesh
-from sources published in github.
 
 Arguments:
-  BUNDLE      the bundle [default: cms]
-  REPOS       list of git repos
-  ENV         the name of the pyenv
-  DIR         the directory form where to start the search
+  YAML   the yaml file
 
 Options:
   -h --help
-  --force   test
+  -f, --format=FORMAT     [default: markdown]
 
 Description:
 
-    cloudmesh-installer list
+  bookmanager url download YAML [--format=FORMAT]
 
-        Bundles
+    downloads the urls into the ./dist directory for local processing
 
-        Cloudmesh has a number of bundels. Bundels are simple a number of git
-        repositories. You can list the bundels with the list command. and see
-        their names in the top level.
+  bookmanager url check YAML [--format=FORMAT]
 
-    cloudmesh-installer info
+    checks if the urls in the yaml file exist
 
-        The info command gives some very basic information about the version
-        numbers of cloudmesh on your system, github, and pypi. THis helps
-        identifying if you may run an odlder version.
+  bookmanager url list YAML [--format=FORMAT]
 
-        In addition we try to check if you do use pyenv
+    lists all urls of the yaml file
 
-    cloudmesh-installer git key [LOCATION]
+  bookmanager list YAML [--format=FORMAT]
 
-        This command only works if you use ssh keys to authenticate with github.
-        This command makes uploading the key easy as it checks for your key and
-        provides via the web browser automatic pageloads to github for the
-        keyupload. YOu do not have tou use this command. It is intenden for
-        novice users.
+    lists the yaml file
 
-    cloudmesh-installer git [clone|pull|status] [BUNDLE]
+  Creation of a book:
 
-        This command executes the given git command on the bundle
+    1) create a yaml file book.yml
+    2) check:    bookmanager url check book.yml
+    3) download: bookmanager download check book.yml
 
-    cloudmesh-installer install [BUNDLE]
+    NOt implemented yet the output
 
-        This command executes an install on the given bundle
+    4} epub: bookmanager epub book.yml
+    5) html: bookmanager html book.yml
+    6) pdf:  bookmanager pdf book.yml
 
-    cloudmesh-installer info
+    will be written into the ./dist directory with the names
 
-        This command is very useful to list the version of the installed
-        package, the version n git, and the version on pypi
-
-    cloudmesh-installer local purge [DIR] [--force]
-
-        THIS IS A DANGEROUS COMMAND AND YOU SHOULD PROBABLY NOT USE IT
-
-
-        This command should not be used in general. It is for the most
-        experienced user and allows to identify eggs in your directory
-        recursively. The --force option allows to delete the egg, but it may be a
-        better strategy to just list the egs without the --force and than delete the
-        files you do not want.
-
-        One test that you may want to do is to just call the command without the
-        force option as to see possible eggs that you forgot and may need to be
-        deleted.
-
-    cloudmesh-installer pyenv purge ENV [--force]
-
-        THIS IS A DANGEROUS COMMAND AND YOU SHOULD PROBABLY NOT USE IT
-
-        THis command removes the specified virtual envireonment and reinstalls
-        it with python 3.7.2. It will erase it entirely, thus make sure you know
-        what this command does. YOu will have to reinstall all packages.
-
-    Example:
-
-        let us assume you like to work on storage, than you need to do the following
-
-            mkdir cm
-            cd cm
-            cloudmesh-installer git clone storage
-            cloudmesh-installer install storage -e
-            cloudmesh-installer info
+    book.epup, book.pdf, and the dir html
 ```

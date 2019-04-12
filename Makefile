@@ -29,7 +29,7 @@ clean:
 	rm -f *.whl
 
 readme:
-	cloudmesh-installer --help > README-manual.md
+	bookmanager --help > README-manual.md
 	cat README-prefix.md README-postfix.md README-manual.md README-postfix.md > README.md
 
 ######################################################################
