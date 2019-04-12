@@ -6,19 +6,37 @@ import sys
 import shutil
 import requests
 import os
+from pathlib import Path
 import pathlib
 
+from cloudmesh.common.util import path_expand
+from cloudmesh.common.util import writefile
 
 def download(url, name):
-    name = os.path.basename(name)
-    directory = os.path.dirname(name)
+    name = path_expand(name)
+    basename = os.path.basename(name)
+    directory = name # os.path.dirname(name)
+    filename = Path(directory) / os.path.basename(url)
+    print("FFF", filename)
+    print(f"{url} -> download -> {name}", sep=" ")
 
-    path = pathlib.Path(directory)
-    path.parent.mkdir(parents=True, exist_ok=True)
+
+    print ("PPP", basename,  name, directory)
+
+    path = Path(directory)
+
+    path.mkdir(parents=True, exist_ok=True)
+    # path = os.makedirs(directory)
 
     r = requests.get(url, allow_redirects=True)
-    open(f"{name}", 'wb').write(r.content)
+    print (r.content)
+    print(" -> saving", sep=" ")
 
+    output = Path(directory) / filename
+    with open(output, 'wb') as f:
+        f.write(r.content)
+
+    print("-> ok")
 
 def run(command):
     print(command)

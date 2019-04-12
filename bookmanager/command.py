@@ -1,6 +1,8 @@
 """bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
+  bookmanager url download [YAML] [--format=FORMAT]
+
   bookmanager url check [YAML] [--format=FORMAT]
   bookmanager url list [YAML] [--format=FORMAT]
   bookmanager list [YAML] [--format=FORMAT]
@@ -109,10 +111,17 @@ def main():
             )
 
         for entry in result:
-            url = entry["url"]
-            path = "./dist/{path}".format(**entry)
-            if url.startswith("http"):
+            if entry["kind"] == "section":
+                pprint (entry)
+                url = entry["url"]
+                path = entry["path"]
+                path = f"./dist{path}"
                 download(url, path)
+            #url = entry["url"]
+            #if "path" in entry:
+            #    path = "./dist/{path}".format(**entry)
+            ##    if url.startswith("http"):
+            #        download(url, path)
 
 
     elif arguments.url and arguments.list:
