@@ -49,7 +49,7 @@ dist:
 requirements_dev:
 	pip install -r  requirements-dev.txt
 
-patch: clean requirements_dev readme
+patch: clean requirements_dev
 	$(call banner, "build")
 	bump2version --no-tag patch
 	python setup.py sdist
