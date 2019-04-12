@@ -1,3 +1,11 @@
+import subprocess
+import oyaml as yaml
+import colorama
+from colorama import Fore, Style
+import sys
+import shutil
+
+
 def run(command):
     print(command)
     try:
@@ -44,10 +52,19 @@ def banner(txt, c=Fore.BLUE):
     print(c + "#" * 70)
 
 
-
 def remove(location):
     print("delete", location)
     try:
         shutil.rmtree(location)
     except Exception as e:
         print(e)
+
+
+def readyaml(name):
+    with open(name, 'r') as stream:
+        try:
+            d = yaml.safe_load(stream)
+            return d
+        except yaml.YAMLError as exc:
+            print(exc)
+    return []

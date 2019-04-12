@@ -25,48 +25,45 @@ import webbrowser
 from pathlib import Path
 from pprint import pprint
 from tabulate import tabulate
-from cloudmesh.management.configuration.config import Config
+from bookmanager.config import Config
 from cloudmesh.common.FlatDict import FlatDict
 from bookmanager.yaml_parser import flatten_json
-from cloudmesh.common.util import readfile
-
+from cloudmesh.common.util import readfile, writefile
+from bookmanager.util import readyaml
 import oyaml as yaml
 import requests
 from docopt import docopt
 import colorama
 from colorama import Fore, Style
-
+from cloudmesh.common.dotdict import dotdict
+from cloudmesh.DEBUG import VERBOSE
 debug = False
 
-def read_yaml(name):
-    with open(name, 'r') as stream:
-        try:
-            d = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    return d
 
 def main():
-    arguments = docopt(__doc__)
+    arguments = dotdict(docopt(__doc__))
 
-    pprint(arguments)
+    VERBOSE(arguments)
 
-    d = read_yaml(arguments["YAML"])
-    pprint(d)
+    config = Config(config=arguments.YAML)
 
-    pprint(flatten_json(d, output="{parent}/{key}"))
-    pprint(flatten_json(d, output="{counter} {parent}/{key}"))
-    pprint(flatten_json(d, output="- [ ] {parent}/{key}"))
+    VERBOSE(config.book)
+    VERBOSE(config.variables)
 
-    r = readfile(arguments["YAML"])
-    print(r)
+    print()
+    pprint(flatten_json(config.book, output="{parent}/{key}"))
+    print()
+    pprint(flatten_json(config.book, output="{counter} {parent}/{key}"))
+    print()
+    pprint(flatten_json(config.book, output="- [ ] {parent}/{key}"))
+    print()
+
     '''
-    config = Config(config_path=arguments["YAML"])
-
-    d = config.data
     print (config)
 
     print (d)
     '''
+
+
 if __name__ == '__main__':
     main()

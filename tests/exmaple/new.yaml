@@ -1,19 +1,22 @@
 ---
-- BOOK:
-  - "{b516}/preface.md"
+git:
+  "e516": "abc"
+  "manager": "xyz"
+BOOK:
+  - "{git.e516}/preface.md"
   - INTRODUCTION:
-    - "{manager}/other.md"
+    - "{git.manager}/other.md"
   - CLOUD:
-    - "{manager}/other.md"
+    - "{git.manager}/other.md"
     - AWS:
-      - "{manager}/other.md"
-      - "i {manager}"
-      - "r {manager}"
-      - "p {manager}/test.py"
+      - "{git.manager}/other.md"
+      - "i {git.manager}"
+      - "r {git.manager}"
+      - "p {git.manager}/test.py"
   - DEVOPS:
-    - "{manager}/other.md"
+    - "{git.manager}/other.md"
     - ANSIBLE:
-      - "{manager}/other.md"
-      - "i {manager}"
-      - "r {manager}"
-      - "p {manager}/test.py"
+      - "{git.manager}/other.md"
+      - "i {git.manager}"
+      - "r {git.manager}"
+      - "p {git.manager}/test.py"

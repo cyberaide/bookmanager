@@ -15,10 +15,11 @@ def process_dir(link):
 
 
 counter = -1
-def flatten_json(data, output="{counter} {parent}/{key}"):
 
+
+def flatten_json(data, output="{counter} {parent}/{key}"):
     global counter
-    counter=-1
+    counter = -1
     r = len(yaml.dump(data).split("\n"))
 
     out = ['undefined'] * r
@@ -29,15 +30,17 @@ def flatten_json(data, output="{counter} {parent}/{key}"):
             for a in x:
                 counter = counter + 1
                 key = list(x.keys())[0]
-                #key = a.keys()[0]
+                # key = a.keys()[0]
 
                 display = output.format(**locals(), counter=counter)
                 out[counter] = display
-                flatten(x[a], parent=f"{parent}/{a}", name=f"{name}{a}/", output=output)
+                flatten(x[a], parent=f"{parent}/{a}", name=f"{name}{a}/",
+                        output=output)
         elif type(x) is list:
             i = 0
             for a in x:
-                flatten(a, parent=f"{parent}", name=f"{name}{i}/", output=output)
+                flatten(a, parent=f"{parent}", name=f"{name}{i}/",
+                        output=output)
                 i += 1
         else:
             counter = counter + 1
@@ -53,9 +56,9 @@ def flatten_json(data, output="{counter} {parent}/{key}"):
                 process_dir(x)
             key = x
 
-            display =  output.format(**locals(), counter=counter)
+            display = output.format(**locals(), counter=counter)
             out[counter] = display
 
     flatten(data)
 
-    return out[:counter+1]
+    return out[:counter + 1]
