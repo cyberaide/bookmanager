@@ -70,7 +70,7 @@ Description:
 
       bookmanager YAML download [--format=FORMAT]
 
-        downloads the urls into the ./dist directory for local processing
+        downloads the urls into the ./dest directory for local processing
 
       bookmanager YAML check [--format=FORMAT]
 
@@ -89,7 +89,7 @@ Description:
 
     1) pdf:  bookmanager pdf book.yml
 
-    will be writing into the ./dist directory the output files with the names
+    will be writing into the ./dest directory the output files with the names
 
     book.epub, book.pdf, and the dir html
 

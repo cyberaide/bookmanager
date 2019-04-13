@@ -91,7 +91,8 @@ from cloudmesh.shell.command import map_parameters
 from cloudmesh.common.dotdict import dotdict
 from docopt import docopt
 from pprint import pprint
-from bookmanager.util import download,create_metadata, create_css
+from bookmanager.util import create_metadata, create_css
+from bookmanager.util import download as page_download
 import os
 from bookmanager.util import create_section, find_image_dirs
 import sys
@@ -184,13 +185,13 @@ class Book:
             if entry["kind"] == "section":
                 print(entry["level"] * "   ", entry["counter"], entry["name"],
                       end=' ')
-                print('download', end=' ')
+                print('...', end=' ')
                 # pprint (entry)
                 url = entry["url"]
                 path = entry["path"]
                 path = f"./dest/book{path}"
-                download(url, path, entry['level'])
-                print("ok")
+                page_download(url, path, entry['level'])
+                print()
             elif entry["kind"] == 'header':
                 print(entry['level'] * "   ", entry['counter'], entry['topic'])
 

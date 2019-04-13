@@ -129,7 +129,7 @@ def download(url, name, level=0):
             d = Path(image_dir)
             d.mkdir(parents=True, exist_ok=True)
             r = get_file_from_git(image_url, image_dir, image_name)
-            print()
+            print("...")
 
 def run(command):
     print(command)
