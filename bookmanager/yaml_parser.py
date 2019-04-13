@@ -89,7 +89,6 @@ def json_flatten(data,
                          indent=indent)
         elif type(entry) is list:
             i = 0
-            level = level + 1
             for a in entry:
                 _flatten(a,
                          book=book,

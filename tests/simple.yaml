@@ -1,0 +1,20 @@
+---
+git:
+  "e516": "abc"
+  "manager": "xyz"
+BOOK:
+  - "{git.e516}/preface.md"
+  - INTRODUCTION:
+    - "{git.manager}/one.md"
+  - CLOUD:
+    - "{git.manager}/two.md"
+    - AWS:
+      - "{git.manager}/three.md"
+      - "p {git.manager}/four.py"
+  - DEVOPS:
+    - "{git.manager}/five.md"
+    - ANSIBLE:
+      - "{git.manager}/six.md"
+      - "i {git.manager}/seven.png"
+      - "r {git.manager}/eight-dir"
+      - "p {git.manager}/nine.py"

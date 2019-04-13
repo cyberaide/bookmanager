@@ -7,6 +7,7 @@ Usage:
   bookmanager list YAML [--format=FORMAT]
   bookmanager epub YAML
   bookmanager info
+  bookmanager level YAML
 
 
 Arguments:
@@ -225,6 +226,39 @@ def main():
         print(command)
         os.system(command)
 
+
+    elif arguments.level:
+
+        banner("Creating Epub")
+
+        result = \
+            config.flatten(
+                book="",
+                title="",
+                section="{url}",
+                header="",
+                indent=""
+            )
+
+        for entry in result:
+            if entry["kind"] == "section":
+                url = entry["url"]
+                path = entry["path"]
+                basename=entry["basename"]
+                local = path_expand(f"./dist{path}/{basename}")
+                entry["local"] = local
+                level = entry["level"]
+                #pprint(entry)
+                command = f"pandoc -o --base-header-level={level} ./dist/tmp.md {local}"
+                print(command)
+                #os.system(command)
+                command = f"cp ./dist/tmp.md {local}"
+                print(command)
+                print()
+
+
+
+#--base-header-level=
 
 
 if __name__ == '__main__':
