@@ -7,6 +7,11 @@ metadata:
   subauthor: "Editor"
   email: "laszewski@gmail.com"
   url: "https://github.com/cyberaide/bookmanager"
+  description: "Book creator"
+  abstract: "my abstract"
+  keywords: "pandoc"
+  stylesheet: "epub.css"
+  dest: "dest/book"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
 BOOK:

@@ -1,13 +1,13 @@
 ---
-title: Cloud Computing
+title: {title}
 creator:
 - role: editor
-  text: Gregor von Laszewski
-description: Big Data Applications
+  text: {author}
+description: {description}
 rights: (c) Gregor von Laszewski, 2018
 language: en-US
-stylesheet: template/epub/epub.css
-cover-image: template/epub/cover/cover.jpg
+stylesheet: epub.css
+cover-image: cover.png
 figureTitle: Figure
 figPrefix: Figure
 eqnPrefix: Equation
@@ -18,8 +18,8 @@ nameInLink: True
 fignos-caption-name: Figure
 fignos-plus-name: Figure
 xnos-number-sections: True
-keywords: [cloud, container]
+keywords: {keywords}
 mustache: abbrev.yaml
 abstract: |
-  This book contains the lecture notes for e516
+  {abstract}
 ...

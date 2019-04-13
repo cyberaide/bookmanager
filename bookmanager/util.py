@@ -9,9 +9,9 @@ import os
 from pathlib import Path
 import pathlib
 from pprint import pprint
-
+import pkg_resources
 from cloudmesh.common.util import path_expand
-from cloudmesh.common.util import writefile
+from cloudmesh.common.util import writefile,readfile
 
 def create_section(filename, header):
     writefile(filename, f"# {header}\n\n")
@@ -24,14 +24,37 @@ import markdown
 from markdown.treeprocessors import Treeprocessor
 from markdown.extensions import Extension
 
+from shutil import copyfile
 
 import sys
 import glob
 import os
 
 
+def create_metadata(metadata, location):
+    location = path_expand(location)
+    Path(os.path.dirname(location)).mkdir(parents=True, exist_ok=True)
+    if not os.path.isfile(location):
+        metadata_file = pkg_resources.resource_filename("bookmanager",
+                                              'template/epub/metadata.txt')
 
-def find_image_dirs(directory='dist'):
+        content = readfile(metadata_file)
+        content = content.format(**metadata)
+        writefile(location, content)
+
+
+def create_css(metadata, location):
+    location = path_expand(location)
+    Path(os.path.dirname(location)).mkdir(parents=True, exist_ok=True)
+    if not os.path.isfile(location):
+        css_file = pkg_resources.resource_filename("bookmanager",
+                                                        'template/epub/epub.css')
+
+        copyfile(css_file, location)
+
+
+
+def find_image_dirs(directory='dest'):
     directory = path_expand(directory)
     directories = []
 

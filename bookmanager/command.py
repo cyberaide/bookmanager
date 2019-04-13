@@ -42,7 +42,7 @@ Description:
 
       bookmanager YAML download [--format=FORMAT]
 
-        downloads the urls into the ./dist directory for local processing
+        downloads the urls into the ./dest directory for local processing
 
       bookmanager YAML check [--format=FORMAT]
 
@@ -61,7 +61,7 @@ Description:
 
     1) pdf:  bookmanager pdf book.yml
 
-    will be writing into the ./dist directory the output files with the names
+    will be writing into the ./dest directory the output files with the names
 
     book.epub, book.pdf, and the dir html
 
@@ -91,7 +91,7 @@ from cloudmesh.shell.command import map_parameters
 from cloudmesh.common.dotdict import dotdict
 from docopt import docopt
 from pprint import pprint
-from bookmanager.util import download
+from bookmanager.util import download,create_metadata, create_css
 import os
 from bookmanager.util import create_section, find_image_dirs
 import sys
@@ -105,6 +105,7 @@ class Book:
     def __init__(self, arguments):
 
         self.config = Config(config=arguments.YAML)
+        self.metadata = self.config["metadata"]
         self.arguments = arguments
 
     def list(self, output):
@@ -187,7 +188,7 @@ class Book:
                 # pprint (entry)
                 url = entry["url"]
                 path = entry["path"]
-                path = f"./dist{path}"
+                path = f"./dest/book{path}"
                 download(url, path, entry['level'])
                 print("ok")
             elif entry["kind"] == 'header':
@@ -230,11 +231,12 @@ class Book:
                 indent=""
             )
 
+
         files = []
         for entry in result:
             if entry["kind"] == "section":
                 entry["local"] = path_expand(
-                    "./dist{path}/{basename}".format(**entry))
+                    "./dest/book{path}/{basename}".format(**entry))
 
             if entry["kind"] == "header":
                 entry["local"] = path_expand(
@@ -253,15 +255,17 @@ class Book:
 
         banner("Creating Command")
 
-
         files = " ".join(files)
-        title = "Example"
+
+        #metadata["stylesheet"] = path_expand(metadata["stylesheet"])
+        title = self.metadata["title"]
+
         if output == "epub":
 
             result = \
                 self.config.flatten(
-                    book="My Book",
-                    title="{book}",
+                    book=title,
+                    title=title,
                     section="{topic}",
                     header="{topic}",
                     indent=""
@@ -272,31 +276,40 @@ class Book:
                 if section["kind"] == "section":
                     pprint(section)
                     path = section["path"]
-                    dirs.append(path_expand(f"./dist{path}"))
+                    dirs.append(path_expand(f"./dest/book{path}"))
             dirs = set(dirs)
-            # dirs = find_image_dirs(directory='./dist')
+            # dirs = find_image_dirs(directory='./dest')
+
+            create_metadata(self.metadata, "./dest/book/metadata.txt")
+            create_css(self.metadata, "./dest/book/epub.css")
+
+            pprint(self.metadata)
+
 
             directories = (":".join(dirs))
-            metadata = "./template/epub/metadata.txt"
+            metadata = path_expand("./dest/book/metadata.txt")
             options = "--toc --number-sections"
             resources = f"--resource-path={directories}"
-            command = f"pandoc {options} {resources} -o ./dist/book.epub --title={title} {files} {metadata}"
+            epub = path_expand("./dest/book.epub")
+            command = f'cd dest/book; pandoc {options} {resources} -o {epub} {files} {metadata}'
+
+            pprint(command.split(" "))
 
 
         elif output == "pdf":
-            metadata = "./template/epub/metadata.txt"
+            metadata = "./dest/metadata.txt"
             options = "--toc --number-sections"
-            command = f"pandoc {options} -o ./dist/book.pdf --title={title} {files}"
+            command = f'pandoc {options} -o ./dest/book.pdf {files}'
 
         elif output == "html":
-            metadata = "./template/epub/metadata.txt"
+            metadata = "./dest/metadata.txt"
             options = "--toc --number-sections"
-            command = f"pandoc {options} -o ./dist/book.html --title={title} {files}"
+            command = f'pandoc {options} -o ./dest/book.html {files}'
 
         elif output == "docx":
-            metadata = "./template/epub/metadata.txt"
+            metadata = "./dest/metadata.txt"
             options = "--toc --number-sections"
-            command = f"pandoc {options} -o ./dist/book.docx --title={title} {files}"
+            command = f'pandoc {options} -o ./dest/book.docx {files}'
 
         else:
             raise ValueError("this output format is not yet supported")
@@ -308,11 +321,12 @@ class Book:
 
         banner("Creating Level")
 
+        title = self.metadata["title"]
 
         result = \
             self.config.flatten(
-                book="My Book",
-                title="{book}",
+                book=title,
+                title="title",
                 section="{topic}",
                 header="{topic}",
                 indent=""
@@ -321,7 +335,7 @@ class Book:
         for entry in result:
             if entry["kind"] == "section":
                 entry["local"] = path_expand(
-                    "./dist{path}/{basename}".format(**entry))
+                    "./dest/book{path}/{basename}".format(**entry))
 
             if entry["kind"] == "header":
                 entry["local"] = path_expand(
@@ -334,15 +348,18 @@ class Book:
                       end=' ')
                 sys.stdout.flush()
                 # pprint(entry)
-                command = "pandoc --base-header-level={level} -o ./dist/tmp.md {local} > log.txt".format(
+                command = "pandoc --base-header-level={level} -o ./dest/tmp.md {local} > log.txt".format(
                     **entry)
                 # print(command)
                 print("convert", end=' ')
                 sys.stdout.flush()
                 os.system(command)
-                command = "cp ./dist/tmp.md {local} > log.txt".format(**entry)
+                command = "cp ./dest/tmp.md {local} > log.txt".format(**entry)
                 # print(command)
                 os.system(command)
+                os.system("rm -f ./dest/tmp.md")
+                os.system("rm -f log.txt")
+
                 print('ok', end=' ')
                 sys.stdout.flush()
                 print()
@@ -353,7 +370,13 @@ class Book:
 
         metadata = dotdict(self.config["metadata"])
 
+        pprint (metadata)
         image = metadata.image
+        dest = metadata.dest
+
+        image = path_expand(f"./{dest}/{image}")
+        Path(os.path.dirname(image)).mkdir(parents=True, exist_ok=True)
+
         banner(f"Generating Cover Page: {image}")
 
         table = []
@@ -362,7 +385,7 @@ class Book:
         print(tabulate(table, tablefmt="fancy_grid", headers=["Attrbute", "Value"]))
 
         cover.generate(
-            image=metadata.image,
+            image=image,
             background=metadata.background,
             title=metadata.title,
             subtitle=metadata.subtitle,

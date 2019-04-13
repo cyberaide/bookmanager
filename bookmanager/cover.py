@@ -64,6 +64,9 @@ class Cover(object):
         if background is None:
             background = pkg_resources.resource_filename("bookmanager",
                                                   'template/epub/cover/cover-image.png')
+        print(">>>>>",background)
+        print(">>>>>",image)
+
         canvas = Image.open(background)
         self.draw = ImageDraw.Draw(canvas)
 
