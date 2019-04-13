@@ -2,9 +2,12 @@
 
 Usage:
   bookmanager YAML get [--format=FORMAT]
+  bookmanager YAML download
   bookmanager YAML level
   bookmanager YAML epub
-  bookmanager YAML download
+  bookmanager YAML pdf
+  bookmanager YAML html
+  bookmanager YAML docx
   bookmanager YAML check [--format=FORMAT]
   bookmanager YAML urls [--format=FORMAT]
   bookmanager YAML list [--format=FORMAT]
@@ -20,37 +23,40 @@ Options:
 
 Description:
 
-  bookmanager url download YAML [--format=FORMAT]
+    In principal you only need one command at this time. All other commands are
+    available for test purpuses.
 
-    downloads the urls into the ./dist directory for local processing
+    You can create an epub with
 
-  bookmanager url check YAML [--format=FORMAT]
+      bookmanager YAML get [--format=FORMAT]
 
-    checks if the urls in the yaml file exist
 
-  bookmanager url list YAML [--format=FORMAT]
+    Other commands include:
 
-    lists all urls of the yaml file
+      bookmanager YAML download [--format=FORMAT]
 
-  bookmanager list YAML [--format=FORMAT]
+        downloads the urls into the ./dist directory for local processing
 
-    lists the yaml file
+      bookmanager YAML check [--format=FORMAT]
 
-  Creation of a book:
+        checks if the urls in the yaml file exist
 
-    1) create a yaml file book.yml
-    2) check:    bookmanager url check book.yml
-    3) download: bookmanager download check book.yml
+      bookmanager YAML urls  [--format=FORMAT]
 
-    NOt implemented yet the output
+        lists all urls of the yaml file
 
-    4} epub: bookmanager epub book.yml
-    5) html: bookmanager html book.yml
-    6) pdf:  bookmanager pdf book.yml
+      bookmanager YAML list [--format=FORMAT]
+
+        lists the yaml file
+
+    Not implemented are the following features:
+
+    1) html: bookmanager html book.yml
+    2) pdf:  bookmanager pdf book.yml
 
     will be written into the ./dist directory with the names
 
-    book.epup, book.pdf, and the dir html
+    book.epub, book.pdf, and the dir html
 
   YAML Table of Contents format
 
@@ -199,9 +205,9 @@ class Book:
 
         print('\n'.join(self.config.output(result, kind="url")))
 
-    def epub(self):
+    def generate(self, output):
 
-        banner("Creating Epub")
+        banner(f"Creating {output}")
 
         result = \
             self.config.flatten(
@@ -235,17 +241,38 @@ class Book:
 
         banner("Creating Command")
 
+
         files = " ".join(files)
         title = "Example"
-        metadata = "./template/epub/metadata.txt"
-        options = "--toc --number-sections"
-        command = f"pandoc {options} -o ./dist/book.epub --title={title} {files} {metadata}"
+        if output == "epub":
+            metadata = "./template/epub/metadata.txt"
+            options = "--toc --number-sections"
+            command = f"pandoc {options} -o ./dist/book.epub --title={title} {files} {metadata}"
+
+        elif output == "pdf":
+            metadata = "./template/epub/metadata.txt"
+            options = "--toc --number-sections"
+            command = f"pandoc {options} -o ./dist/book.pdf --title={title} {files}"
+
+        elif output == "html":
+            metadata = "./template/epub/metadata.txt"
+            options = "--toc --number-sections"
+            command = f"pandoc {options} -o ./dist/book.html --title={title} {files}"
+
+        elif output == "docx":
+            metadata = "./template/epub/metadata.txt"
+            options = "--toc --number-sections"
+            command = f"pandoc {options} -o ./dist/book.docx --title={title} {files}"
+
+        else:
+            raise ValueError("this output format is not yet supported")
+
         print(command)
         os.system(command)
 
     def level(self):
 
-        banner("Creating Epub")
+        banner("Creating Level")
 
         result = \
             self.config.flatten(
@@ -318,7 +345,7 @@ def main():
 
         book.download()
         book.level()
-        book.epub()
+        book.generate("epub")
 
     elif arguments["download"]:
 
@@ -331,7 +358,19 @@ def main():
 
     elif arguments.epub:
 
-        book.epub()
+        book.generate("epub")
+
+    elif arguments.pdf:
+
+        book.generate("pdf")
+
+    elif arguments.html:
+
+        book.generate("html")
+
+    elif arguments.docx:
+
+        book.generate("docx")
 
     elif arguments.level:
 
