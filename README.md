@@ -113,12 +113,14 @@ and example is given at
 
 * <https://github.com/cyberaide/bookmanager/blob/master/tests/exmaple/cover.png>
 
-![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover.png)
+![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover.png | width=100)
 
+
+
+<img src="https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover.png" width="100"" title="Cover Page">
 
 ## Refernces
 
 * Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
 * Home page: <https://github.com/cyberaide/bookmanager>
-
 
