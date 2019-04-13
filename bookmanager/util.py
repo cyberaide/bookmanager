@@ -12,31 +12,23 @@ import pathlib
 from cloudmesh.common.util import path_expand
 from cloudmesh.common.util import writefile
 
+def create_section(filename, header):
+    writefile(filename, f"# {header}\n\n")
+
+
 def download(url, name):
     name = path_expand(name)
     basename = os.path.basename(name)
     directory = name # os.path.dirname(name)
     filename = Path(directory) / os.path.basename(url)
-    print("FFF", filename)
-    print(f"{url} -> download -> {name}", sep=" ")
-
-
-    print ("PPP", basename,  name, directory)
 
     path = Path(directory)
-
     path.mkdir(parents=True, exist_ok=True)
-    # path = os.makedirs(directory)
-
     r = requests.get(url, allow_redirects=True)
-    print (r.content)
-    print(" -> saving", sep=" ")
 
     output = Path(directory) / filename
     with open(output, 'wb') as f:
         f.write(r.content)
-
-    print("-> ok")
 
 def run(command):
     print(command)

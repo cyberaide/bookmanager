@@ -2,6 +2,7 @@ import oyaml as yaml
 from pprint import pprint
 import os
 
+
 def process_image(link):
     pass
 
@@ -40,12 +41,20 @@ def json_flatten(data,
         "header": header,
         "level": indent_level,
         "indent": indent,
-        "kind": "title"
+        "kind": "title",
+        "path": "."
     }
 
     def _flatten(entry,
                  book=book,
-                 title=title, path='', name='', section=section, header=header, level=0, indent_level = indent_level, indent=indent):
+                 title=title,
+                 path='',
+                 name='',
+                 section=section,
+                 header=header,
+                 level=0,
+                 indent_level = indent_level,
+                 indent=indent):
         global counter
         if type(entry) is dict:
             for a in entry:
@@ -53,7 +62,7 @@ def json_flatten(data,
                 counter = counter + 1
                 key = list(entry.keys())[0]
                 # key = a.keys()[0]
-                topic=f"{path} {key}"[1:]
+                topic=a
 
                 d = {
                     "title": title,
@@ -62,13 +71,12 @@ def json_flatten(data,
                     "output": header,
                     "url": "",
                     "line": key,
-                    "basename": "",
-                    "path": path,
+                    "basename": f"{topic}",
+                    "path": f"dist/{topic}",
                     "counter": counter,
                     "level": level,
                     "indent": level * indent,
                     "topic": a.replace("-", " ")
-
                 }
                 if verbose:
                     print("-----", d)
@@ -89,6 +97,7 @@ def json_flatten(data,
                          indent=indent)
         elif type(entry) is list:
             i = 0
+            level = level+1
             for a in entry:
                 _flatten(a,
                          book=book,

@@ -1,13 +1,14 @@
 """bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
-  bookmanager url download YAML [--format=FORMAT]
-  bookmanager url check YAML [--format=FORMAT]
-  bookmanager url list YAML [--format=FORMAT]
-  bookmanager list YAML [--format=FORMAT]
-  bookmanager epub YAML
+  bookmanager YAML get [--format=FORMAT]
+  bookmanager YAML level
+  bookmanager YAML epub
+  bookmanager YAML download
+  bookmanager YAML check [--format=FORMAT]
+  bookmanager YAML urls [--format=FORMAT]
+  bookmanager YAML list [--format=FORMAT]
   bookmanager info
-  bookmanager level YAML
 
 
 Arguments:
@@ -74,59 +75,62 @@ from docopt import docopt
 from pprint import pprint
 from bookmanager.util import download
 import os
+from bookmanager.util import create_section
+import sys
 
 import requests
 
 debug = False
 
-def main():
-    arguments = dotdict(docopt(__doc__))
-    arguments["FORMAT"] = arguments["--format"]
+class Book:
 
-    pprint(arguments)
+    def __init__(self, arguments):
 
-    config = Config(config=arguments.YAML)
+        self.config = Config(config=arguments.YAML)
+        self.arguments = arguments
 
-
-    if arguments.info:
-
-        pprint(config.book)
-        pprint(config.variables)
-
-    elif arguments.list and (arguments.FORMAT in ["md", "markdown"]):
+    def list(self, output):
+        banner("list")
 
         banner("MARDOWN")
 
+        if output == "markdown":
+
+            result = \
+                self.config.flatten(
+                    book="My Book",
+                    title="- {book}",
+                    section="{indent}- [ ] {counter} [{topic}]({url}) {level}",
+                    header="{indent}- [ ] {counter} {topic} {level}",
+                    indent="  "
+                )
+
+            print(self.config.output(result, kind="text"))
+
+
+        else:
+
+            banner("list")
+
+            banner("LITS LIST")
+
+            result = \
+                self.config.flatten(
+                    book="My Book",
+                    title="- {book}",
+                    section="{indent}- [ ] [{topic}]({url}) {level}",
+                    header="{indent}- [ ] {topic} {level}",
+                    indent="  "
+                )
+
+            print(self.config.output(result, kind="list"))
+
+    def check(self):
+
+        banner("check")
+
         result = \
-            config.flatten(
-                book="My Book",
-                title="- {book}",
-                section="{indent}- [ ] [{topic}]({url}) {level}",
-                header="{indent}- [ ] {topic} {level}",
-                indent="  "
-            )
-
-        print(config.output(result, kind="text"))
-
-    elif arguments.list and (arguments.FORMAT in ["list"]):
-
-        banner("LITS LIST")
-
-        result = \
-            config.flatten(
-                book="My Book",
-                title="- {book}",
-                section="{indent}- [ ] [{topic}]({url}) {level}",
-                header="{indent}- [ ] {topic} {level}",
-                indent="  "
-            )
-
-        print(config.output(result, kind="list"))
-
-    elif arguments.url and arguments.check:
-
-        result = \
-            config.flatten(
+            self.config.flatten(
                 book="",
                 title="",
                 section="{url}",
@@ -144,39 +148,46 @@ def main():
                 else:
                     print("error", response.status_code)
 
-    elif arguments.url and arguments.download:
+    def download(self):
+
+        banner("get")
 
         result = \
-            config.flatten(
-                book="",
-                title="",
-                section="{url}",
-                header="",
+            self.config.flatten(
+                book="My Book",
+                title="{book}",
+                section="{topic}",
+                header="{topic}",
                 indent=""
             )
 
         for entry in result:
             if entry["kind"] == "section":
-                pprint (entry)
+                print(entry["level"] * "   ", entry["counter"], entry["name"],
+                      end=' ')
+                print('download', end=' ')
+                # pprint (entry)
                 url = entry["url"]
                 path = entry["path"]
                 path = f"./dist{path}"
                 download(url, path)
+                print("ok")
+            elif entry["kind"] == 'header':
+                print(entry['level'] * "   ", entry['counter'], entry['topic'])
 
 
-
-    elif arguments.url and arguments.list:
+    def urls(self):
 
         banner("URL")
 
-        if arguments.FORMAT in ["md", "markdown"]:
+        if self.arguments.FORMAT in ["md", "markdown"]:
             kind = "text"
         else:
             kind = "list"
 
 
         result = \
-            config.flatten(
+            self.config.flatten(
                 book="",
                 title="",
                 section="{url}",
@@ -186,15 +197,14 @@ def main():
 
         print (result)
 
-        print('\n'.join(config.output(result, kind="url")))
+        print('\n'.join(self.config.output(result, kind="url")))
 
-
-    elif arguments.epub:
+    def epub(self):
 
         banner("Creating Epub")
 
         result = \
-            config.flatten(
+            self.config.flatten(
                 book="",
                 title="",
                 section="{url}",
@@ -205,16 +215,23 @@ def main():
         files = []
         for entry in result:
             if entry["kind"] == "section":
+                entry["local"] = path_expand(
+                    "./dist{path}/{basename}".format(**entry))
+
+            if entry["kind"] == "header":
+                entry["local"] = path_expand(
+                    "./{path}/{basename}.md".format(**entry))
+
+            if entry["kind"] in ["section", "header"]:
                 url = entry["url"]
                 path = entry["path"]
-                basename=entry["basename"]
-                local = path_expand(f"./dist{path}/{basename}")
-                entry["local"] = local
+                basename = entry["basename"]
+                local = entry["local"]
                 files.append(local)
 
         banner("Finding Contents")
 
-        print ("Number of included Sections:",  len(result))
+        print("Number of included Sections:", len(result))
 
         banner("Creating Command")
 
@@ -226,39 +243,99 @@ def main():
         print(command)
         os.system(command)
 
-
-    elif arguments.level:
+    def level(self):
 
         banner("Creating Epub")
 
         result = \
-            config.flatten(
-                book="",
-                title="",
-                section="{url}",
-                header="",
+            self.config.flatten(
+                book="My Book",
+                title="{book}",
+                section="{topic}",
+                header="{topic}",
                 indent=""
             )
-
+        os.system("echo > log.txt")
         for entry in result:
             if entry["kind"] == "section":
-                url = entry["url"]
-                path = entry["path"]
-                basename=entry["basename"]
-                local = path_expand(f"./dist{path}/{basename}")
-                entry["local"] = local
-                level = entry["level"]
-                #pprint(entry)
-                command = f"pandoc -o --base-header-level={level} ./dist/tmp.md {local}"
-                print(command)
-                #os.system(command)
-                command = f"cp ./dist/tmp.md {local}"
-                print(command)
+                entry["local"] = path_expand(
+                    "./dist{path}/{basename}".format(**entry))
+
+            if entry["kind"] == "header":
+                entry["local"] = path_expand(
+                    "./{path}/{basename}.md".format(**entry))
+                create_section(entry["local"], entry["name"])
+
+            if entry["kind"] in ["header", "section"]:
+                entry["level"] = entry["level"] - 1
+                print(entry["level"] * "   ", entry["counter"], entry["name"],
+                      end=' ')
+                sys.stdout.flush()
+                # pprint(entry)
+                command = "pandoc --base-header-level={level} -o ./dist/tmp.md {local} > log.txt".format(
+                    **entry)
+                # print(command)
+                print("convert", end=' ')
+                sys.stdout.flush()
+                os.system(command)
+                command = "cp ./dist/tmp.md {local} > log.txt".format(**entry)
+                # print(command)
+                os.system(command)
+                print('ok', end=' ')
+                sys.stdout.flush()
                 print()
 
 
+def main():
+    arguments = dotdict(docopt(__doc__))
+    arguments["FORMAT"] = arguments["--format"]
 
-#--base-header-level=
+    pprint(arguments)
+
+    book = Book(arguments)
+
+
+    if arguments.info:
+
+        #pprint(config.book)
+        #pprint(config.variables)
+
+        raise NotImplementedError
+
+    elif arguments.list and (arguments.FORMAT in ["md", "markdown"]):
+
+        book.list("markdown")
+
+    elif arguments.list and (arguments.FORMAT in ["list"]):
+
+        book.list("list")
+
+    elif arguments.url and arguments.check:
+
+        book.check()
+
+    elif arguments["get"]:
+
+        book.download()
+        book.level()
+        book.epub()
+
+    elif arguments["download"]:
+
+       book.download()
+
+
+    elif arguments.urls:
+
+        book.urls()
+
+    elif arguments.epub:
+
+        book.epub()
+
+    elif arguments.level:
+
+        book.level()
 
 
 if __name__ == '__main__':

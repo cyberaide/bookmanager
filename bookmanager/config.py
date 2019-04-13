@@ -112,7 +112,7 @@ class Config(object):
         if kind in ['url']:
             out = []
             for entry in content:
-                print (entry)
+                # print (entry)
                 if entry != "":
                     out.append(entry)
             return out
