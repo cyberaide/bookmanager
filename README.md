@@ -50,12 +50,18 @@ Options:
 Description:
 
     In principal you only need one command at this time. All other commands are
-    available for test purpuses.
+    available for test purposes.
 
     You can create an epub with
 
       bookmanager YAML get [--format=FORMAT]
 
+    The command seatches for all images within the markdown documet and fetches
+    them so the document can be created locally with the images. We assume all
+    images in the md document are for now not specified via http locations but
+    via relative locations.
+
+    To view the document use your favourite ePub Reader
 
     Other commands include:
 
@@ -75,12 +81,12 @@ Description:
 
         lists the yaml file
 
+
     Not implemented are the following features:
 
-    1) html: bookmanager html book.yml
-    2) pdf:  bookmanager pdf book.yml
+    1) pdf:  bookmanager pdf book.yml
 
-    will be written into the ./dist directory with the names
+    will be writing into the ./dist directory the output files with the names
 
     book.epub, book.pdf, and the dir html
 
