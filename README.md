@@ -111,13 +111,13 @@ Book manager can create a simple cover page for you.
 
 and example is given at 
 
+
 * <https://github.com/cyberaide/bookmanager/blob/master/tests/exmaple/cover.png>
 
-![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover.png width=100)
+![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover-thumb.png)
 
 
 
-<img src="https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover.png" width="100"" title="Cover Page">
 
 ## Refernces
 
