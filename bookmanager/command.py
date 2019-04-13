@@ -1,6 +1,7 @@
 """bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
+  bookmanager YAML cover
   bookmanager YAML get [--format=FORMAT]
   bookmanager YAML download
   bookmanager YAML level
@@ -78,7 +79,12 @@ Description:
 
 
 """
+from tabulate import tabulate
+
 from bookmanager.config import Config
+from bookmanager.cover import Cover
+
+from pathlib import Path
 from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.util import banner, path_expand
 from cloudmesh.shell.command import map_parameters
@@ -302,6 +308,7 @@ class Book:
 
         banner("Creating Level")
 
+
         result = \
             self.config.flatten(
                 book="My Book",
@@ -340,17 +347,45 @@ class Book:
                 sys.stdout.flush()
                 print()
 
+    def cover(self, arguments):
+
+        cover = Cover()
+
+        metadata = dotdict(self.config["metadata"])
+
+        image = metadata.image
+        banner(f"Generating Cover Page: {image}")
+
+        table = []
+        for k,v in metadata.items():
+            table.append([k,v])
+        print(tabulate(table, tablefmt="fancy_grid", headers=["Attrbute", "Value"]))
+
+        cover.generate(
+            image=metadata.image,
+            background=metadata.background,
+            title=metadata.title,
+            subtitle=metadata.subtitle,
+            author=metadata.author,
+            email=metadata.email,
+            webpage=metadata.url
+        )
+
+
 
 def main():
     arguments = dotdict(docopt(__doc__))
     arguments["FORMAT"] = arguments["--format"]
 
-    pprint(arguments)
+    # pprint(arguments)
 
     book = Book(arguments)
 
+    if arguments.cover:
 
-    if arguments.info:
+        book.cover(arguments)
+
+    elif arguments.info:
 
         #pprint(config.book)
         #pprint(config.variables)

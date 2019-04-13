@@ -1,0 +1,4 @@
+include README.md
+include bookmanager/template/epub/cover/*.png
+include bookmanager/template/epub/fonts/*.png
+include bookmanager/template/epub/*.*

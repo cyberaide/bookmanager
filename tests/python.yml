@@ -1,4 +1,12 @@
 ---
+metadata:
+  image: "cover.png"
+  title: "Introduction to Python"
+  subtitle: "for Cloud Computing"
+  author: 'Gregor von Laszewski'
+  subauthor: "Editor"
+  email: "laszewski@gmail.com"
+  url: "https://github.com/cyberaide/bookmanager"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
 BOOK:

@@ -66,6 +66,7 @@ setup(
     license="Apache 2.0",
     url=URL,
     packages=find_packages(),
+    keywords='pandoc book proceedings markdown epub',
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
@@ -95,6 +96,7 @@ setup(
         "Topic :: System :: Shells",
         "Topic :: Utilities",
     ],
+    include_package_data=True,
     install_requires=requiers,
     tests_require=[
         "flake8",
