@@ -30,7 +30,8 @@ clean:
 
 readme:
 	bookmanager --help > README-manual.md
-	cat README-prefix.md README-manual.md README-postfix.md > README.md
+	echo '```' > verbatim.md
+	cat README-prefix.md verbatim.md README-manual.md verbatim.md README-postfix.md > README.md
 	git commit -am "Generating the README"
 	git push
 
