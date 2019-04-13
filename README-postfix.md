@@ -10,8 +10,6 @@ and example is given at
 ![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover-thumb.png)
 
 
-
-
 ## Refernces
 
 * Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
