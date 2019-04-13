@@ -8,6 +8,7 @@ import requests
 import os
 from pathlib import Path
 import pathlib
+from pprint import pprint
 
 from cloudmesh.common.util import path_expand
 from cloudmesh.common.util import writefile
@@ -15,20 +16,97 @@ from cloudmesh.common.util import writefile
 def create_section(filename, header):
     writefile(filename, f"# {header}\n\n")
 
+def git_download(repo, path, destination):
+    os.system(f"svn export https://github.com/{repo}/trunk/{path} {destination}")
 
-def download(url, name):
-    name = path_expand(name)
-    basename = os.path.basename(name)
-    directory = name # os.path.dirname(name)
-    filename = Path(directory) / os.path.basename(url)
 
-    path = Path(directory)
-    path.mkdir(parents=True, exist_ok=True)
+import markdown
+from markdown.treeprocessors import Treeprocessor
+from markdown.extensions import Extension
+
+
+import sys
+import glob
+import os
+
+
+
+def find_image_dirs(directory='dist'):
+    directory = path_expand(directory)
+    directories = []
+
+    p = Path(directory)
+    images = []
+    for t in ['png', "PNG", "JPG", "jpg", "JPEG", "jpeg"]:
+        images = images + list(p.glob(f"**/*{t}"))
+    dirs = []
+    for image in images:
+        dirs.append(os.path.dirname(image))
+    dirs = set(dirs)
+    return dirs
+
+# First create the treeprocessor
+
+class ImgExtractor(Treeprocessor):
+    def run(self, doc):
+        "Find all images and append to markdown.images. "
+        self.markdown.images = []
+        for image in doc.findall('.//img'):
+            self.markdown.images.append(image.get('src'))
+
+# Then tell markdown about it
+
+class ImgExtExtension(Extension):
+    def extendMarkdown(self, md, md_globals):
+        img_ext = ImgExtractor(md)
+        md.treeprocessors.add('imgext', img_ext, '>inline')
+
+# Finally create an instance of the Markdown class with the new extension
+
+def find_images(content):
+    md = markdown.Markdown(extensions=[ImgExtExtension()])
+    html = md.convert(content)
+    return md.images
+
+
+def get_file_from_git(url, directory, filename):
+    d = Path(directory)
+    d.mkdir(parents=True, exist_ok=True)
+    d.mkdir(parents=True, exist_ok=True)
     r = requests.get(url, allow_redirects=True)
 
     output = Path(directory) / filename
     with open(output, 'wb') as f:
         f.write(r.content)
+    return r
+
+def download(url, name, level=0):
+    name = path_expand(name)
+    basename = os.path.basename(name)
+    directory = name # os.path.dirname(name)
+    filename = Path(directory) / os.path.basename(url)
+
+    r = get_file_from_git(url, directory, filename)
+
+    if b"![" in r.content:
+        images = find_images(r.content)
+        print()
+        print()
+        print('   ' * (level+2), "Downloading", len(images), " images")
+
+        dirurl = os.path.dirname(url)
+        for image in images:
+            print ('   ' * (level+2), "Download", image, end=" ")
+            image_name = os.path.basename(image)
+            image_url = f"{dirurl}/{image}"
+
+            destination =  f"{directory}"
+            image_dir = os.path.dirname(f"{destination}/{image}")
+
+            d = Path(image_dir)
+            d.mkdir(parents=True, exist_ok=True)
+            r = get_file_from_git(image_url, image_dir, image_name)
+            print()
 
 def run(command):
     print(command)

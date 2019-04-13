@@ -81,7 +81,7 @@ from docopt import docopt
 from pprint import pprint
 from bookmanager.util import download
 import os
-from bookmanager.util import create_section
+from bookmanager.util import create_section, find_image_dirs
 import sys
 
 import requests
@@ -176,7 +176,7 @@ class Book:
                 url = entry["url"]
                 path = entry["path"]
                 path = f"./dist{path}"
-                download(url, path)
+                download(url, path, entry['level'])
                 print("ok")
             elif entry["kind"] == 'header':
                 print(entry['level'] * "   ", entry['counter'], entry['topic'])
@@ -245,9 +245,31 @@ class Book:
         files = " ".join(files)
         title = "Example"
         if output == "epub":
+
+            result = \
+                self.config.flatten(
+                    book="My Book",
+                    title="{book}",
+                    section="{topic}",
+                    header="{topic}",
+                    indent=""
+                )
+
+            dirs = []
+            for section in result:
+                if section["kind"] == "section":
+                    pprint(section)
+                    path = section["path"]
+                    dirs.append(path_expand(f"./dist{path}"))
+            dirs = set(dirs)
+            # dirs = find_image_dirs(directory='./dist')
+
+            directories = (":".join(dirs))
             metadata = "./template/epub/metadata.txt"
             options = "--toc --number-sections"
-            command = f"pandoc {options} -o ./dist/book.epub --title={title} {files} {metadata}"
+            resources = f"--resource-path={directories}"
+            command = f"pandoc {options} {resources} -o ./dist/book.epub --title={title} {files} {metadata}"
+
 
         elif output == "pdf":
             metadata = "./template/epub/metadata.txt"
