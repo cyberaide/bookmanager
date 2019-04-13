@@ -10,6 +10,16 @@ and example is given at
 ![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover-thumb.png)
 
 
+## Example creation
+
+```bash
+$ git clone https://github.com/cyberaide/bookmanager.git
+$ cd bookmanager
+$ pip install -e .
+$ cyberaide-bookmanager test/pytho.yaml get
+$ open dest/book.epub
+```
+
 ## Refernces
 
 * Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
