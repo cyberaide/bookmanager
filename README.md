@@ -113,7 +113,7 @@ and example is given at
 
 * <https://github.com/cyberaide/bookmanager/blob/master/tests/exmaple/cover.png>
 
-![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover.png | width=100)
+![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover.png|width=100)
 
 
 ## Refernces
