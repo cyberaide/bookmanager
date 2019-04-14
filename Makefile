@@ -29,10 +29,10 @@ clean:
 	rm -f *.whl
 
 readme:
-	bookmanager --help > README-manual.md
+	bookmanager --help > README-helper/manual.md
 	cat README-prefix.md \
 	    README-helper/verbatim-start.md \
-	    README-manual.md \
+	    README-helper/manual.md \
 	    README-helper/verbatim-stop.md \
 	    README-postfix.md \
 	    README-helper/verbatim-start.md \
