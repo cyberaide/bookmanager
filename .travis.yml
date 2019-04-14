@@ -9,16 +9,22 @@ python:
 #  - "3.8-dev"  # 3.8 development branch
 #  - "nightly"  # nightly build
 
+# BUG
+# cloudmesh.common requires that the yaml files are there, we need to make sure this is done differently at one point
+#
 install:
+  - python --versio
   - pwd
+  - mkdir -p ~/.cloudmesh
+  - wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
+  - wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
+  - ls .cloudmesh
+  - pip install cloudmesh-installer
+  - pip install cloudmesh-common
   - pip install -r requirements.txt
   - pip install -r requirements-dev.txt
   - pip install .
   - ls
   - pwd
-  - python --version
-  - mkdir -p ~/.cloudmesh
-  - wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
-  - wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
 
  script: pytest -v tests/test_bookmanager.py
