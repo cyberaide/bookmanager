@@ -57,16 +57,20 @@ RUN dpkg -i pandoc-2.7.2-1-amd64.deb
 RUN pandoc --version
 
 
-RUN git clone https://github.com/cyberaide/bookmanager.git
-
 RUN mkdir -p ~/.cloudmesh
 RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
 RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
+
+RUN git clone https://github.com/cyberaide/bookmanager.git
 
 WORKDIR bookmanager
 
 RUN pip install -e .
 
-ENTRYPOINT ["bin/pull.sh"]
 
-# CMD [ "/bin/bash" ]
+# ENTRYPOINT ["/bookmanager/bin/pull.sh"]
+
+CMD [ "/bin/bash" ]
+
+
+

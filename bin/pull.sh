@@ -2,3 +2,5 @@
 
 set -x
 git pull
+
+/bin/bash"
