@@ -38,6 +38,7 @@ docopt
 requests
 colorama
 tabulate
+munch
 cloudmesh-common
 cloudmesh-installer
 """.split("\n")
