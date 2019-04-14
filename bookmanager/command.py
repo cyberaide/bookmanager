@@ -271,7 +271,7 @@ class Book:
             dirs = []
             for section in result:
                 if section["kind"] == "section":
-                    pprint(section)
+                    # pprint(section)
                     path = section["path"]
                     dirs.append(path_expand(f"./dest/book{path}"))
             dirs = set(dirs)
@@ -280,7 +280,7 @@ class Book:
             create_metadata(self.metadata, "./dest/book/metadata.txt")
             create_css(self.metadata, "./dest/book/epub.css")
 
-            pprint(self.metadata)
+            # pprint(self.metadata)
 
             directories = (":".join(dirs))
             metadata = path_expand("./dest/book/metadata.txt")
@@ -291,7 +291,7 @@ class Book:
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
             command = f'cd dest/book; pandoc {options} {resources} -o {epub} {files} {metadata}'
-            pprint(command.split(" "))
+            # pprint(command.split(" "))
 
         elif output == "pdf":
             metadata = "./dest/metadata.txt"
@@ -311,7 +311,7 @@ class Book:
         else:
             raise ValueError("this output format is not yet supported")
 
-        print(command)
+        VERBOSE(command)
         os.system(command)
 
     def level(self):
@@ -358,7 +358,7 @@ class Book:
                 os.system("rm -f ./dest/tmp.md")
                 os.system("rm -f log.txt")
 
-                print('ok', end=' ')
+                print('...', end=' ')
                 sys.stdout.flush()
                 print()
 

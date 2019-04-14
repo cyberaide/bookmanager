@@ -15,7 +15,10 @@ metadata:
   filename: "vonLaszewski-python.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
+  "credit": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
 BOOK:
+  - PREFACE:
+    - "{git.credit}/disclaimer.md"
   - INTRODUCTION:
     - "{git.book}/prg/SECTION-PYTHON.md"
     - "{git.book}/prg/python/python-intro.md"

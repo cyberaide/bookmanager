@@ -43,6 +43,7 @@ The bibtex entry is
   month = 	 apr,
   year = 	 2019,
   url={https://pypi.org/project/cyberaide-bookmanager/}
+}
 ```
 
 ## Extensions
