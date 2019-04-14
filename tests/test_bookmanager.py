@@ -16,7 +16,7 @@ from cloudmesh_installer.install.test import readfile, run
 class Test_bokmenager:
 
     def test_python_book(self):
-        cmd = "bookmanager test/python.yaml get"
+        cmd = "bookmanager tests/python.yaml get"
         result = run(cmd)
         print(result)
 
