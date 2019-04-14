@@ -119,8 +119,8 @@ Description:
     Here is an example of a simple TOC yaml file:
 
     * <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
-
 ```
+
 ## Cover Page 
 
 Book manager can create a simple cover page for you.
@@ -204,5 +204,5 @@ BOOK:
     - "{git.book}/prg/python/random-forest/random-forest.md"
     - "{git.book}/prg/python/fingerprint/fingerprint.md"
     - "{git.book}/prg/python/facedetection/facedetection.md"
-
 ```
+

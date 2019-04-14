@@ -31,13 +31,13 @@ clean:
 readme:
 	bookmanager --help > README-manual.md
 	cat README-prefix.md \
-	    README-verbatim.md \
+	    README-helper/verbatim-start.md \
 	    README-manual.md \
-	    README-verbatim.md \
+	    README-helper/verbatim-stop.md \
 	    README-postfix.md \
-	    README-verbatim.md \
+	    README-helper/verbatim-start.md \
 	    tests/python.yml \
-	    README-verbatim.md > README.md
+	    README-helper/verbatim-stop.md > README.md
 	git commit -am "Generating the README"
 	git push
 
