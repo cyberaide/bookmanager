@@ -19,4 +19,4 @@ install:
   - pwd
   - python --version
 
-script: pytest -v tests/test_installer.py
+script: pytest -v tests/test_bookmanager.py
