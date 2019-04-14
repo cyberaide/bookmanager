@@ -7,4 +7,3 @@ munch
 pillow
 markdown
 cloudmesh-common
-cloudmesh-installer

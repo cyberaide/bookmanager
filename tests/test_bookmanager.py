@@ -9,8 +9,8 @@ import shutil
 
 import os
 import pytest
-from cloudmesh_installer.install.test import readfile, run
-
+from cloudmesh.common.run.file import run
+from cloudmesh.common.util import readfile
 
 @pytest.mark.incremental
 class Test_bokmenager:
