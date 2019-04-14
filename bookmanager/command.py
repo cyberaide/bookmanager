@@ -377,7 +377,7 @@ class Book:
         table = []
         for k, v in metadata.items():
             table.append([k, v])
-        print(tabulate(table, tablefmt="fancy_grid",
+        print(tabulate(table, tablefmt="grid",
                        headers=["Attrbute", "Value"]))
 
         cover.generate(
