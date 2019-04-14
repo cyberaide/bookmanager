@@ -17,7 +17,6 @@ install:
   - ls
   - pwd
   - python --version
-  - echo "BUG: we need to remove the yaml file dependency from common, foe=r now it works"
   - mkdir -p ~/.cloudmesh
   - wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
   - wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
