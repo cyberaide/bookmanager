@@ -2,11 +2,14 @@
 # Bookmanager
 
 [![Version](https://img.shields.io/pypi/v/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/cloudmesh/cyberaide-bookmanager/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/cyberaide/bookmanager/blob/master/LICENSE)
 [![Python](https://img.shields.io/pypi/pyversions/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
 [![Format](https://img.shields.io/pypi/format/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
 [![Status](https://img.shields.io/pypi/status/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
-[![Travis](https://travis-ci.com/cloudmesh/cyberaide-bookmanager.svg?branch=master)](https://travis-ci.com/cloudmesh/cyberaide-bookmanager)
+[![Travis](https://travis-ci.org/cyberaide/bookmanager.svg?branch=master)](https://travis-ci.com/cloudmesh/cyberaide-bookmanager)
+
+
+
 
 Bookmanager is a tool to create a publication from a number of sources on the
 internet. It is especially useful to create customized books, lecture notes, or
