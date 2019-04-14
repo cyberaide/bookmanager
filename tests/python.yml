@@ -12,6 +12,7 @@ metadata:
   keywords: "pandoc"
   stylesheet: "epub.css"
   dest: "dest/book"
+  filename: "vonLaszewski-python.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
 BOOK:

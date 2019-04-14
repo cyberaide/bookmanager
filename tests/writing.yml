@@ -1,0 +1,32 @@
+---
+metadata:
+  image: "cover.png"
+  title: "Scientif Writing"
+  subtitle: "with Markdown"
+  author: 'Gregor von Laszewski'
+  subauthor: "Editor"
+  email: "laszewski@gmail.com"
+  url: "https://github.com/cyberaide/bookmanager"
+  description: "Book creator"
+  abstract: "my abstract"
+  keywords: "pandoc"
+  stylesheet: "epub.css"
+  dest: "dest/book"
+  filename: "vonLaszewski-writing.epub"
+git:
+  "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
+BOOK:
+  - PREFACE:
+    - "{git.book}/version.md"
+    - "{git.book}/preface/notation.md"
+    - CREATIION:
+      - "{git.book}/preface/create.md"
+      - "{git.book}/preface/reader.md"
+  - WRITING:
+    - "{git.book}/SECTION/SECTION-WRITING.md"
+    - "{git.book}/doc/plagiarism.md"
+    - "{git.book}/doc/writing-markdown.md"
+    - "{git.book}/doc/markdown.md"
+    - "{git.book}/doc/emacs.md"
+    - "{git.book}/doc/ppt.md"
+    - "{git.book}/doc/graphviz.md"

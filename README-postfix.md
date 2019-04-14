@@ -16,7 +16,7 @@ and example is given at
 $ git clone https://github.com/cyberaide/bookmanager.git
 $ cd bookmanager
 $ pip install -e .
-$ cyberaide-bookmanager test/pytho.yaml get
+$ bookmanager test/python.yaml get
 $ open dest/book.epub
 ```
 
