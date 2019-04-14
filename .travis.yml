@@ -10,7 +10,7 @@ python:
 #  - "nightly"  # nightly build
 
 install:
-  - apt-get install tree
+  - sudo apt-get install tree
   - python --version
   - pwd
   - mkdir -p ~/.cloudmesh
