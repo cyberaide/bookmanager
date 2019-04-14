@@ -6,7 +6,7 @@ import pkg_resources
 class Cover(object):
 
     def __init__(self):
-        self.line = 1
+        self.row = 1
         self.step = 50
         self.font = self.set_font("normal")
         self.color = 'rgb(255, 255, 255)'  # white color
@@ -27,28 +27,39 @@ class Cover(object):
                 ttf,
                 size=int(self.step * .4))
 
+        elif scale == "credit":
+            self.font = ImageFont.truetype(ttf,
+                                           size=int(self.step * .2))
+
         else:
             self.font = ImageFont.truetype(ttf,
                                            size=int(self.step * .7))
         return self.font
 
-    def reset(self):
-        self.line = 1
+    def reset(self, row=None):
+        if row is None:
+            self.row = 1
+        else:
+            row=row
 
     def skip(self, n):
-        self.line = self.line + n
+        self.row = self.row + n
 
-    def msg(self, x, text, step=50, scale="normal"):
+    def mesg(self, x, text, step=50, scale="normal"):
         font = self.set_font(scale)
-        self.draw.text((self.step * x, self.step * self.line), text,
+        self.draw.text((self.step * x, self.step * self.row), text,
                        fill=self.color, font=self.font)
-        self.line = self.line + 1
+        self.row = self.row + 1
 
-    def hline(self, start, stop):
-        self.draw.line((start * self.step, self.step * self.line,
-                        stop * self.step, self.step * self.line),
+    def line(self, start, stop):
+        self.draw.line((start * self.step, self.step * self.row,
+                        stop * self.step, self.step * self.row),
                        fill=self.color,
                        width=10)
+
+    def credit(self, n):
+        self.reset(n * self.step)
+        self.mesg(3, "Creted by Cyberaide Bookmanager, https://github.com/cyberaide/bookmanager ", scale="credit")
 
     def generate(self,
                  image="cover.png",
@@ -65,8 +76,6 @@ class Cover(object):
             background = pkg_resources.resource_filename(
                 "bookmanager",
                 'template/epub/cover/cover-image.png')
-        print(">>>>>", background)
-        print(">>>>>", image)
 
         canvas = Image.open(background)
         self.draw = ImageDraw.Draw(canvas)
@@ -75,17 +84,20 @@ class Cover(object):
             date = "{:%B %d, %Y - %I:%M %p}".format(datetime.now())
 
         self.reset()
-        self.msg(1, title, scale="large")
-        self.msg(1, subtitle, scale="normal")
+        self.mesg(1, title, scale="large")
+        self.mesg(1, subtitle, scale="normal")
+        self.skip(2)
+        self.line(1, 10)
+        self.skip(1)
+        self.mesg(2, author)
+        self.mesg(2, subauthor, scale="tiny")
+        self.skip(1)
+        self.mesg(5, email, scale="small")
         self.skip(4)
-        self.hline(1, 10)
-        self.skip(1)
-        self.msg(2, author)
-        self.msg(2, subauthor, scale="tiny")
-        self.skip(1)
-        self.msg(5, email, scale="small")
-        self.skip(5)
-        self.msg(2, date, scale="tiny")
-        self.msg(2, webpage, scale="small")
+        self.mesg(2, date, scale="tiny")
+        self.mesg(2, webpage, scale="small")
+        self.line(1, 10)
+
+        self.credit(5)
 
         canvas.save(image)

@@ -25,3 +25,7 @@ $ open dest/book.epub
 * Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
 * Home page: <https://github.com/cyberaide/bookmanager>
 
+## Example Yaml file
+
+The following is an example for a table of contents yaml file that can be used
+to pull together content from diferent repositories.

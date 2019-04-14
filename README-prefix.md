@@ -18,6 +18,7 @@ formats supported by it.
 Implemented Features:
 
 * Table of contents with indentation levels can be specified via Yaml
+* Special variable substitution of elements defined in the yaml file
 * Documts are fetched from github 
 * The documents will be inspected and the images found in them are fetched 
   (we assume the images are relative to the document, http links will not be modified)

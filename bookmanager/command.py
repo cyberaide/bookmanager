@@ -410,7 +410,7 @@ def main():
 
     if arguments.cover:
 
-        book.cover(arguments)
+        book.cover()
 
     elif arguments.info:
 
