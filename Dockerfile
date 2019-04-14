@@ -67,6 +67,6 @@ WORKDIR bookmanager
 
 RUN pip install -e .
 
-CMD ["git", "pull"]
+ENTRYPOINT ["bin/pull.sh"]
 
-CMD [ "/bin/bash" ]
+# CMD [ "/bin/bash" ]
