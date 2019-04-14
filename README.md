@@ -107,21 +107,21 @@ Description:
 
     1) pdf:  bookmanager pdf book.yml
 
-    will be writing into the ./dest directory the output files with the names
+    YAML Table of Contents format:
 
-    book.epub, book.pdf, and the dir html
-
-  YAML Table of Contents format
-
-    The table of contents for the book can be controled with a simple yaml file
-    that has some specific contectual enhancements. THis include the creation of
-    a BOOK section that has the sections outlined in hierarchical form, and
-    contains chapter and section headers without links that are automatically
-    generated.
+      The table of contents for the book can be controled with a simple yaml
+      file that has some specific contectual enhancements. THis include the
+      creation of a BOOK section that has the sections outlined in hierarchical
+      form, and contains chapter and section headers without links that are
+      automatically generated.
 
     Here is an example of a simple TOC yaml file:
 
-    * <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
+    * https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml
+
+    Bugs and enhancement suggestions:
+
+    * https://github.com/cyberaide/bookmanager/issues
 ```
 
 ## Cover Page 
