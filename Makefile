@@ -15,6 +15,10 @@ source:
 	pip install -e . -U
 	cms help
 
+validate:
+	gem install travis
+	travis lint .travis.yml
+
 clean:
 	$(call banner, "CLEAN")
 	rm -rf dist
