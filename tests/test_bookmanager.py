@@ -18,8 +18,13 @@ class Test_bokmenager:
         cmd = "bookmanager test/python.yaml get"
         result = run(cmd)
         print (result)
+
         cmd = "ls"
         result = run(cmd)
         print(result)
 
-        assert os.path.exists("dess/vonLaszewski-python.epub") == 1
+        cmd = "ls dest"
+        result = run(cmd)
+        print(result)
+
+        assert os.path.exists("dest/vonLaszewski-python.epub") == 1
