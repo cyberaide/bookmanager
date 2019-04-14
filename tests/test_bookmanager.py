@@ -15,21 +15,21 @@ from cloudmesh_installer.install.test import readfile, run
 @pytest.mark.incremental
 class Test_bokmenager:
 
-    def test_python_book(self):
-
-
+    def _find_python_yml(self):
         cmd = "ls tests"
         result = run(cmd)
         print(result)
+        assert "python.yml" in result
+
+    def test_python_book(self):
 
         cmd = "bookmanager tests/python.yml get"
         result = run(cmd)
         print(result)
 
-        cmd = "ls"
-        result = run(cmd)
-        print(result)
+        assert True
 
+    def test_check_for_output(self):
         cmd = "ls dest"
         result = run(cmd)
         print(result)
