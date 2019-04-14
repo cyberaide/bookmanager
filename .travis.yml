@@ -9,9 +9,6 @@ python:
 #  - "3.8-dev"  # 3.8 development branch
 #  - "nightly"  # nightly build
 
-# BUG
-# cloudmesh.common requires that the yaml files are there, we need to make sure this is done differently at one point
-#
 install:
   - python --versio
   - pwd
