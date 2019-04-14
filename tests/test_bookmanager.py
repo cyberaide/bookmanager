@@ -15,7 +15,7 @@ from cloudmesh.common.util import readfile
 @pytest.mark.incremental
 class Test_bokmenager:
 
-    def _find_python_yml(self):
+    def test_find_python_yml(self):
         cmd = "ls tests"
         result = run(cmd)
         print(result)
