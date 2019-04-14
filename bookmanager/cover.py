@@ -29,7 +29,7 @@ class Cover(object):
 
         elif scale == "credit":
             self.font = ImageFont.truetype(ttf,
-                                           size=int(self.step * .2))
+                                           size=int(self.step * .25))
 
         else:
             self.font = ImageFont.truetype(ttf,
@@ -40,7 +40,7 @@ class Cover(object):
         if row is None:
             self.row = 1
         else:
-            row=row
+            self.row=row
 
     def skip(self, n):
         self.row = self.row + n
@@ -51,15 +51,15 @@ class Cover(object):
                        fill=self.color, font=self.font)
         self.row = self.row + 1
 
-    def line(self, start, stop):
+    def line(self, start, stop, width=10):
+
         self.draw.line((start * self.step, self.step * self.row,
                         stop * self.step, self.step * self.row),
                        fill=self.color,
-                       width=10)
+                       width=width)
 
     def credit(self, n):
-        self.reset(n * self.step)
-        self.mesg(3, "Creted by Cyberaide Bookmanager, https://github.com/cyberaide/bookmanager ", scale="credit")
+        self.mesg(n, "Created by Cloudmesh & Cyberaide Bookmanager, https://github.com/cyberaide/bookmanager ", scale="credit")
 
     def generate(self,
                  image="cover.png",
@@ -87,7 +87,7 @@ class Cover(object):
         self.mesg(1, title, scale="large")
         self.mesg(1, subtitle, scale="normal")
         self.skip(2)
-        self.line(1, 10)
+        self.line(1, 13)
         self.skip(1)
         self.mesg(2, author)
         self.mesg(2, subauthor, scale="tiny")
@@ -96,8 +96,8 @@ class Cover(object):
         self.skip(4)
         self.mesg(2, date, scale="tiny")
         self.mesg(2, webpage, scale="small")
-        self.line(1, 10)
-
-        self.credit(5)
+        self.line(1, 13, width=10)
+        self.skip(3)
+        self.credit(1.5)
 
         canvas.save(image)
