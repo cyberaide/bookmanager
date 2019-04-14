@@ -21,6 +21,7 @@ class Test_bokmenager:
         print(result)
         assert "python.yml" in result
 
+class a:
     def test_python_book(self):
 
         cmd = "bookmanager tests/python.yml get"
