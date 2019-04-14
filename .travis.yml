@@ -24,4 +24,4 @@ install:
   - ls
   - pwd
 
-script: pytest -v tests/test_bookmanager.py
+script: pytest -v -capture=no tests/test_bookmanager.py
