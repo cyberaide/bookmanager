@@ -41,6 +41,7 @@ tabulate
 munch
 pillow
 cloudmesh-common
+cloudmesh-cmd5
 cloudmesh-installer
 """.split("\n")
 
