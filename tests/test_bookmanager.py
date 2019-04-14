@@ -22,7 +22,7 @@ class Test_bokmenager:
         result = run(cmd)
         print(result)
 
-        cmd = "bookmanager tests/python.yaml get"
+        cmd = "bookmanager tests/python.yml get"
         result = run(cmd)
         print(result)
 
