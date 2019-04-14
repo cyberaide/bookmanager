@@ -39,6 +39,7 @@ $ pip install cyberaide-bookmanager
 
 ## Usage
 
+
 ```
 bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
@@ -118,6 +119,7 @@ Description:
     Here is an example of a simple TOC yaml file:
 
     * <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
+
 ```
 ## Cover Page 
 
@@ -150,6 +152,7 @@ $ open dest/book.epub
 
 The following is an example for a table of contents yaml file that can be used
 to pull together content from diferent repositories.
+
 ```
 ---
 metadata:
@@ -201,4 +204,5 @@ BOOK:
     - "{git.book}/prg/python/random-forest/random-forest.md"
     - "{git.book}/prg/python/fingerprint/fingerprint.md"
     - "{git.book}/prg/python/facedetection/facedetection.md"
+
 ```
