@@ -78,25 +78,22 @@ Description:
     * https://github.com/cyberaide/bookmanager/issues
 
 """
-from tabulate import tabulate
-
-from bookmanager.config import Config
-from bookmanager.cover import Cover
-
-from pathlib import Path
-from cloudmesh.DEBUG import VERBOSE
-from cloudmesh.common.util import banner, path_expand
-from cloudmesh.shell.command import map_parameters
-from cloudmesh.common.dotdict import dotdict
-from docopt import docopt
-from pprint import pprint
-from bookmanager.util import create_metadata, create_css
-from bookmanager.util import download as page_download
 import os
-from bookmanager.util import create_section, find_image_dirs
 import sys
+from pathlib import Path
+from pprint import pprint
 
 import requests
+from bookmanager.config import Config
+from bookmanager.cover import Cover
+from bookmanager.util import create_metadata, create_css
+from bookmanager.util import create_section
+from bookmanager.util import download as page_download
+from cloudmesh.DEBUG import VERBOSE
+from cloudmesh.common.dotdict import dotdict
+from cloudmesh.common.util import banner, path_expand
+from docopt import docopt
+from tabulate import tabulate
 
 debug = False
 

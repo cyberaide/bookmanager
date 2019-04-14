@@ -11,13 +11,14 @@ import os
 import pytest
 from cloudmesh_installer.install.test import readfile, run
 
+
 @pytest.mark.incremental
 class Test_bokmenager:
 
     def test_python_book(self):
         cmd = "bookmanager test/python.yaml get"
         result = run(cmd)
-        print (result)
+        print(result)
 
         cmd = "ls"
         result = run(cmd)

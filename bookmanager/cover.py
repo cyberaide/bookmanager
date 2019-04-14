@@ -40,7 +40,7 @@ class Cover(object):
         if row is None:
             self.row = 1
         else:
-            self.row=row
+            self.row = row
 
     def skip(self, n):
         self.row = self.row + n
@@ -59,7 +59,10 @@ class Cover(object):
                        width=width)
 
     def credit(self, n):
-        self.mesg(n, "Created by Cloudmesh & Cyberaide Bookmanager, https://github.com/cyberaide/bookmanager ", scale="credit")
+        self.mesg(n,
+                  "Created by Cloudmesh & Cyberaide Bookmanager, "
+                  "https://github.com/cyberaide/bookmanager ",
+                  scale="credit")
 
     def generate(self,
                  image="cover.png",

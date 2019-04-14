@@ -1,6 +1,6 @@
-import oyaml as yaml
-from pprint import pprint
 import os
+
+import oyaml as yaml
 
 
 def process_image(link):

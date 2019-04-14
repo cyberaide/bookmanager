@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from colorama import Fore
 
+
 class Git(object):
 
     @staticmethod
@@ -27,7 +28,8 @@ class Git(object):
                     print(e)
             else:
                 # noinspection PyPep8
-                print(Fore.RED + "         ERROR: not downlaoded as repo already exists.")
+                print(
+                    Fore.RED + "         ERROR: not downlaoded as repo already exists.")
 
     @staticmethod
     def status(repos):
@@ -57,4 +59,3 @@ class Git(object):
                 os.chdir("../")
             else:
                 print(run("pip install {repo}".format(repo=repo)))
-
