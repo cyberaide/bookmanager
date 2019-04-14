@@ -10,7 +10,7 @@ python:
 #  - "nightly"  # nightly build
 
 install:
-  - python --versio
+  - python --version
   - pwd
   - mkdir -p ~/.cloudmesh
   - wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
