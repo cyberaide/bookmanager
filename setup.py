@@ -40,6 +40,7 @@ colorama
 tabulate
 munch
 pillow
+markdown
 cloudmesh-common
 cloudmesh-cmd5
 cloudmesh-installer
