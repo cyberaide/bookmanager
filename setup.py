@@ -39,6 +39,7 @@ requests
 colorama
 tabulate
 munch
+pillow
 cloudmesh-common
 cloudmesh-installer
 """.split("\n")
