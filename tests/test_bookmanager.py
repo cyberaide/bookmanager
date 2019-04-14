@@ -16,7 +16,7 @@ class Test_bokmenager:
 
     def test_python_book(self):
         cmd = "bookmanager test/python.yaml get"
-        result = run(cmd, hide=True, warn=True)
+        result = run(cmd)
         print (result)
         cmd = "ls"
         result = run(cmd)
