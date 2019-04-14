@@ -2,8 +2,8 @@ from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 import pkg_resources
 
-class Cover(object):
 
+class Cover(object):
 
     def __init__(self):
         self.line = 1
@@ -12,8 +12,9 @@ class Cover(object):
         self.color = 'rgb(255, 255, 255)'  # white color
 
     def set_font(self, scale):
-        ttf = pkg_resources.resource_filename("bookmanager",
-                                              'template/epub/fonts/OpenSans-Bold.ttf')
+        ttf = pkg_resources.resource_filename(
+            "bookmanager",
+            'template/epub/fonts/OpenSans-Bold.ttf')
 
         if scale == "large":
             self.font = ImageFont.truetype(ttf,
@@ -60,12 +61,12 @@ class Cover(object):
                  webpage="https://github.com/cyberaide/bookmanager",
                  date=None):
 
-
         if background is None:
-            background = pkg_resources.resource_filename("bookmanager",
-                                                  'template/epub/cover/cover-image.png')
-        print(">>>>>",background)
-        print(">>>>>",image)
+            background = pkg_resources.resource_filename(
+                "bookmanager",
+                'template/epub/cover/cover-image.png')
+        print(">>>>>", background)
+        print(">>>>>", image)
 
         canvas = Image.open(background)
         self.draw = ImageDraw.Draw(canvas)
@@ -88,6 +89,3 @@ class Cover(object):
         self.msg(2, webpage, scale="small")
 
         canvas.save(image)
-
-
-

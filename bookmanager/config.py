@@ -2,7 +2,7 @@ from os.path import dirname
 from pathlib import Path
 
 import oyaml as yaml
-#from bookmanager.yaml_parser_ok import json_flatten
+# from bookmanager.yaml_parser_ok import json_flatten
 from bookmanager.yaml_parser import json_flatten
 from cloudmesh.common.FlatDict import flatten as dict_flatten
 # from cloudmesh.DEBUG import VERBOSE
@@ -45,10 +45,8 @@ class Config(object):
         
         """
 
-
         self.__dict__ = self.__shared_state
         if "data" not in self.__dict__:
-
             # VERBOSE("Load config")
 
             self.config_path = Path(path_expand(config)).resolve()
@@ -74,7 +72,7 @@ class Config(object):
 
         spec = yaml.dump(book)
 
-        for variable  in vars:
+        for variable in vars:
             value = vars[variable]
             token = "{" + variable + "}"
             spec = spec.replace(token, value)
@@ -86,7 +84,7 @@ class Config(object):
                 book="BOOK",
                 title="{book}",
                 section="{parent}/{key}",
-                header = "{parent}/{key}",
+                header="{parent}/{key}",
                 indent=""):
         result = json_flatten(self.book,
                               book=book,
@@ -120,7 +118,6 @@ class Config(object):
         else:
             return content
 
-
     def __str__(self):
         return yaml.dump(self.data, default_flow_style=False, indent=2)
 
@@ -139,7 +136,6 @@ class Config(object):
         """
         return self.data.get(key, default)
 
-
     def __getitem__(self, item):
         """
         gets an item form the dict. The key is . separated
@@ -156,6 +152,3 @@ class Config(object):
         for key in keys[1:]:
             element = element[key]
         return element
-
-
-

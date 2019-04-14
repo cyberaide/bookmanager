@@ -2,10 +2,10 @@
 
 Usage:
   bookmanager YAML cover
-  bookmanager YAML get [--format=FORMAT]
+  bookmanager YAML get [--format=FORMAT] [--force]
   bookmanager YAML download
   bookmanager YAML level
-  bookmanager YAML epub
+  bookmanager YAML epub [--force]
   bookmanager YAML pdf
   bookmanager YAML html
   bookmanager YAML docx
@@ -101,6 +101,7 @@ import requests
 
 debug = False
 
+
 class Book:
 
     def __init__(self, arguments):
@@ -126,7 +127,6 @@ class Book:
                 )
 
             print(self.config.output(result, kind="text"))
-
 
         else:
 
@@ -164,7 +164,7 @@ class Book:
                 print(url, end="")
                 response = requests.get(url)
                 if response.status_code < 400:
-                    print (" -> ok")
+                    print(" -> ok")
                 else:
                     print("error", response.status_code)
 
@@ -195,7 +195,6 @@ class Book:
             elif entry["kind"] == 'header':
                 print(entry['level'] * "   ", entry['counter'], entry['topic'])
 
-
     def urls(self):
 
         banner("URL")
@@ -204,7 +203,6 @@ class Book:
             kind = "text"
         else:
             kind = "list"
-
 
         result = \
             self.config.flatten(
@@ -215,7 +213,7 @@ class Book:
                 indent=""
             )
 
-        print (result)
+        print(result)
 
         print('\n'.join(self.config.output(result, kind="url")))
 
@@ -231,7 +229,6 @@ class Book:
                 header="",
                 indent=""
             )
-
 
         files = []
         for entry in result:
@@ -258,7 +255,7 @@ class Book:
 
         files = " ".join(files)
 
-        #metadata["stylesheet"] = path_expand(metadata["stylesheet"])
+        # metadata["stylesheet"] = path_expand(metadata["stylesheet"])
         title = self.metadata["title"]
 
         if output == "epub":
@@ -286,16 +283,16 @@ class Book:
 
             pprint(self.metadata)
 
-
             directories = (":".join(dirs))
             metadata = path_expand("./dest/book/metadata.txt")
+            filename = self.metadata["filename"]
+
             options = "--toc --number-sections"
             resources = f"--resource-path={directories}"
-            epub = path_expand("./dest/book.epub")
+            epub = path_expand(f"./dest/{filename}")
+            # noinspection PyPep8
             command = f'cd dest/book; pandoc {options} {resources} -o {epub} {files} {metadata}'
-
             pprint(command.split(" "))
-
 
         elif output == "pdf":
             metadata = "./dest/metadata.txt"
@@ -349,6 +346,7 @@ class Book:
                       end=' ')
                 sys.stdout.flush()
                 # pprint(entry)
+                # noinspection PyPep8
                 command = "pandoc --base-header-level={level} -o ./dest/tmp.md {local} > log.txt".format(
                     **entry)
                 # print(command)
@@ -365,13 +363,13 @@ class Book:
                 sys.stdout.flush()
                 print()
 
-    def cover(self, arguments):
+    def cover(self):
 
         cover = Cover()
 
         metadata = dotdict(self.config["metadata"])
 
-        pprint (metadata)
+        pprint(metadata)
         image = metadata.image
         dest = metadata.dest
 
@@ -381,9 +379,10 @@ class Book:
         banner(f"Generating Cover Page: {image}")
 
         table = []
-        for k,v in metadata.items():
-            table.append([k,v])
-        print(tabulate(table, tablefmt="fancy_grid", headers=["Attrbute", "Value"]))
+        for k, v in metadata.items():
+            table.append([k, v])
+        print(tabulate(table, tablefmt="fancy_grid",
+                       headers=["Attrbute", "Value"]))
 
         cover.generate(
             image=image,
@@ -396,7 +395,6 @@ class Book:
         )
 
 
-
 def main():
     arguments = dotdict(docopt(__doc__))
     arguments["FORMAT"] = arguments["--format"]
@@ -405,14 +403,19 @@ def main():
 
     book = Book(arguments)
 
+    if arguments.force:
+        os.system("rm -rf dest/book/epub.css")
+        os.system("rm -rf dest/book/cover.png")
+        os.system("rm -rf dest/bool/metadata.txt")
+
     if arguments.cover:
 
         book.cover(arguments)
 
     elif arguments.info:
 
-        #pprint(config.book)
-        #pprint(config.variables)
+        # pprint(config.book)
+        # pprint(config.variables)
 
         raise NotImplementedError
 
@@ -430,14 +433,14 @@ def main():
 
     elif arguments["get"]:
 
+        book.cover()
         book.download()
         book.level()
         book.generate("epub")
 
     elif arguments["download"]:
 
-       book.download()
-
+        book.download()
 
     elif arguments.urls:
 
@@ -445,6 +448,7 @@ def main():
 
     elif arguments.epub:
 
+        book.cover()
         book.generate("epub")
 
     elif arguments.pdf:

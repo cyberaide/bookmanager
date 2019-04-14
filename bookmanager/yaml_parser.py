@@ -22,10 +22,9 @@ def json_flatten(data,
                  book="BOOK",
                  title="{title}",
                  section="{counter} {path} {url} {line}",
-                 header = "{counter} {path} {url} {line}",
+                 header="{counter} {path} {url} {line}",
                  indent_level=0,
                  indent=""):
-
     verbose = False
     global counter
     counter = 0
@@ -53,7 +52,7 @@ def json_flatten(data,
                  section=section,
                  header=header,
                  level=0,
-                 indent_level = indent_level,
+                 indent_level=indent_level,
                  indent=indent):
         global counter
         if type(entry) is dict:
@@ -62,7 +61,7 @@ def json_flatten(data,
                 counter = counter + 1
                 key = list(entry.keys())[0]
                 # key = a.keys()[0]
-                topic=a
+                topic = a
 
                 d = {
                     "title": title,
@@ -81,8 +80,8 @@ def json_flatten(data,
                 if verbose:
                     print("-----", d)
 
-                #display = header.format(**d)
-                #out[counter] = display
+                # display = header.format(**d)
+                # out[counter] = display
                 out[counter] = d
 
                 _flatten(entry[a],
@@ -97,7 +96,7 @@ def json_flatten(data,
                          indent=indent)
         elif type(entry) is list:
             i = 0
-            level = level+1
+            level = level + 1
             for a in entry:
                 _flatten(a,
                          book=book,
@@ -139,15 +138,16 @@ def json_flatten(data,
                 "counter": counter,
                 "name": name,
                 "level": level,
-                "indent": level  * indent,
-                "topic": name.replace("-"," ").capitalize()
+                "indent": level * indent,
+                "topic": name.replace("-", " ").capitalize()
             }
             if verbose:
                 print("     >>>>>", d)
 
-            #result = output.format(**d)
-            #out[counter] = result
+            # result = output.format(**d)
+            # out[counter] = result
             out[counter] = d
+
     try:
         _flatten(
             data,

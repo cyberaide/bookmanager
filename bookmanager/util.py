@@ -1,42 +1,37 @@
-import subprocess
-import oyaml as yaml
-import colorama
-from colorama import Fore, Style
-import sys
-import shutil
-import requests
 import os
+import shutil
+import subprocess
+import sys
 from pathlib import Path
-import pathlib
-from pprint import pprint
+from shutil import copyfile
+
+import markdown
+import oyaml as yaml
 import pkg_resources
+import requests
 from cloudmesh.common.util import path_expand
-from cloudmesh.common.util import writefile,readfile
+from cloudmesh.common.util import writefile, readfile
+from colorama import Fore
+from markdown.extensions import Extension
+from markdown.treeprocessors import Treeprocessor
+
 
 def create_section(filename, header):
     writefile(filename, f"# {header}\n\n")
 
+
 def git_download(repo, path, destination):
-    os.system(f"svn export https://github.com/{repo}/trunk/{path} {destination}")
-
-
-import markdown
-from markdown.treeprocessors import Treeprocessor
-from markdown.extensions import Extension
-
-from shutil import copyfile
-
-import sys
-import glob
-import os
+    os.system(
+        f"svn export https://github.com/{repo}/trunk/{path} {destination}")
 
 
 def create_metadata(metadata, location):
     location = path_expand(location)
     Path(os.path.dirname(location)).mkdir(parents=True, exist_ok=True)
     if not os.path.isfile(location):
-        metadata_file = pkg_resources.resource_filename("bookmanager",
-                                              'template/epub/metadata.txt')
+        metadata_file = pkg_resources.resource_filename(
+            "bookmanager",
+            'template/epub/metadata.txt')
 
         content = readfile(metadata_file)
         content = content.format(**metadata)
@@ -48,10 +43,9 @@ def create_css(metadata, location):
     Path(os.path.dirname(location)).mkdir(parents=True, exist_ok=True)
     if not os.path.isfile(location):
         css_file = pkg_resources.resource_filename("bookmanager",
-                                                        'template/epub/epub.css')
+                                                   'template/epub/epub.css')
 
         copyfile(css_file, location)
-
 
 
 def find_image_dirs(directory='dest'):
@@ -68,14 +62,16 @@ def find_image_dirs(directory='dest'):
     dirs = set(dirs)
     return dirs
 
+
 # First create the treeprocessor
 
 class ImgExtractor(Treeprocessor):
     def run(self, doc):
-        "Find all images and append to markdown.images. "
+        """Find all images and append to markdown.images. """
         self.markdown.images = []
         for image in doc.findall('.//img'):
             self.markdown.images.append(image.get('src'))
+
 
 # Then tell markdown about it
 
@@ -83,6 +79,7 @@ class ImgExtExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         img_ext = ImgExtractor(md)
         md.treeprocessors.add('imgext', img_ext, '>inline')
+
 
 # Finally create an instance of the Markdown class with the new extension
 
@@ -103,10 +100,11 @@ def get_file_from_git(url, directory, filename):
         f.write(r.content)
     return r
 
+
 def download(url, name, level=0):
     name = path_expand(name)
     basename = os.path.basename(name)
-    directory = name # os.path.dirname(name)
+    directory = name  # os.path.dirname(name)
     filename = Path(directory) / os.path.basename(url)
 
     r = get_file_from_git(url, directory, filename)
@@ -115,21 +113,22 @@ def download(url, name, level=0):
         images = find_images(r.content)
         print()
         print()
-        print('   ' * (level+2), "Downloading", len(images), " images")
+        print('   ' * (level + 2), "Downloading", len(images), " images")
 
         dirurl = os.path.dirname(url)
         for image in images:
-            print ('   ' * (level+2), "Download", image, end=" ")
+            print('   ' * (level + 2), "Download", image, end=" ")
             image_name = os.path.basename(image)
             image_url = f"{dirurl}/{image}"
 
-            destination =  f"{directory}"
+            destination = f"{directory}"
             image_dir = os.path.dirname(f"{destination}/{image}")
 
             d = Path(image_dir)
             d.mkdir(parents=True, exist_ok=True)
             r = get_file_from_git(image_url, image_dir, image_name)
             print("...")
+
 
 def run(command):
     print(command)
@@ -171,6 +170,8 @@ def banner(txt, c=Fore.BLUE):
 
     :param txt: a text message to be printed
     :type txt: string
+    :param c: a char used for the frame
+    :type c: char
     """
     print(c + "#" * 70)
     print(c + f"#{txt}")
