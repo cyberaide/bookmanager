@@ -151,6 +151,28 @@ $ open dest/book.epub
 * Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
 * Home page: <https://github.com/cyberaide/bookmanager>
 
+## Requirements
+
+Book manager requires the existence of some cloudmesh yaml files, In future releases we intend to remove them.
+Simply do 
+
+```bash
+$ mkdir -p ~/.cloudmesh
+$ wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
+$ wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
+```
+
+In addition we require an up to date version of pandoc. Please consult with the
+pandoc documentation on how to do this. Unfortuantely the versions distributed
+with ubuntu are outdated. On ubuntu you can say:
+
+```bash
+wget -q https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb
+sudo dpkg -i pandoc-2.7.2-1-amd64.deb
+pandoc --version
+```
+We recommend pandoc version 2.7.2.
+
 ## Example Yaml file
 
 The following is an example for a table of contents yaml file that can be used
@@ -174,7 +196,10 @@ metadata:
   filename: "vonLaszewski-python.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
+  "credit": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
 BOOK:
+  - PREFACE:
+    - "{git.credit}/disclaimer.md"
   - INTRODUCTION:
     - "{git.book}/prg/SECTION-PYTHON.md"
     - "{git.book}/prg/python/python-intro.md"
