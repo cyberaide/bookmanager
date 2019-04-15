@@ -35,4 +35,4 @@ class Test_bokmenager:
         result = run(cmd)
         VERBOSE(result)
 
-        assert os.path.exists("dest/vonLaszewski-python.epub") == 1
+        assert os.path.exists("./dest/vonLaszewski-python.epub") == 1
