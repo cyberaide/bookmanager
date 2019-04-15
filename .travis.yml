@@ -11,6 +11,9 @@ python:
 
 install:
   - sudo apt-get install tree
+  - wget -q https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb
+  - sudo dpkg -i pandoc-2.7.2-1-amd64.deb
+  - pandoc --version
   - python --version
   - pwd
   - mkdir -p ~/.cloudmesh
