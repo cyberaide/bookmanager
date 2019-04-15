@@ -12,12 +12,16 @@ import pytest
 from bookmanager.run import run
 from cloudmesh.common.util import readfile
 from cloudmesh.DEBUG import VERBOSE
+from cloudmesh.variables import Variables
+
+v = Variables()
+v["verbose"] = "10"
 
 @pytest.mark.incremental
 class Test_bokmenager:
 
     def test_find_python_yml(self):
-        cmd = "ls tests".split(" ")
+        cmd = "ls ./tests".split(" ")
         result = run(cmd)
         VERBOSE(result)
         assert "python.yml" in result.stdout
@@ -25,13 +29,13 @@ class Test_bokmenager:
 
     def test_python_book(self):
 
-        cmd = "bookmanager tests/python.yml get".split(" ")
+        cmd = "bookmanager ./tests/python.yml get".split(" ")
         result = run(cmd)
         VERBOSE(result)
         assert True
 
     def test_check_for_output(self):
-        cmd = "ls dest".split(" ")
+        cmd = "ls ./dest".split(" ")
         result = run(cmd)
         VERBOSE(result)
 
