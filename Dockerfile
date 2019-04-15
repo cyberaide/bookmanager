@@ -61,6 +61,8 @@ RUN mkdir -p ~/.cloudmesh
 RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
 RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
 
+#
+RUN ls
 RUN git clone https://github.com/cyberaide/bookmanager.git
 
 WORKDIR bookmanager

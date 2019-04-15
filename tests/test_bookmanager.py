@@ -9,30 +9,30 @@ import shutil
 
 import os
 import pytest
-from cloudmesh.common.run.file import run
+from bookmanager.run import run
 from cloudmesh.common.util import readfile
+from cloudmesh.DEBUG import VERBOSE
 
 @pytest.mark.incremental
 class Test_bokmenager:
 
     def test_find_python_yml(self):
-        cmd = "ls tests"
+        cmd = "ls tests".split(" ")
         result = run(cmd)
-        print(result)
-        assert "python.yml" in result
+        VERBOSE(result)
+        assert "python.yml" in result.stdout
 
-class a:
+
     def test_python_book(self):
 
-        cmd = "bookmanager tests/python.yml get"
+        cmd = "bookmanager tests/python.yml get".split(" ")
         result = run(cmd)
-        print(result)
-
+        VERBOSE(result)
         assert True
 
     def test_check_for_output(self):
-        cmd = "ls dest"
+        cmd = "ls dest".split(" ")
         result = run(cmd)
-        print(result)
+        VERBOSE(result)
 
         assert os.path.exists("dest/vonLaszewski-python.epub") == 1
