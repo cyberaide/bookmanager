@@ -17,7 +17,7 @@ install:
   - tar xvf linux-pandoc_2_7.tar.gz
   - which pandoc
   - sudo cp ./pandoc-crossref /usr/bin
-  - chmod a+x /us/bin/pandoc-crossref
+  - chmod a+x /usr/bin/pandoc-crossref
   - pandoc --version
   - python --version
   - pwd
