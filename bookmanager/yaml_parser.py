@@ -18,12 +18,19 @@ def process_dir(link):
 counter = 1
 
 
+def clean_path(repos):
+    for repo in repos:
+        if repo["path"].startswith("/"):
+            repo["path"] = repo["path"][1:]
+    return repos
+
+
 def json_flatten(data,
                  book="BOOK",
                  title="{title}",
-                 section="{counter} {path} {url} {line}",
-                 header="{counter} {path} {url} {line}",
-                 indent_level=0,
+                 section="{counter} {path} {topic} {url} {line}",
+                 header="{counter} {path} {topic} {url} {line}",
+                 level=0,
                  indent=""):
     verbose = False
     global counter
@@ -38,7 +45,7 @@ def json_flatten(data,
         "book": book,
         "output": title,
         "header": header,
-        "level": indent_level,
+        "level": level,
         "indent": indent,
         "kind": "title",
         "path": "."
@@ -51,8 +58,7 @@ def json_flatten(data,
                  name='',
                  section=section,
                  header=header,
-                 level=0,
-                 indent_level=indent_level,
+                 level=level,
                  indent=indent):
         global counter
         if type(entry) is dict:
@@ -60,7 +66,6 @@ def json_flatten(data,
                 level = level + 1
                 counter = counter + 1
                 key = list(entry.keys())[0]
-                # key = a.keys()[0]
                 topic = a
 
                 d = {
@@ -71,7 +76,7 @@ def json_flatten(data,
                     "url": "",
                     "line": key,
                     "basename": f"{topic}",
-                    "path": f"dest/book/{topic}",
+                    "path": f"{path}/{topic}",
                     "counter": counter,
                     "level": level,
                     "indent": level * indent,
@@ -91,7 +96,6 @@ def json_flatten(data,
                          name=f"{name}{a}/",
                          section=section,
                          header=header,
-                         indent_level=indent_level,
                          level=level,
                          indent=indent)
         elif type(entry) is list:
@@ -105,7 +109,6 @@ def json_flatten(data,
                          name=f"{name}{i}/",
                          section=section,
                          header=header,
-                         indent_level=indent_level,
                          level=level,
                          indent=indent)
                 i += 1
@@ -155,11 +158,13 @@ def json_flatten(data,
             title=title,
             section=section,
             header=header,
-            indent_level=indent_level,
+            level=level,
             indent=indent)
     # except KeyError as e:
     except Exception as e:
         print()
         print(f"ERROR: The key {e} could not be found")
 
-    return out[:counter + 1]
+    d = out[:counter + 1]
+
+    return clean_path(d)

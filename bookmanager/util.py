@@ -16,8 +16,8 @@ from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
 
 
-def create_section(filename, header):
-    writefile(filename, f"# {header}\n\n")
+def create_section(filename, header, n):
+    writefile(filename, ("#" * n) + f" {header}\n\n")
 
 
 def git_download(repo, path, destination):
@@ -89,6 +89,58 @@ def find_images(content):
     return md.images
 
 
+def find_smalest_headers(content):
+    """
+    find the smalest header level
+    :param content:
+    :type content:
+    :return:
+    :rtype:
+    """
+    ignore = False
+    lines = content.split("\n")
+    headers = []
+    for line in lines:
+        if line.startswith("`"):
+            ignore = not ignore
+            break
+        if line.startswith("#") and not ignore:
+            headers.append(line.split(" ")[0])
+    headers = set(headers)
+    level = sorted(headers, key=len)
+    if len(level) == 0:
+        level = 1
+    else:
+        level = len(level[0])
+    return level
+
+
+def reduce_headers(content, level, indent=1):
+    """
+    replaces the #* with level number of #
+    :param content:
+    :type content:
+    :param level:
+    :type level:
+    :return:
+    :rtype:
+    """
+    ignore = False
+    lines = content.split("\n")
+    headers = []
+    out = []
+    for line in lines:
+        if line.startswith("`"):
+            ignore = not ignore
+
+        if line.startswith("#") and not ignore:
+            line = line.replace("#" * level, "#")
+            line = line.replace("# ", "#" * (indent - 1) + " ")
+
+        out.append(line)
+    return out
+
+
 def get_file_from_git(url, directory, filename):
     d = Path(directory)
     d.mkdir(parents=True, exist_ok=True)
@@ -107,27 +159,37 @@ def download(url, name, level=0):
     directory = name  # os.path.dirname(name)
     filename = Path(directory) / os.path.basename(url)
 
+    if os.path.exists(filename):
+        print(Fore.RED + "Warning: file alredy exists" + Fore.RESET, end="")
+        return
+
     r = get_file_from_git(url, directory, filename)
 
     if b"![" in r.content:
         images = find_images(r.content)
+
+        # from pprint import pprint ; pprint(images)
         print()
         print()
         print('   ' * (level + 2), "Downloading", len(images), " images")
 
         dirurl = os.path.dirname(url)
         for image in images:
-            print('   ' * (level + 2), "Download", image, end=" ")
-            image_name = os.path.basename(image)
-            image_url = f"{dirurl}/{image}"
+            if not image.startswith("http"):
+                print('   ' * (level + 2), "Download", image, end=" ")
+                image_name = os.path.basename(image)
+                image_url = f"{dirurl}/{image}"
 
-            destination = f"{directory}"
-            image_dir = os.path.dirname(f"{destination}/{image}")
+                destination = f"{directory}"
+                image_dir = os.path.dirname(f"{destination}/{image}")
 
-            d = Path(image_dir)
-            d.mkdir(parents=True, exist_ok=True)
-            r = get_file_from_git(image_url, image_dir, image_name)
-            print("...")
+                d = Path(image_dir)
+                d.mkdir(parents=True, exist_ok=True)
+
+                r = get_file_from_git(image_url, image_dir, image_name)
+                print("...")
+            else:
+                print('   ' * (level + 2), "Skipping", image)
 
 
 def run(command):

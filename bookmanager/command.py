@@ -87,17 +87,21 @@ import requests
 from bookmanager.config import Config
 from bookmanager.cover import Cover
 from bookmanager.util import create_metadata, create_css
+from bookmanager.util import find_smalest_headers, reduce_headers
 from bookmanager.util import create_section
 from bookmanager.util import download as page_download
 from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.dotdict import dotdict
-from cloudmesh.common.util import banner, path_expand
+from cloudmesh.common.util import banner, path_expand, readfile, writefile
 from docopt import docopt
 from tabulate import tabulate
+import collections
+
 
 debug = False
 
 
+# noinspection PyPep8
 class Book:
 
     def __init__(self, arguments):
@@ -117,8 +121,8 @@ class Book:
                 self.config.flatten(
                     book="My Book",
                     title="- {book}",
-                    section="{indent}- [ ] {counter} [{topic}]({url}) {level}",
-                    header="{indent}- [ ] {counter} {topic} {level}",
+                    section="{level:3} {path:20} {kind} {indent}- [ ] [{topic}]({url})",
+                    header="{level:3} {path:20} {kind} {indent}- [ ]  {topic}",
                     indent="  "
                 )
 
@@ -134,8 +138,8 @@ class Book:
                 self.config.flatten(
                     book="My Book",
                     title="- {book}",
-                    section="{indent}- [ ] [{topic}]({url}) {level}",
-                    header="{indent}- [ ] {topic} {level}",
+                    section="{level:3} {indent}- [ ] [{topic}]({url}) {level}",
+                    header="{level:3} {indent}- [ ] {topic} {level}",
                     indent="  "
                 )
 
@@ -185,7 +189,7 @@ class Book:
                 # pprint (entry)
                 url = entry["url"]
                 path = entry["path"]
-                path = f"./dest/book{path}"
+                path = f"./dest/book/{path}"
                 page_download(url, path, entry['level'])
                 print()
             elif entry["kind"] == 'header':
@@ -209,7 +213,7 @@ class Book:
                 indent=""
             )
 
-        print(result)
+        pprint(result)
 
         print('\n'.join(self.config.output(result, kind="url")))
 
@@ -230,11 +234,11 @@ class Book:
         for entry in result:
             if entry["kind"] == "section":
                 entry["local"] = path_expand(
-                    "./dest/book{path}/{basename}".format(**entry))
+                    "./dest/book/{path}/{basename}".format(**entry))
 
             if entry["kind"] == "header":
                 entry["local"] = path_expand(
-                    "./{path}/{basename}.md".format(**entry))
+                    "./dest/book/{path}/{basename}.md".format(**entry))
 
             if entry["kind"] in ["section", "header"]:
                 url = entry["url"]
@@ -270,7 +274,7 @@ class Book:
                 if section["kind"] == "section":
                     # pprint(section)
                     path = section["path"]
-                    dirs.append(path_expand(f"./dest/book{path}"))
+                    dirs.append(path_expand(f"./dest/book/{path}"))
             dirs = set(dirs)
             # dirs = find_image_dirs(directory='./dest')
 
@@ -283,11 +287,14 @@ class Book:
             metadata = path_expand("./dest/book/metadata.txt")
             filename = self.metadata["filename"]
 
+            # "MARKDOWN-OPTIONS=--verbose  $(MERMAID) --filter pandoc-crossref -f markdown+header_attributes -f markdown+smart -f markdown+emoji --indented-code-classes=bash,python,yaml"
+
+            markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
             options = "--toc --number-sections"
             resources = f"--resource-path={directories}"
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
-            command = f'cd dest/book; pandoc {options} {resources} -o {epub} {files} {metadata}'
+            command = f'cd dest/book; pandoc {options} {markdown} {resources} -o {epub} {files} {metadata}'
             # pprint(command.split(" "))
 
         elif output == "pdf":
@@ -313,6 +320,16 @@ class Book:
 
     def level(self):
 
+        def convert_level(level, entry):
+            command = "pandoc --base-header-level={level} -o ./dest/tmp.md {local} > log.txt".format(
+                **entry)
+            sys.stdout.flush()
+            os.system(command)
+            command = "cp ./dest/tmp.md {local} > log.txt".format(**entry)
+            os.system(command)
+            os.system("rm -f ./dest/tmp.md")
+            os.system("rm -f log.txt")
+
         banner("Creating Level")
 
         title = self.metadata["title"]
@@ -321,39 +338,53 @@ class Book:
             self.config.flatten(
                 book=title,
                 title="title",
-                section="{topic}",
-                header="{topic}",
+                section="{topic} {name} {basename} {path} {topic}",
+                header="{topic} {name} {basename} {path} {topic}",
                 indent=""
             )
-        os.system("echo > log.txt")
+        """
+        "title": title,
+        "name": a,
+        "kind": "header",
+        "output": header,
+        "url": "",
+        "line": key,
+        "basename": f"{topic}",
+        "path": f"dest/book/{topic}",
+        "counter": counter,
+        "level": level,
+        "indent": level * indent,
+        "topic": a.replace("-", " ")
+        """
+
+        def PRINT(entry, end="\n"):
+            print(entry["level"] * "   ", entry["counter"], entry["name"],
+                  end=end)
+
         for entry in result:
-            if entry["kind"] == "section":
-                entry["local"] = path_expand(
-                    "./dest/book{path}/{basename}".format(**entry))
 
             if entry["kind"] == "header":
+                PRINT(entry)
                 entry["local"] = path_expand(
-                    "./{path}/{basename}.md".format(**entry))
-                create_section(entry["local"], entry["name"])
+                    "dest/book/{path}/{basename}.md".format(**entry))
+                create_section(entry["local"], entry["name"], entry["level"])
 
-            if entry["kind"] in ["header", "section"]:
-                entry["level"] = entry["level"] - 1
-                print(entry["level"] * "   ", entry["counter"], entry["name"],
-                      end=' ')
+            elif entry["kind"] == "section":
+
+                entry["local"] = path_expand(
+                    "./dest/book/{path}/{basename}".format(**entry))
+
+                PRINT(entry, end=' ')
                 sys.stdout.flush()
-                # pprint(entry)
-                # noinspection PyPep8
-                command = "pandoc --base-header-level={level} -o ./dest/tmp.md {local} > log.txt".format(
-                    **entry)
-                # print(command)
-                print("convert", end=' ')
-                sys.stdout.flush()
-                os.system(command)
-                command = "cp ./dest/tmp.md {local} > log.txt".format(**entry)
-                # print(command)
-                os.system(command)
-                os.system("rm -f ./dest/tmp.md")
-                os.system("rm -f log.txt")
+                level = entry["level"]
+
+                # n = find_smalest_headers(readfile(entry["local"]))
+                # print (n, end="")
+                # out = reduce_headers(readfile(entry["local"]), n, level)
+                # writefile(entry["local"], "\n".join(out))
+
+                print(level, end="")
+                convert_level(level, entry)
 
                 print('...', end=' ')
                 sys.stdout.flush()

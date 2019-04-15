@@ -68,12 +68,12 @@ class Config(object):
                      book,
                      variables):
 
-        vars = dict_flatten(variables, sep=".")
+        variable_list = dict_flatten(variables, sep=".")
 
         spec = yaml.dump(book)
 
-        for variable in vars:
-            value = vars[variable]
+        for variable in variable_list:
+            value = variable_list[variable]
             token = "{" + variable + "}"
             spec = spec.replace(token, value)
 
@@ -91,7 +91,7 @@ class Config(object):
                               title=title,
                               section=section,
                               header=header,
-                              indent_level=0,
+                              level=-1,
                               indent=indent)
         return result
 

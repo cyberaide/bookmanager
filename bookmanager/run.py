@@ -4,6 +4,7 @@ from cloudmesh.common.dotdict import dotdict
 import os
 from cloudmesh.DEBUG import VERBOSE
 
+
 def run(cmd):
     out = dotdict({
         "stdout": None,
@@ -27,4 +28,3 @@ def run(cmd):
         out.stdout = out.stdout.decode("utf-8")
 
     return out
-
