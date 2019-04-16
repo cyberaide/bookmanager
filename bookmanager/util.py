@@ -227,8 +227,6 @@ def download(url, name, level=0, force=False):
 
         bib_url_guess = str(url).split(".md")[0] + ".bib"
         bib_filename_guess = str(filename).split(".md")[0] + ".bib"
-        print (bib_url_guess)
-        print (bib_filename_guess)
         check = get_file_from_git(bib_url_guess, directory, bib_filename_guess)
         if check.status_code == 200:
             print('   ' * (level + 2), "Download", os.path.basename(bib_filename_guess))
