@@ -22,12 +22,14 @@ def cat_bibfiles(directory, output):
     VERBOSE(d)
     bibs = list(Path(d).glob("**/*.bib"))
 
+    pprint(bibs)
+
     r = ""
     for bib in bibs:
         bib = str(bib)
         content = readfile(bib)
-        r = r + content +"\n\n# " + bib + "\n\n"
-    writefile(output, content)
+        r = r + content +"\n\n% " + bib + "\n\n"
+    writefile(output, r)
 
     return list(bibs)
 
@@ -159,14 +161,21 @@ def reduce_headers(content, level, indent=1):
 def get_file_from_git(url, directory, filename):
     d = Path(directory)
     d.mkdir(parents=True, exist_ok=True)
-    d.mkdir(parents=True, exist_ok=True)
     r = requests.get(url, allow_redirects=True)
 
-    output = Path(directory) / filename
-    with open(output, 'wb') as f:
-        f.write(r.content)
+    if r.status_code == 200:
+        output = Path(directory) / filename
+        with open(output, 'wb') as f:
+            f.write(r.content)
+    else:
+        if not url.endswith(".bib"):
+            print()
+            print("can not find")
+            print()
+            print(url)
+            print("   ", directory, filename)
+            sys.exit(1)
     return r
-
 
 def download(url, name, level=0, force=False):
     name = path_expand(name)
@@ -179,26 +188,6 @@ def download(url, name, level=0, force=False):
         return
 
     r = get_file_from_git(url, directory, filename)
-
-    #
-    # DOWNLOAD BIB from guesssed bibfile
-    #
-
-    try:
-        from pprint import pprint
-
-        bib_url_guess = str(url).split(".md")[0] + ".bib"
-        bib_filename_guess = str(filename).split(".md")[0] + ".bib"
-        # print (bib_url_guess)
-        # print (bib_filename_guess)
-        check = get_file_from_git(bib_url_guess, directory, bib_filename_guess)
-        if check.status_code == 200:
-            print()
-            print()
-            print('   ' * (level + 2), "Download", os.path.basename(bib_filename_guess))
-    except Exception as e:
-        print (e)
-
 
     #
     # DOWNLOAD IMAGES
@@ -228,6 +217,24 @@ def download(url, name, level=0, force=False):
                 print("...")
             else:
                 print('   ' * (level + 2), "Skipping", image)
+
+    #
+    # DOWNLOAD BIB from guesssed bibfile
+    #
+
+    try:
+        from pprint import pprint
+
+        bib_url_guess = str(url).split(".md")[0] + ".bib"
+        bib_filename_guess = str(filename).split(".md")[0] + ".bib"
+        print (bib_url_guess)
+        print (bib_filename_guess)
+        check = get_file_from_git(bib_url_guess, directory, bib_filename_guess)
+        if check.status_code == 200:
+            print('   ' * (level + 2), "Download", os.path.basename(bib_filename_guess))
+    except Exception as e:
+        print (e)
+
 
 
 def run(command):

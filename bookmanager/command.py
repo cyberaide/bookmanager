@@ -296,15 +296,15 @@ class Book:
             bib = path_expand("./dest/all.bib")
             csl = path_expand("./dest/book/ieee-with-url.csl")
             bibfile = f"--filter pandoc-citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
-            r = readfile("./dest/all.bib")
+            all_bibs = readfile("./dest/all.bib")
             css_style = pkg_resources.resource_filename("bookmanager",'template/epub/ieee-with-url.csl')
 
-            print (css_style)
-            print(csl)
+            # print (css_style)
+            # print(csl)
 
             copyfile(css_style, path_expand("./dest/book/ieee-with-url.csl"))
 
-            if "@" not in r:
+            if "@" not in all_bibs:
                 bibfile = ""
 
             # "MARKDOWN-OPTIONS=--verbose  $(MERMAID) --filter pandoc-crossref -f markdown+header_attributes -f markdown+smart -f markdown+emoji --indented-code-classes=bash,python,yaml"
