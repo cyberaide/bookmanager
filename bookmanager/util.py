@@ -14,7 +14,22 @@ from cloudmesh.common.util import writefile, readfile
 from colorama import Fore
 from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
+from pprint import pprint
+from cloudmesh.DEBUG import VERBOSE
 
+def cat_bibfiles(directory, output):
+    d = path_expand(directory)
+    VERBOSE(d)
+    bibs = list(Path(d).glob("**/*.bib"))
+
+    r = ""
+    for bib in bibs:
+        bib = str(bib)
+        content = readfile(bib)
+        r = r + content +"\n\n# " + bib + "\n\n"
+    writefile(output, content)
+
+    return list(bibs)
 
 def create_section(filename, header, n):
     writefile(filename, ("#" * n) + f" {header}\n\n")
@@ -153,18 +168,41 @@ def get_file_from_git(url, directory, filename):
     return r
 
 
-def download(url, name, level=0):
+def download(url, name, level=0, force=False):
     name = path_expand(name)
     basename = os.path.basename(name)
     directory = name  # os.path.dirname(name)
     filename = Path(directory) / os.path.basename(url)
 
-    if os.path.exists(filename):
+    if os.path.exists(filename) and not force:
         print(Fore.RED + "Warning: file alredy exists" + Fore.RESET, end="")
         return
 
     r = get_file_from_git(url, directory, filename)
 
+    #
+    # DOWNLOAD BIB from guesssed bibfile
+    #
+
+    try:
+        from pprint import pprint
+
+        bib_url_guess = str(url).split(".md")[0] + ".bib"
+        bib_filename_guess = str(filename).split(".md")[0] + ".bib"
+        # print (bib_url_guess)
+        # print (bib_filename_guess)
+        check = get_file_from_git(bib_url_guess, directory, bib_filename_guess)
+        if check.status_code == 200:
+            print()
+            print()
+            print('   ' * (level + 2), "Download", os.path.basename(bib_filename_guess))
+    except Exception as e:
+        print (e)
+
+
+    #
+    # DOWNLOAD IMAGES
+    #
     if b"![" in r.content:
         images = find_images(r.content)
 

@@ -89,14 +89,15 @@ from bookmanager.cover import Cover
 from bookmanager.util import create_metadata, create_css
 from bookmanager.util import find_smalest_headers, reduce_headers
 from bookmanager.util import create_section
-from bookmanager.util import download as page_download
+from bookmanager.util import download as page_download, cat_bibfiles
 from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.dotdict import dotdict
 from cloudmesh.common.util import banner, path_expand, readfile, writefile
 from docopt import docopt
 from tabulate import tabulate
 import collections
-
+import pkg_resources
+from shutil import copyfile
 
 debug = False
 
@@ -168,7 +169,7 @@ class Book:
                 else:
                     print("error", response.status_code)
 
-    def download(self):
+    def download(self, force):
 
         banner("get")
 
@@ -190,7 +191,7 @@ class Book:
                 url = entry["url"]
                 path = entry["path"]
                 path = f"./dest/book/{path}"
-                page_download(url, path, entry['level'])
+                page_download(url, path, entry['level'], force)
                 print()
             elif entry["kind"] == 'header':
                 print(entry['level'] * "   ", entry['counter'], entry['topic'])
@@ -287,14 +288,33 @@ class Book:
             metadata = path_expand("./dest/book/metadata.txt")
             filename = self.metadata["filename"]
 
+            #
+            # ad bibfile if bib was found
+            #
+            cat_bibfiles("./dest", "./dest/all.bib")
+
+            bib = path_expand("./dest/all.bib")
+            csl = path_expand("./dest/book/ieee-with-url.csl")
+            bibfile = f"--filter pandoc-citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
+            r = readfile("./dest/all.bib")
+            css_style = pkg_resources.resource_filename("bookmanager",'template/epub/ieee-with-url.csl')
+
+            print (css_style)
+            print(csl)
+
+            copyfile(css_style, path_expand("./dest/book/ieee-with-url.csl"))
+
+            if "@" not in r:
+                bibfile = ""
+
             # "MARKDOWN-OPTIONS=--verbose  $(MERMAID) --filter pandoc-crossref -f markdown+header_attributes -f markdown+smart -f markdown+emoji --indented-code-classes=bash,python,yaml"
 
             markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
-            options = "--toc --number-sections"
+            options = "--toc --toc-depth=6  --number-sections"
             resources = f"--resource-path={directories}"
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
-            command = f'cd dest/book; pandoc {options} {markdown} {resources} -o {epub} {files} {metadata}'
+            command = f'cd dest/book; pandoc {options} {markdown} {resources} {bibfile} -o {epub} {files} {metadata}'
             # pprint(command.split(" "))
 
         elif output == "pdf":
@@ -425,7 +445,7 @@ class Book:
 def main():
     arguments = dotdict(docopt(__doc__))
     arguments["FORMAT"] = arguments["--format"]
-
+    force = arguments["--force"]
     # pprint(arguments)
 
     book = Book(arguments)
@@ -461,7 +481,7 @@ def main():
     elif arguments["get"]:
 
         book.cover()
-        book.download()
+        book.download(force)
         book.level()
         book.generate("epub")
 
