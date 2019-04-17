@@ -46,10 +46,12 @@ class Cover(object):
         self.row = self.row + n
 
     def mesg(self, x, text, step=50, scale="normal"):
-        font = self.set_font(scale)
-        self.draw.text((self.step * x, self.step * self.row), text,
-                       fill=self.color, font=self.font)
-        self.row = self.row + 1
+        lines = text.split("\n")
+        for line in lines:
+            font = self.set_font(scale)
+            self.draw.text((self.step * x, self.step * self.row), line,
+                           fill=self.color, font=self.font)
+            self.row = self.row + 1
 
     def line(self, start, stop, width=10):
 
@@ -96,11 +98,14 @@ class Cover(object):
         self.mesg(2, subauthor, scale="tiny")
         self.skip(1)
         self.mesg(5, email, scale="small")
-        self.skip(4)
+        self.skip(1)
+        self.line(1, 13)
+
+        self.reset(1)
+        self.skip(16)
+
         self.mesg(2, date, scale="tiny")
         self.mesg(2, webpage, scale="small")
-        self.line(1, 13, width=10)
-        self.skip(3)
         self.credit(1.5)
 
         canvas.save(image)
