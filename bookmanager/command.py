@@ -89,7 +89,8 @@ from bookmanager.cover import Cover
 from bookmanager.util import create_metadata, create_css
 from bookmanager.util import find_smalest_headers, reduce_headers
 from bookmanager.util import create_section
-from bookmanager.util import download as page_download, cat_bibfiles
+from bookmanager.util import download as page_download
+from bookmanager.util import cat_bibfiles
 from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.dotdict import dotdict
 from cloudmesh.common.util import banner, path_expand, readfile, writefile
@@ -217,6 +218,7 @@ class Book:
         pprint(result)
 
         print('\n'.join(self.config.output(result, kind="url")))
+
 
     def generate(self, output):
 
@@ -487,7 +489,7 @@ def main():
 
     elif arguments["download"]:
 
-        book.download()
+        book.download(force)
 
     elif arguments.urls:
 

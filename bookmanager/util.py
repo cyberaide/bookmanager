@@ -177,23 +177,61 @@ def get_file_from_git(url, directory, filename):
             sys.exit(1)
     return r
 
+class Result(object):
+    def __init__(self):
+        self.content = None
+        self.status_code = None
+
+def get_file_from_local(url, directory, filename):
+    d = Path(directory)
+    d.mkdir(parents=True, exist_ok=True)
+
+    output = Path(directory) / filename
+
+    source = Path(url.replace("file://", "")).resolve()
+
+    copyfile(source,output)
+
+    r = Result()
+    r.content = readfile(output).encode()
+    r.status_code = "200"
+    return r
+
 def download(url, name, level=0, force=False):
     name = path_expand(name)
     basename = os.path.basename(name)
     directory = name  # os.path.dirname(name)
     filename = Path(directory) / os.path.basename(url)
 
+
     if os.path.exists(filename) and not force:
         print(Fore.RED + "Warning: file alredy exists" + Fore.RESET, end="")
         return
 
-    r = get_file_from_git(url, directory, filename)
+
+    content = ""
+    if url.startswith("http"):
+        r = get_file_from_git(url, directory, filename)
+    elif url.startswith("file:"):
+        r = get_file_from_local(url, directory, filename)
+    else:
+        print("prefix in url not supported", url)
+        sys.exit(1)
+
+
+    content = r.content
 
     #
     # DOWNLOAD IMAGES
     #
-    if b"![" in r.content:
-        images = find_images(r.content)
+    #if type(content) == str:
+    #    image_found = "![" in content
+    #
+    #else:
+    image_found = b"![" in content
+        
+    if image_found:
+        images = find_images(content)
 
         # from pprint import pprint ; pprint(images)
         print()
@@ -223,11 +261,37 @@ def download(url, name, level=0, force=False):
     #
 
     try:
-        from pprint import pprint
 
-        bib_url_guess = str(url).split(".md")[0] + ".bib"
-        bib_filename_guess = str(filename).split(".md")[0] + ".bib"
-        check = get_file_from_git(bib_url_guess, directory, bib_filename_guess)
+        content = ""
+        if url.startswith("http"):
+            r = get_file_from_git(url, directory, filename)
+        elif url.startswith("file:"):
+            r = get_file_from_local(url, directory, filename)
+        else:
+            print("prefix in url not supported", url)
+            sys.exit(1)
+
+
+        if url.startswith("http"):
+            bib_url_guess = str(url).split(".md")[0] + ".bib"
+            bib_filename_guess = str(filename).split(".md")[0] + ".bib"
+
+            check = get_file_from_git(bib_url_guess,
+                                      directory,
+                                      bib_filename_guess)
+
+        elif url.startswith("file:"):
+
+            bib_url_guess = str(url).split(".md")[0] + ".bib"
+            bib_filename_guess = str(filename).split(".md")[0] + ".bib"
+
+            check = get_file_from_local(url, directory, filename)
+        else:
+            print("prefix in url not supported", url)
+            sys.exit(1)
+
+
+
         if check.status_code == 200:
             print('   ' * (level + 2), "Download", os.path.basename(bib_filename_guess))
     except Exception as e:
