@@ -6,7 +6,7 @@
 [![Python](https://img.shields.io/pypi/pyversions/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
 [![Format](https://img.shields.io/pypi/format/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
 [![Status](https://img.shields.io/pypi/status/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
-[![Travis](https://travis-ci.org/cyberaide/bookmanager.svg?branch=master)](https://travis-ci.com/cyberaide/bookmanager)
+[![Travis](https://travis-ci.org/cyberaide/bookmanager.svg?branch=master)](https://travis-ci.org/cyberaide/bookmanager)
 
 
 
@@ -142,7 +142,7 @@ and example is given at
 $ git clone https://github.com/cyberaide/bookmanager.git
 $ cd bookmanager
 $ pip install -e .
-$ bookmanager test/python.yaml get
+$ bookmanager tests/python.yaml get
 $ open dest/book.epub
 ```
 
@@ -192,7 +192,7 @@ metadata:
   abstract: "my abstract"
   keywords: "pandoc"
   stylesheet: "epub.css"
-  dest: "dest/book"
+  dest: "./dest/book"
   filename: "vonLaszewski-python.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
@@ -219,7 +219,7 @@ BOOK:
   - DATA:
     - "{git.book}/SECTION/SECTION-DATA.md"
     - "{git.book}/data/formats.md"
-  - MONGODB:
+  - MONGO:
     - "{git.book}/data/mongodb.md"
     - "{git.book}/data/mongoengine.md"
   - OTHER:
@@ -227,9 +227,10 @@ BOOK:
     - "{git.book}/prg/python/numpy/numpy.md"
     - "{git.book}/prg/python/scipy/scipy.md"
     - "{git.book}/prg/python/scikit-learn/scikit-learn.md"
+    - "{git.book}/prg/python/random-forest/random-forest.md"
     - "{git.book}/prg/python/python-parallel.md"
     - "{git.book}/prg/python/dask/dask.md"
-    - "{git.book}/prg/python/random-forest/random-forest.md"
+  - APPLICATIONS:
     - "{git.book}/prg/python/fingerprint/fingerprint.md"
     - "{git.book}/prg/python/facedetection/facedetection.md"
 ```
