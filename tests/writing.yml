@@ -11,7 +11,7 @@ metadata:
   abstract: "my abstract"
   keywords: "pandoc"
   stylesheet: "epub.css"
-  dest: "dest/book"
+  dest: "./dest/book"
   filename: "vonLaszewski-writing.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"

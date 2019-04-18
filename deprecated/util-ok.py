@@ -20,6 +20,7 @@ from cloudmesh.DEBUG import VERBOSE
 
 def cat_bibfiles(directory, output):
     d = path_expand(directory)
+    VERBOSE(d)
     bibs = list(Path(d).glob("**/*.bib"))
 
     pprint(bibs)
@@ -204,11 +205,10 @@ def get_file_from_local(url, directory, filename):
     return r
 
 
-def download(url, destination, level=0, force=False):
-    destination = str(Path(destination).resolve())
-    basename  = os.path.basename(destination)
-    directory = os.path.dirname(destination)
-
+def download(url, name, level=0, force=False):
+    name = path_expand(name)
+    basename = os.path.basename(name)
+    directory = name  # os.path.dirname(name)
     filename = Path(directory) / os.path.basename(url)
 
     if os.path.exists(filename) and not force:

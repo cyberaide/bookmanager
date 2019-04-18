@@ -11,7 +11,7 @@ metadata:
   abstract: "my abstract"
   keywords: "pandoc"
   stylesheet: "epub.css"
-  dest: "dest/book"
+  dest: "./dest/book"
   filename: "vonLaszewski-python.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
@@ -43,15 +43,12 @@ BOOK:
     - "{git.book}/data/mongoengine.md"
   - OTHER:
     - "{git.book}/prg/python/python-wordcount.md"
-    - NEXT:
-      - "{git.book}/prg/python/python-wordcount.md"
-      - "{git.book}/prg/python/numpy/numpy.md"
-      - "{git.book}/prg/python/scipy/scipy.md"
-      - "{git.book}/prg/python/scikit-learn/scikit-learn.md"
-      - "{git.book}/prg/python/random-forest/random-forest.md"
-    - PARALLEL:
-      - "{git.book}/prg/python/python-parallel.md"
-      - "{git.book}/prg/python/dask/dask.md"
-    - NIST:
-      - "{git.book}/prg/python/fingerprint/fingerprint.md"
-      - "{git.book}/prg/python/facedetection/facedetection.md"
+    - "{git.book}/prg/python/numpy/numpy.md"
+    - "{git.book}/prg/python/scipy/scipy.md"
+    - "{git.book}/prg/python/scikit-learn/scikit-learn.md"
+    - "{git.book}/prg/python/random-forest/random-forest.md"
+    - "{git.book}/prg/python/python-parallel.md"
+    - "{git.book}/prg/python/dask/dask.md"
+  - APPLICATIONS:
+    - "{git.book}/prg/python/fingerprint/fingerprint.md"
+    - "{git.book}/prg/python/facedetection/facedetection.md"

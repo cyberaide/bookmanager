@@ -6,6 +6,7 @@ import pkg_resources
 class Cover(object):
 
     def __init__(self):
+        self.draw = None
         self.row = 1
         self.step = 50
         self.font = self.set_font("normal")

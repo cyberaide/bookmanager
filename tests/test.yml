@@ -11,18 +11,16 @@ metadata:
   abstract: "my abstract"
   keywords: "pandoc"
   stylesheet: "epub.css"
-  dest: "dest/book"
+  dest: "./dest/book"
   filename: "vonLaszewski-python.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
   "credit": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
-local:
-  "template": "file://./bookmanager/template"
-  "cwd": "file://."
 BOOK:
   - PREFACE:
-    - "{local.template}/disclaimer.md"
-  - INTRODUCTION:
-    - "{local.cwd}/README.md"
-    - "{git.book}/prg/python/python-cmd5.md"
-    - "{git.book}/prg/python/python-cmd5.md"
+    - INTRODUCTION:
+      - "{git.book}/prg/SECTION-PYTHON.md"
+      - ABC:
+        - "{git.book}/prg/SECTION-PYTHON.md"
+  - REFERENCES:
+    - "{git.book}/prg/SECTION-PYTHON.md"
