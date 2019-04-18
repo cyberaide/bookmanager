@@ -15,6 +15,7 @@ from colorama import Fore
 from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
 from pprint import pprint
+import copy
 from cloudmesh.DEBUG import VERBOSE
 
 
@@ -51,8 +52,12 @@ def create_metadata(metadata, location):
             "bookmanager",
             'template/epub/metadata.txt')
 
+        meta = copy.deepcopy(metadata)
+        for field in ["author", "title"]:
+            meta[field] = meta[field].replace("\n", " ")
+
         content = readfile(metadata_file)
-        content = content.format(**metadata)
+        content = content.format(**meta)
         writefile(location, content)
 
 
@@ -206,7 +211,7 @@ def get_file_from_local(url, directory, filename):
 
 def download(url, destination, level=0, force=False):
     destination = str(Path(destination).resolve())
-    basename  = os.path.basename(destination)
+    basename = os.path.basename(destination)
     directory = os.path.dirname(destination)
 
     filename = Path(directory) / os.path.basename(url)

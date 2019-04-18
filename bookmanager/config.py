@@ -3,7 +3,7 @@ from pathlib import Path
 
 import oyaml as yaml
 # from bookmanager.yaml_parser_ok import json_flatten
-from bookmanager.yaml_parser import json_flatten
+from deprecated.yaml_parser import json_flatten
 from cloudmesh.common.FlatDict import flatten as dict_flatten
 # from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.util import path_expand

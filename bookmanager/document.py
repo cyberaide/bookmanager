@@ -1,7 +1,7 @@
 from pprint import pprint
 from pathlib import Path
 import oyaml as yaml
-from  cloudmesh.DEBUG import VERBOSE
+from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.util import readfile
 from cloudmesh.common.dotdict import dotdict
 from munch import munchify
@@ -10,18 +10,17 @@ import os
 from collections import Counter
 
 
-
 class Document(dotdict):
 
     def __init__(self):
-        self["title"] = None       # The title
-        self["name"] = None        # A short name unique for the destination dir
-        self["kind"] = "section"   # header section
-        self["uri"] = None         # https://
-        self["prefix"] =  "http"   # https http local
+        self["title"] = None  # The title
+        self["name"] = None  # A short name unique for the destination dir
+        self["kind"] = "section"  # header section
+        self["uri"] = None  # https://
+        self["prefix"] = "http"  # https http local
         self["basename"] = None
         self["dirname"] = None
-        self["destination"] =  None # where to copy it to
+        self["destination"] = None  # where to copy it to
         self["counter"] = 0
         self["level"] = 0
         self["topic"] = None
@@ -69,7 +68,7 @@ class Documents(object):
         self.flat = munchify(variables)
         b = self.spec_replace(book, variables)
         transformed = yaml.dump(b)
-        #print (transformed)
+        # print (transformed)
 
         lines = transformed.split("\n")
 
@@ -78,7 +77,7 @@ class Documents(object):
             if len(line) == 0 or line.strip().startswith("#"):
                 continue
             doc = Document()
-            indent, value = line.split("-",1)
+            indent, value = line.split("-", 1)
             indent = int(len(indent) / 2)
             self.depth = max(self.depth, indent)
             doc.level = indent
@@ -104,7 +103,7 @@ class Documents(object):
             if entry.kind == "section":
 
                 if entry.uri.startswith("file://"):
-                    entry.uri = entry.uri.replace("file://","")
+                    entry.uri = entry.uri.replace("file://", "")
                     entry.uri = str(Path(entry.uri).resolve())
                 entry.dirname = os.path.dirname(entry.uri)
                 entry.basename = os.path.basename(entry.uri)
@@ -131,8 +130,9 @@ class Documents(object):
 
                 entry.destination = self.metadata["dest"]
                 entry.destination = str(Path(entry.destination).resolve())
-                print (path_list)
-                entry.destination = "{destination}/{path}/{basename}".format(**entry)
+                # print (path_list)
+                entry.destination = "{destination}/{path}/{basename}".format(
+                    **entry)
                 entry.dirname = os.path.dirname(entry.destination)
 
                 # print(entry)
@@ -144,26 +144,24 @@ class Documents(object):
         locations = []
         for entry in self.entries:
             if entry.kind == "section":
-                #print (entry)
+                # print (entry)
                 locations.append(entry.destination)
                 ids.append(entry.counter)
 
-        #print (ids)
-        #pprint (locations)
+        # print (ids)
+        # pprint (locations)
 
         counts = Counter(locations)
-        #pprint (counts)
+        # pprint (counts)
 
         duplicates = {k: v for k, v in counts.items() if v > 1}
 
-        #pprint (duplicates)
+        # pprint (duplicates)
         for entry in self.entries:
             if entry.destination in duplicates:
                 base, ending = entry.destination.rsplit(".", 1)
                 counter = entry.counter
                 entry.destination = str(Path(f"{base}-{counter}.{ending}"))
-
-
 
     def printer(self,
                 section="{indent} - [ ] {title}",

@@ -45,17 +45,24 @@ class Book:
         print('\n'.join(r))
 
 
-    def list(self, output):
+    def list(self, output, details):
         banner("list")
 
         banner("MARDOWN")
 
         if output == "markdown":
 
-            self.printer(
-                section="{level:3} {path:20} {kind} {indent}- [ ] [{topic}]({url})",
-                header="{level:3} {path:20} {kind} {indent}- [ ]  {topic}",
-            )
+            if details:
+                self.printer(
+                    section="{level:3} {path:20} {kind} {indent}- [ ] [{topic}]({url})",
+                    header="{level:3} {path:20} {kind} {indent}- [ ]  {topic}",
+                )
+            else:
+                self.printer(
+                    section="{indent}- [ ] [{topic}]({url})",
+                    header="{indent}- [ ]  {topic}",
+                )
+
 
 
     def check(self):

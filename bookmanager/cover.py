@@ -27,6 +27,10 @@ class Cover(object):
             self.font = ImageFont.truetype(
                 ttf,
                 size=int(self.step * .4))
+        elif scale == "smaller":
+            self.font = ImageFont.truetype(
+                ttf,
+                size=int(self.step * .3))
 
         elif scale == "credit":
             self.font = ImageFont.truetype(ttf,
@@ -101,12 +105,13 @@ class Cover(object):
         self.mesg(5, email, scale="small")
         self.skip(1)
         self.line(1, 13)
+        self.skip(1)
+        self.mesg(1, webpage, scale="tiny")
 
         self.reset(1)
         self.skip(16)
 
         self.mesg(2, date, scale="tiny")
-        self.mesg(2, webpage, scale="small")
         self.credit(1.5)
 
         canvas.save(image)

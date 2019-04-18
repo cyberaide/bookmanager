@@ -1,6 +1,7 @@
 """bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
+  bookmanager version
   bookmanager YAML cover
   bookmanager YAML get [--format=FORMAT] [--force]
   bookmanager YAML download
@@ -11,8 +12,7 @@ Usage:
   bookmanager YAML docx
   bookmanager YAML check [--format=FORMAT]
   bookmanager YAML urls [--format=FORMAT]
-  bookmanager YAML list [--format=FORMAT]
-  bookmanager info
+  bookmanager YAML list [--format=FORMAT] [--details]
 
 
 Arguments:
@@ -21,6 +21,7 @@ Arguments:
 Options:
   -h --help
   -f, --format=FORMAT     [default: markdown]
+  -d, --details           [default: False]
 
 Description:
 
@@ -83,6 +84,8 @@ import os
 from cloudmesh.common.dotdict import dotdict
 from docopt import docopt
 from bookmanager.book import Book
+from bookmanager.__version__ import version
+import sys
 
 debug = False
 
@@ -92,6 +95,10 @@ def main():
     arguments["FORMAT"] = arguments["--format"]
     force = arguments["--force"]
     # pprint(arguments)
+
+    if arguments.version:
+        print(version)
+        sys.exit(0)
 
     book = Book(arguments)
 
@@ -113,7 +120,8 @@ def main():
 
     elif arguments.list and (arguments.FORMAT in ["md", "markdown"]):
 
-        book.list("markdown")
+        details = arguments["--details"]
+        book.list("markdown", details)
 
     elif arguments.list and (arguments.FORMAT in ["list"]):
 
