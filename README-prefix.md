@@ -20,9 +20,9 @@ formats supported by it.
 
 Implemented Features:
 
-* Table of contents with indentation levels can be specified via Yaml
+* Table of contents with indentation levels can be specified via yaml
 * Special variable substitution of elements defined in the yaml file
-* Documts are fetched from github 
+* Documents are fetched from github 
 * The documents will be inspected and the images found in them are fetched 
   (we assume the images are relative to the document, http links will not be modified)
 * Automatic generation of a cover page
@@ -30,10 +30,10 @@ Implemented Features:
 
 Planed enhancements:
 
-* integration of Refernces via pandoc citeref
-* integration of Section, Table, Image refernces via pandoc crossref
+* integration of References via pandoc citeref
+* integration of Section, Table, Image references via pandoc crossref
 
-If you like to help get in contagt with Gregor von Laszewski
+If you like to help get in contact with Gregor von Laszewski
 <laszewski@gmail.com>
 
 ```bash
