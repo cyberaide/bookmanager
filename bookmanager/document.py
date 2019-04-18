@@ -91,7 +91,7 @@ class Documents(object):
             self.entries.append(doc)
             counter += 1
         self.local_path_resolve()
-        self.make_local_files_unique()
+        # self.make_local_files_unique()
 
     def __str__(self):
         data = str(self.__dict__)
@@ -162,6 +162,8 @@ class Documents(object):
                 base, ending = entry.destination.rsplit(".", 1)
                 counter = entry.counter
                 entry.destination = str(Path(f"{base}-{counter}.{ending}"))
+
+
 
     def printer(self,
                 section="{indent} - [ ] {title}",

@@ -4,10 +4,11 @@ from pathlib import Path
 from pprint import pprint
 from shutil import copyfile
 
+
 import pkg_resources
 import requests
 from bookmanager.cover import Cover
-from bookmanager.util import cat_bibfiles
+from bookmanager.util import cat_bibfiles, find_unique_name
 from bookmanager.util import create_metadata, create_css
 from bookmanager.util import create_section
 from bookmanager.util import download as page_download
@@ -87,6 +88,8 @@ class Book:
             if entry["kind"] == "section":
                 print(entry.level * "   ", entry.counter, entry.title, end=' ')
                 print('...', end=' ')
+
+                entry.destination = find_unique_name(entry, self.docs.entries)
 
                 page_download(entry.uri, entry.destination, entry.level, force)
                 print()

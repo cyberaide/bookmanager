@@ -17,7 +17,24 @@ from markdown.treeprocessors import Treeprocessor
 from pprint import pprint
 import copy
 from cloudmesh.DEBUG import VERBOSE
+from collections import Counter
 
+def find_unique_name(entry, entries):
+    locations = []
+    for element in entries:
+        if element.kind == "section":
+            # print (entry)
+            locations.append(element.destination)
+
+    counts = Counter(locations)
+
+    duplicates = {k: v for k, v in counts.items() if v > 1}
+
+    if entry.destination in duplicates:
+        base, ending = entry.destination.rsplit(".", 1)
+        counter = entry.counter
+        entry.destination = str(Path(f"{base}-{counter}.{ending}"))
+    return entry.destination
 
 def cat_bibfiles(directory, output):
     d = path_expand(directory)
@@ -211,10 +228,11 @@ def get_file_from_local(url, directory, filename):
 
 def download(url, destination, level=0, force=False):
     destination = str(Path(destination).resolve())
+
     basename = os.path.basename(destination)
     directory = os.path.dirname(destination)
 
-    filename = Path(directory) / os.path.basename(url)
+    filename = destination
 
     if os.path.exists(filename) and not force:
         print(Fore.RED + "Warning: file alredy exists" + Fore.RESET, end="")
