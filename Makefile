@@ -2,6 +2,8 @@ package=cyberaide-bookmanager
 UNAME=$(shell uname)
 VERSION=`head -1 VERSION`
 
+.PHONY: readme
+
 define banner
 	@echo
 	@echo "############################################################"

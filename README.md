@@ -20,9 +20,9 @@ formats supported by it.
 
 Implemented Features:
 
-* Table of contents with indentation levels can be specified via Yaml
+* Table of contents with indentation levels can be specified via yaml
 * Special variable substitution of elements defined in the yaml file
-* Documts are fetched from github 
+* Documents are fetched from github 
 * The documents will be inspected and the images found in them are fetched 
   (we assume the images are relative to the document, http links will not be modified)
 * Automatic generation of a cover page
@@ -30,10 +30,10 @@ Implemented Features:
 
 Planed enhancements:
 
-* integration of Refernces via pandoc citeref
-* integration of Section, Table, Image refernces via pandoc crossref
+* integration of References via pandoc citeref
+* integration of Section, Table, Image references via pandoc crossref
 
-If you like to help get in contagt with Gregor von Laszewski
+If you like to help get in contact with Gregor von Laszewski
 <laszewski@gmail.com>
 
 ```bash
@@ -47,6 +47,7 @@ $ pip install cyberaide-bookmanager
 bookmanager -- a helper to create books from mardown files in a yaml TOC.
 
 Usage:
+  bookmanager version
   bookmanager YAML cover
   bookmanager YAML get [--format=FORMAT] [--force]
   bookmanager YAML download
@@ -57,8 +58,7 @@ Usage:
   bookmanager YAML docx
   bookmanager YAML check [--format=FORMAT]
   bookmanager YAML urls [--format=FORMAT]
-  bookmanager YAML list [--format=FORMAT]
-  bookmanager info
+  bookmanager YAML list [--format=FORMAT] [--details]
 
 
 Arguments:
@@ -67,6 +67,7 @@ Arguments:
 Options:
   -h --help
   -f, --format=FORMAT     [default: markdown]
+  -d, --details           [default: False]
 
 Description:
 
@@ -77,7 +78,7 @@ Description:
 
       bookmanager YAML get [--format=FORMAT]
 
-    The command seatches for all images within the markdown documet and fetches
+    The command searches for all images within the markdown document and fetches
     them so the document can be created locally with the images. We assume all
     images in the md document are for now not specified via http locations but
     via relative locations.
@@ -109,8 +110,8 @@ Description:
 
     YAML Table of Contents format:
 
-      The table of contents for the book can be controled with a simple yaml
-      file that has some specific contectual enhancements. THis include the
+      The table of contents for the book can be controlled with a simple yaml
+      file that has some specific contextual enhancements. THis include the
       creation of a BOOK section that has the sections outlined in hierarchical
       form, and contains chapter and section headers without links that are
       automatically generated.
