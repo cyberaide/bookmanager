@@ -232,10 +232,10 @@ class Book:
 
 
         def PRINT(entry, end="\n"):
-            print(entry.level * "   ", entry.counter, entry.title, end=end)
+            print(entry.level * "   ", entry.counter, entry.title, entry.uri, end=end)
 
 
-        pprint(self.docs.entries)
+        # pprint(self.docs.entries)
 
 
         for entry in self.docs.entries:

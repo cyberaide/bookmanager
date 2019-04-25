@@ -57,9 +57,11 @@ def create_section(filename, header, n):
 
 
 def git_download(repo, path, destination):
-    os.system(
-        f"svn export https://github.com/{repo}/trunk/{path} {destination}")
-
+    try:
+        os.system(
+            f"svn export https://github.com/{repo}/trunk/{path} {destination}")
+    except:
+        print("ERROR: file not found", repo, path)
 
 def create_metadata(metadata, location):
     location = path_expand(location)
@@ -200,7 +202,6 @@ def get_file_from_git(url, directory, filename):
             print()
             print(url)
             print("   ", directory, filename)
-            sys.exit(1)
     return r
 
 
