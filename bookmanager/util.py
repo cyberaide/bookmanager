@@ -19,6 +19,13 @@ import copy
 from cloudmesh.DEBUG import VERBOSE
 from collections import Counter
 
+def filewrap(path, prefix, postfix):
+    content = readfile(path)
+    if not content.startswith(prefix):
+        content = prefix + "\n" + content
+    if not content.endswith(postfix):
+        content = content + "\n" + postfix
+
 def find_unique_name(entry, entries):
     locations = []
     for element in entries:
@@ -46,7 +53,7 @@ def cat_bibfiles(directory, output):
     for bib in bibs:
         bib = str(bib)
         content = readfile(bib)
-        r = r + content + "\n\n% " + bib + "\n\n"
+        r = r + "\n\n% " + bib + "\n\n" + content
     writefile(output, r)
 
     return list(bibs)
@@ -194,6 +201,15 @@ def get_file_from_git(url, directory, filename):
     if r.status_code == 200:
         output = Path(directory) / filename
         with open(output, 'wb') as f:
+            #if url.endswith(".bib"):
+            #    VERBOSE(url)
+            #    VERBOSE(output)
+            #    VERBOSE(r.content)
+            #    f.write(b"% " + url.encode('ascii') + "\n" +
+            #            b"% " + output.encode('ascii') + "\n" +
+            #            r.content)
+            #    f.write("%" + url + "\n" + r.content)
+            #else:
             f.write(r.content)
     else:
         if not url.endswith(".bib"):

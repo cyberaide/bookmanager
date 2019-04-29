@@ -11,6 +11,7 @@ from bookmanager.cover import Cover
 from bookmanager.util import cat_bibfiles, find_unique_name
 from bookmanager.util import create_metadata, create_css
 from bookmanager.util import create_section
+from bookmanager.util import filewrap
 from bookmanager.util import download as page_download
 from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.dotdict import dotdict
@@ -212,6 +213,12 @@ class Book:
     def level(self):
 
         def convert_level(entry):
+
+            #destination = entry["destination"]
+            #extension = os.path.basename(destination).rsplit(".", 1)[1]
+            #if extension in ["yaml", "yml"]:
+            #    VERBOSE(destination)
+            #    filewrap(f"./dest/book/{destination}", "```", "```")
 
             pandoc_level = entry.level + 1
             tmp = str(Path(self.docs.metadata["dest"]) / "tmp.md")
