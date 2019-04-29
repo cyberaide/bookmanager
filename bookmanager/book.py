@@ -75,7 +75,7 @@ class Book:
             if entry.kind == "section":
                 if entry.uri.startswith("http"):
                     print(entry.uri, end="")
-                    response = requests.get(entry.uri)
+                    response = requests.get(entry.uri, headers={'Cache-Control': 'no-cache'})
                     if response.status_code < 400:
                         print(" -> ok")
                     else:

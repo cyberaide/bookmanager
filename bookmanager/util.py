@@ -196,7 +196,7 @@ def reduce_headers(content, level, indent=1):
 def get_file_from_git(url, directory, filename):
     d = Path(directory)
     d.mkdir(parents=True, exist_ok=True)
-    r = requests.get(url, allow_redirects=True)
+    r = requests.get(url, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
 
     if r.status_code == 200:
         output = Path(directory) / filename
