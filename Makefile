@@ -123,13 +123,13 @@ log:
 ######################################################################
 
 image:
-	docker build -t cloudmesh/bookmanager:0.2.5 .
+	docker build -t cloudmesh/bookmanager:0.2.6 .
 
 shell:
-	docker run --rm -it cloudmesh/bookmanager:0.2.5  /bin/bash
+	docker run --rm -it cloudmesh/bookmanager:0.2.6  /bin/bash
 
 cms:
-	docker run --rm -it cloudmesh/bookmanager:0.2.5
+	docker run --rm -it cloudmesh/bookmanager:0.2.6
 
 dockerclean:
 	-docker kill $$(docker ps -q)
@@ -137,7 +137,7 @@ dockerclean:
 	-docker rmi $$(docker images -q)
 
 push:
-	docker push cloudmesh/bookmanager:0.2.5
+	docker push cloudmesh/bookmanager:0.2.6
 
 run:
-	docker run cloudmesh/bookmanager:0.2.5 /bin/sh -c "cd technologies; git pull; make"
+	docker run cloudmesh/bookmanager:0.2.6 /bin/sh -c "cd technologies; git pull; make"
