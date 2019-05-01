@@ -92,7 +92,7 @@ debug = False
 
 def main():
     arguments = dotdict(docopt(__doc__))
-    arguments["FORMAT"] = arguments["--format"]
+    arguments["FORMAT"] = arguments["--format"] or "epub"
     force = arguments["--force"]
     # pprint(arguments)
 
@@ -133,7 +133,7 @@ def main():
 
     elif arguments["get"]:
 
-        output = arguments["--format"]
+        output = arguments["--format"] or "epub"
 
         if output not in ["epub", "pdf", "md", "markdown"]:
             print(f"Error: format {output} not supported")

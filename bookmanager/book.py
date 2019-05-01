@@ -173,8 +173,7 @@ class Book:
         resources = f"--resource-path={directories}"
         markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
 
-        if output == "epub":
-
+        if output in ["epub", "md", "markdown"]:
 
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
@@ -200,7 +199,7 @@ class Book:
             command = f'pandoc {options} -o ./dest/book.docx {files}'
 
         else:
-            raise ValueError("this output format is not yet supported")
+            raise ValueError(f"this output format is not yet supported: {output}")
 
         VERBOSE(command)
         os.system(command)

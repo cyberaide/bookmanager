@@ -701,11 +701,6 @@ $endif$
   identifierstyle = \color{listing-identifier}
 }
 $endif$
-
-%
-% emojis
-%
-\usepackage[Latin,Greek,Emoticons]{ucharclasses}
 %
 % header and footer
 %
@@ -731,6 +726,23 @@ $endif$
 %%
 %% end added
 %%
+
+
+%
+% newpage in section
+%
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
+%\let\stdsection\section
+%\renewcommand\section{\clearpage\stdsection}
+
+%
+% emojis
+%
+\usepackage[Latin,Greek,Emoticons]{ucharclasses}
+
+
 
 \begin{document}
 
