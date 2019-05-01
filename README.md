@@ -1,6 +1,7 @@
 
 # Bookmanager
 
+[![DOI](https://zenodo.org/badge/180580449.svg)](https://zenodo.org/badge/latestdoi/180580449)
 [![Version](https://img.shields.io/pypi/v/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/cyberaide/bookmanager/blob/master/LICENSE)
 [![Python](https://img.shields.io/pypi/pyversions/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
