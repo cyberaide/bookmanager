@@ -387,10 +387,9 @@ $if(institute)$
 \providecommand{\institute}[1]{}
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
-\date{
-$date$
-laszewski@gmail.com
-}
+%\date{
+%$date$
+%}
 $if(beamer)$
 $if(titlegraphic)$
 \titlegraphic{\includegraphics{$titlegraphic$}}
@@ -511,6 +510,8 @@ $endif$
 \definecolor{blockquote-border}{RGB}{221,221,221}
 \definecolor{blockquote-text}{RGB}{119,119,119}
 \usepackage{mdframed}
+\usepackage{framed}
+
 \newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
 \renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
 \item\relax\color{blockquote-text}\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
@@ -675,7 +676,7 @@ $endif$
 \renewenvironment{Shaded} {\begin{snugshade}\footnotesize} {\end{snugshade}}
 
 \usepackage{graphicx}
-\input{gpath}
+%\input{gpath}
 
 %\usepackage[utf8]{inputenc}
 %\usepackage{coloremoji}

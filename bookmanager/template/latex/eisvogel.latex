@@ -60,7 +60,7 @@ $endif$
 $if(papersize)$
   $papersize$paper,
 $else$
-  a4paper,
+  letter,
 $endif$
 $if(beamer)$
   ignorenonframetext,
@@ -703,6 +703,10 @@ $endif$
 $endif$
 
 %
+% emojis
+%
+\usepackage[Latin,Greek,Emoticons]{ucharclasses}
+%
 % header and footer
 %
 $if(disable-header-and-footer)$
@@ -734,15 +738,16 @@ $endif$
 %% begin titlepage
 %%
 
-%$if(titlepage)$
+$if(titlepage)$
 
-TEST
-\includegraphics{./dest/book/cover.png}
-\newpage
-%\newpage
 
-%\begin{titlepage}
-%\newgeometry{left=6cm}
+\begin{titlepage}
+
+
+\newgeometry{margin=1cm}
+
+\includegraphics{dest/book/cover.png}
+
 %$if(titlepage-color)$
 %\definecolor{titlepage-color}{HTML}{$titlepage-color$}
 %\newpagecolor{titlepage-color}\afterpage{\restorepagecolor}
@@ -776,7 +781,7 @@ TEST
 %
 %\textsf{$date$}}
 %\end{flushleft}
-%\end{titlepage}
+\end{titlepage}
 \restoregeometry
 $endif$
 

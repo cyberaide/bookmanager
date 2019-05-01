@@ -7,7 +7,7 @@ Usage:
   bookmanager YAML download
   bookmanager YAML level
   bookmanager YAML epub [--force]
-  bookmanager YAML pdf
+  bookmanager YAML pdf [--force]
   bookmanager YAML html
   bookmanager YAML docx
   bookmanager YAML check [--format=FORMAT]
@@ -133,10 +133,16 @@ def main():
 
     elif arguments["get"]:
 
+        output = arguments["--format"]
+
+        if output not in ["epub", "pdf", "md", "markdown"]:
+            print(f"Error: format {output} not supported")
+            sys.exit(1)
+
         book.cover()
         book.download(force)
         book.level()
-        book.generate("epub")
+        book.generate(output)
 
     elif arguments["download"]:
 
@@ -153,6 +159,7 @@ def main():
 
     elif arguments.pdf:
 
+        book.cover()
         book.generate("pdf")
 
     elif arguments.html:

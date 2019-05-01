@@ -140,59 +140,53 @@ class Book:
         # metadata["stylesheet"] = path_expand(metadata["stylesheet"])
         title = self.metadata["title"]
 
+        dirs = []
+        for section in self.docs.entries:
+            if section["kind"] == "section":
+                # pprint(section)
+                path = section["path"]
+                dirs.append(path_expand(f"./dest/book/{path}"))
+        dirs = set(dirs)
+        # dirs = find_image_dirs(directory='./dest')
+
+        create_metadata(self.metadata, "./dest/book/metadata.txt")
+        create_css(self.metadata, "./dest/book/epub.css")
+
+        directories = (":".join(dirs))
+        metadata = path_expand("./dest/book/metadata.txt")
+        filename = self.metadata["filename"]
+        cat_bibfiles("./dest", "./dest/all.bib")
+
+        bib = path_expand("./dest/all.bib")
+        csl = path_expand("./dest/book/ieee-with-url.csl")
+        bibfile = f"--filter pandoc-citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
+        all_bibs = readfile("./dest/all.bib")
+        css_style = pkg_resources.resource_filename("bookmanager",
+                                                    'template/epub/ieee-with-url.csl')
+
+        copyfile(css_style, path_expand("./dest/book/ieee-with-url.csl"))
+
+        if "@" not in all_bibs:
+            bibfile = ""
+
+        options = "--toc --toc-depth=6  --number-sections"
+        resources = f"--resource-path={directories}"
+        markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
+
         if output == "epub":
 
-            dirs = []
-            for section in self.docs.entries:
-                if section["kind"] == "section":
-                    # pprint(section)
-                    path = section["path"]
-                    dirs.append(path_expand(f"./dest/book/{path}"))
-            dirs = set(dirs)
-            # dirs = find_image_dirs(directory='./dest')
 
-            create_metadata(self.metadata, "./dest/book/metadata.txt")
-            create_css(self.metadata, "./dest/book/epub.css")
-
-            # pprint(self.metadata)
-
-            directories = (":".join(dirs))
-            metadata = path_expand("./dest/book/metadata.txt")
-            filename = self.metadata["filename"]
-
-            #
-            # ad bibfile if bib was found
-            #
-            cat_bibfiles("./dest", "./dest/all.bib")
-
-            bib = path_expand("./dest/all.bib")
-            csl = path_expand("./dest/book/ieee-with-url.csl")
-            bibfile = f"--filter pandoc-citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
-            all_bibs = readfile("./dest/all.bib")
-            css_style = pkg_resources.resource_filename("bookmanager",'template/epub/ieee-with-url.csl')
-
-            # print (css_style)
-            # print(csl)
-
-            copyfile(css_style, path_expand("./dest/book/ieee-with-url.csl"))
-
-            if "@" not in all_bibs:
-                bibfile = ""
-
-            # "MARKDOWN-OPTIONS=--verbose  $(MERMAID) --filter pandoc-crossref -f markdown+header_attributes -f markdown+smart -f markdown+emoji --indented-code-classes=bash,python,yaml"
-
-            markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
-            options = "--toc --toc-depth=6  --number-sections"
-            resources = f"--resource-path={directories}"
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
             command = f'cd dest/book; pandoc {options} {markdown} {resources} {bibfile} -o {epub} {files} {metadata}'
             # pprint(command.split(" "))
 
         elif output == "pdf":
-            metadata = "./dest/metadata.txt"
-            options = "--toc --number-sections"
-            command = f'pandoc {options} -o ./dest/book.pdf {files}'
+            # bug hard code for now
+            path= Path("../../bookmanager/bookmanager/template/latex/eisvogel").resolve()
+            book= "-V titlepage=true"
+            latex = f"--template {path} --pdf-engine=xelatex"
+            command = f'pandoc {options} {markdown} {bibfile} {latex} {book} {resources} -o ./dest/book.pdf {files} {metadata}'
 
         elif output == "html":
             metadata = "./dest/metadata.txt"
