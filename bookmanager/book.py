@@ -183,10 +183,11 @@ class Book:
 
         elif output == "pdf":
             # bug hard code for now
+            pdf = path_expand(f"./dest/{filename}").replace(".epub", ".pdf")
             path= Path("../../bookmanager/bookmanager/template/latex/eisvogel").resolve()
             book= "-V titlepage=true"
             latex = f"--template {path} --pdf-engine=xelatex"
-            command = f'pandoc {options} {markdown} {bibfile} {latex} {book} {resources} -o ./dest/book.pdf {files} {metadata}'
+            command = f'pandoc {options} {markdown} {bibfile} {latex} {book} {resources} -o {pdf} {files} {metadata}'
 
         elif output == "html":
             metadata = "./dest/metadata.txt"
