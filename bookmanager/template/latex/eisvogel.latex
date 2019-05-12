@@ -808,11 +808,11 @@ $if(title)$
 $if(beamer)$
 \frame{\titlepage}
 $endif$
-$if(abstract)$
-\begin{abstract}
-$abstract$
-\end{abstract}
-$endif$
+%$if(abstract)$
+%\begin{abstract}
+%$abstract$
+%\end{abstract}
+%$endif$
 $endif$
 
 $if(first-chapter)$
