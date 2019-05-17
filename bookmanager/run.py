@@ -1,8 +1,6 @@
 import subprocess
-import sys
 from cloudmesh.common.dotdict import dotdict
 import os
-from cloudmesh.DEBUG import VERBOSE
 
 
 def run(cmd):

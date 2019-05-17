@@ -11,9 +11,8 @@ from bookmanager.cover import Cover
 from bookmanager.util import cat_bibfiles, find_unique_name
 from bookmanager.util import create_metadata, create_css
 from bookmanager.util import create_section
-from bookmanager.util import filewrap
 from bookmanager.util import download as page_download
-from cloudmesh.DEBUG import VERBOSE
+from cloudmesh.common.debug import VERBOSE
 from cloudmesh.common.dotdict import dotdict
 from cloudmesh.common.util import banner, path_expand, readfile
 from tabulate import tabulate

@@ -15,7 +15,7 @@ from colorama import Fore
 from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
 from pprint import pprint
-from cloudmesh.DEBUG import VERBOSE
+from cloudmesh.common.debug import VERBOSE
 
 
 def cat_bibfiles(directory, output):

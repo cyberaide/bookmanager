@@ -5,14 +5,12 @@
 ###############################################################
 
 from __future__ import print_function
-import shutil
 
 import os
 import pytest
 from bookmanager.run import run
-from cloudmesh.common.util import readfile
-from cloudmesh.DEBUG import VERBOSE
-from cloudmesh.variables import Variables
+from cloudmesh.common.debug import VERBOSE
+from cloudmesh.common.variables import Variables
 
 v = Variables()
 v["verbose"] = "10"

@@ -16,7 +16,6 @@ from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
 from pprint import pprint
 import copy
-from cloudmesh.DEBUG import VERBOSE
 from collections import Counter
 
 def filewrap(path, prefix, postfix):
