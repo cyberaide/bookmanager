@@ -257,7 +257,9 @@ def download(url, destination, level=0, force=False):
     content = ""
     if url.startswith("http"):
         r = get_file_from_git(url, directory, filename)
-    elif url.startswith("file:"):
+    elif url.startswith("file"):
+        r = get_file_from_local(url, directory, filename)
+    elif url.startswith("/"):
         r = get_file_from_local(url, directory, filename)
     else:
         print("prefix in url not supported", url)
@@ -311,6 +313,8 @@ def download(url, destination, level=0, force=False):
             r = get_file_from_git(url, directory, filename)
         elif url.startswith("file:"):
             r = get_file_from_local(url, directory, filename)
+        elif url.startswith("/"):
+            r = get_file_from_local(url, directory, filename)
         else:
             print("prefix in url not supported", url)
             sys.exit(1)
@@ -329,7 +333,14 @@ def download(url, destination, level=0, force=False):
             bib_filename_guess = str(filename).split(".md")[0] + ".bib"
 
             check = get_file_from_local(url, directory, filename)
+        elif url.startswith("/"):
+
+            bib_url_guess = str(url).split(".md")[0] + ".bib"
+            bib_filename_guess = str(filename).split(".md")[0] + ".bib"
+
+            check = get_file_from_local(url, directory, filename)
         else:
+            print("H")
             print("prefix in url not supported", url)
             sys.exit(1)
 
