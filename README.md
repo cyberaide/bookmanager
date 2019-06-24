@@ -178,7 +178,7 @@ We recommend pandoc version 2.7.2.
 ## Example Yaml file
 
 The following is an example for a table of contents yaml file that can be used
-to pull together content from diferent repositories.
+to pull together content from different repositories.
 
 ```
 ---
