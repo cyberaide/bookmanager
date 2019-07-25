@@ -137,9 +137,9 @@ def find_images(content):
     return md.images
 
 
-def find_smalest_headers(content):
+def find_smallest_headers(content):
     """
-    find the smalest header level
+    find the smallest header level
     :param content:
     :type content:
     :return:
@@ -251,7 +251,7 @@ def download(url, destination, level=0, force=False):
     filename = destination
 
     if os.path.exists(filename) and not force:
-        print(Fore.RED + "Warning: file alredy exists" + Fore.RESET, end="")
+        print(Fore.RED + "Warning: file already exists" + Fore.RESET, end="")
         return
 
     content = ""
@@ -303,7 +303,7 @@ def download(url, destination, level=0, force=False):
                 print('   ' * (level + 2), "Skipping", image)
 
     #
-    # DOWNLOAD BIB from guesssed bibfile
+    # DOWNLOAD BIB from guessed bibfile
     #
 
     try:

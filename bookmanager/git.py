@@ -30,7 +30,8 @@ class Git(object):
             else:
                 # noinspection PyPep8
                 print(
-                    Fore.RED + "         ERROR: not downlaoded as repo already exists.")
+                    Fore.RED + \
+                    "         ERROR: not downloaded as repo already exists.")
 
     @staticmethod
     def status(repos):

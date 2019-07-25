@@ -133,7 +133,10 @@ class Documents(object):
                     **entry)
                 entry.dirname = os.path.dirname(entry.destination)
 
-                # print(entry)
+                # os.makedirs(entry.dirname)
+
+
+                #from pprint import pprint; pprint(entry)
 
             entry.indent = "  " * entry.level
 

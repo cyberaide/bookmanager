@@ -154,6 +154,10 @@ class Book:
         directories = (":".join(dirs))
         metadata = path_expand("./dest/book/metadata.txt")
         filename = self.metadata["filename"]
+        try:
+            copyfile("report.bib", "dest/report.bib")
+        except:
+            pass
         cat_bibfiles("./dest", "./dest/all.bib")
 
         bib = path_expand("./dest/all.bib")
