@@ -260,6 +260,7 @@ metadata:
   filename: "vonLaszewski-python.epub"
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
+  "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
   "credit": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
 file:
   "chapter": "file://../chapters"
@@ -299,4 +300,20 @@ BOOK:
   - APPLICATIONS:
     - "{file.chapter}/prg/python/fingerprint/fingerprint.md"
     - "{file.chapter}/prg/python/facedetection/facedetection.md"
+```
+
+## Automated github links
+
+It is possible to replace the local link that will be added to the
+files with a link to a github repository.
+
+Simply add the following in case your local files are in
+`../chapter`. While specifing it in the `base`. This variabble
+specifies the link to the source. The fariable github, will be used to
+replace the base with a link to the github repository.
+
+```
+file:
+  "github": "https://github.com/cloudmesh-community/book/blob/master/chapters"
+  "base": "../chapters"
 ```

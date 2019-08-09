@@ -32,12 +32,14 @@ class Documents(object):
         self.entries = []
         self.depth = 0
         self.metadata = []
+        self.variables = None
 
     def spec_replace(self,
                      book,
                      variables):
 
         variable_list = dict_flatten(variables, sep=".")
+        self.variables = variable_list
 
         spec = yaml.dump(book)
 

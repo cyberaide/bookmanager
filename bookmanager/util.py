@@ -59,6 +59,11 @@ def cat_bibfiles(directory, output):
 
 
 def create_section(filename, header, n):
+    if "{" in header:
+        prefix, rest = header.split("{", 1)
+        header = prefix.replace("_", " ") + "{" + rest
+    else:
+        header = header.replace("_", " ")
     writefile(filename, ("#" * n) + f" {header}\n\n")
 
 
@@ -187,6 +192,8 @@ def reduce_headers(content, level, indent=1):
         if line.startswith("#") and not ignore:
             line = line.replace("#" * level, "#")
             line = line.replace("# ", "#" * (indent - 1) + " ")
+            # if "_" in line:
+            #    line = line.replace("_", " ")
 
         out.append(line)
     return out
@@ -231,6 +238,28 @@ class Result(object):
         self.status_code = None
 
 
+def add_link_to_file(url, filename, variables):
+    lines = readfile(Path(f"{filename}"))
+    lines = lines.split("\n")
+
+    if "{" in lines[0]:
+        headline, ref = lines[0].split("{", 1)
+        lines[0] = headline + f" [:cloud:]({url}) " + "{" + ref
+    else:
+        lines[0] = lines[0] + f" [:cloud:]({url})"
+
+    lines[0] = lines[0].replace("raw.githubusercontent.com", "github.com")
+    lines[0] = lines[0].replace("/master/", "/master/master/")
+
+    if 'file.base' in variables and "file.github" in variables:
+        path = str(Path(variables["file.base"]).resolve())
+        print(type(path))
+        lines[0] = lines[0].replace(path, variables["file.github"])
+
+    lines = '\n'.join(lines)
+    writefile(filename, lines)
+
+
 def get_file_from_local(url, directory, filename):
     d = Path(directory)
     d.mkdir(parents=True, exist_ok=True)
@@ -247,7 +276,7 @@ def get_file_from_local(url, directory, filename):
     return r
 
 
-def download(url, destination, level=0, force=False):
+def download(url, destination, level=0, force=False, spec=None):
     destination = str(Path(destination).resolve())
 
     basename = os.path.basename(destination)
@@ -279,6 +308,7 @@ def download(url, destination, level=0, force=False):
     #    image_found = "![" in content
     #
     # else:
+
     image_found = b"![" in content
 
     if image_found:
@@ -354,6 +384,9 @@ def download(url, destination, level=0, force=False):
                   os.path.basename(bib_filename_guess))
     except Exception as e:
         print(e)
+
+    add_link_to_file(url, filename, spec)
+
 
 
 def run(command):

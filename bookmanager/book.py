@@ -91,7 +91,8 @@ class Book:
 
                 entry.destination = find_unique_name(entry, self.docs.entries)
 
-                page_download(entry.uri, entry.destination, entry.level, force)
+                page_download(entry.uri, entry.destination, entry.level, force, self.docs.variables)
+
                 print()
             elif entry.kind == 'header':
                 print(entry.level * "   ", entry.counter, entry.title)
