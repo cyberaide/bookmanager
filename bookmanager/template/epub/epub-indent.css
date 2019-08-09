@@ -21,7 +21,7 @@
 }
 
 body {
-#  margin: 1%;
+  margin: 1%;
   text-align: justify;
   font-family: OpenSans;
   font-size: x-small;  
@@ -77,9 +77,9 @@ h3.date { }
 ol.toc { padding: 0; margin-left: 1em; }
 ol.toc li { list-style-type: none; margin: 0; padding: 0; }
 
-p { }
-ul { }
-ol { }
+p { margin-left: 5%; }
+ul { margin-left: 5%; }
+ol { margin-left: 5%; }
 table {
     margin-left: auto;
     margin-right: auto;
@@ -109,7 +109,7 @@ blockquote {
 	border-left: 4px solid rgb(242, 242, 242);
   display: block;
   margin-left: 10%;
-#  margin-right: 10%;
+  margin-right: 10%;
 }
 .smalltable {
     font-size: 50%;

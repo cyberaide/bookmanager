@@ -195,28 +195,33 @@ def reduce_headers(content, level, indent=1):
 def get_file_from_git(url, directory, filename):
     d = Path(directory)
     d.mkdir(parents=True, exist_ok=True)
-    r = requests.get(url, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
 
-    if r.status_code == 200:
-        output = Path(directory) / filename
-        with open(output, 'wb') as f:
-            #if url.endswith(".bib"):
-            #    VERBOSE(url)
-            #    VERBOSE(output)
-            #    VERBOSE(r.content)
-            #    f.write(b"% " + url.encode('ascii') + "\n" +
-            #            b"% " + output.encode('ascii') + "\n" +
-            #            r.content)
-            #    f.write("%" + url + "\n" + r.content)
-            #else:
-            f.write(r.content)
+    if url.startswith("/"):
+        copyfile(url, Path(f"{directory}/{filename}"))
+        r = ""
     else:
-        if not url.endswith(".bib"):
-            print()
-            print("can not find")
-            print()
-            print(url)
-            print("   ", directory, filename)
+        r = requests.get(url, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
+
+        if r.status_code == 200:
+            output = Path(directory) / filename
+            with open(output, 'wb') as f:
+                # if url.endswith(".bib"):
+                #    VERBOSE(url)
+                #    VERBOSE(output)
+                #    VERBOSE(r.content)
+                #    f.write(b"% " + url.encode('ascii') + "\n" +
+                #            b"% " + output.encode('ascii') + "\n" +
+                #            r.content)
+                #    f.write("%" + url + "\n" + r.content)
+                # else:
+                f.write(r.content)
+        else:
+            if not url.endswith(".bib"):
+                print()
+                print("can not find")
+                print()
+                print(url)
+                print("   ", directory, filename)
     return r
 
 
