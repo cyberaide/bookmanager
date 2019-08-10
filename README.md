@@ -45,7 +45,7 @@ $ pip install cyberaide-bookmanager
 
 
 ```
-bookmanager -- a helper to create books from mardown files in a yaml TOC.
+bookmanager -- a helper to create books from markdown files in a yaml TOC.
 
 Usage:
   bookmanager version
@@ -133,9 +133,9 @@ Book manager can create a simple cover page for you.
 and example is given at 
 
 
-* <https://github.com/cyberaide/bookmanager/blob/master/tests/exmaple/cover.png>
+* <https://github.com/cyberaide/bookmanager/blob/master/tests/example/cover.png>
 
-![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover-thumb.png)
+![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/example/cover-thumb.png)
 
 
 ## Example creation
@@ -148,7 +148,7 @@ $ bookmanager tests/python.yaml get
 $ open dest/book.epub
 ```
 
-## Refernces
+## References
 
 * Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
 * Home page: <https://github.com/cyberaide/bookmanager>
@@ -165,7 +165,7 @@ $ wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-com
 ```
 
 In addition we require an up to date version of pandoc. Please consult with the
-pandoc documentation on how to do this. Unfortuantely the versions distributed
+pandoc documentation on how to do this. Unfortunately the versions distributed
 with ubuntu are outdated. On ubuntu you can say:
 
 ```bash
@@ -239,7 +239,7 @@ BOOK:
 
 In case you have local files, you can add them with `file://`.
 
-Let us assume you havethe files all stored in a chapters directory, than
+Let us assume you have the files all stored in a chapters directory, than
 you could use the following yaml file.
 
 ```
@@ -309,8 +309,8 @@ files with a link to a github repository. At this time this is only
 supported for documents that are in the same repository.
 
 Simply add the following in case your local files are in
-`../chapter`. While specifing it in the `base`. This variabble
-specifies the link to the source. The fariable github, will be used to
+`../chapter`. While specifying it in the `base`. This variable
+specifies the link to the source. The variable github, will be used to
 replace the base with a link to the github repository.
 
 ```

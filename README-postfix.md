@@ -5,9 +5,9 @@ Book manager can create a simple cover page for you.
 and example is given at 
 
 
-* <https://github.com/cyberaide/bookmanager/blob/master/tests/exmaple/cover.png>
+* <https://github.com/cyberaide/bookmanager/blob/master/tests/example/cover.png>
 
-![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover-thumb.png)
+![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/example/cover-thumb.png)
 
 
 ## Example creation

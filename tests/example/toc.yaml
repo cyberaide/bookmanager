@@ -1,6 +1,6 @@
 ---
 b516: "https://raw.githubusercontent.com/cloudmesh-community/book/blob/master/chapter"
-manager: "https://raw.githubusercontent.com/cyberaide/bookmanager/master//tests/exmaple"
+manager: "https://raw.githubusercontent.com/cyberaide/bookmanager/master//tests/example"
 
 cloudmesh:
   default:
