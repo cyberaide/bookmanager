@@ -305,7 +305,8 @@ BOOK:
 ## Automated github links
 
 It is possible to replace the local link that will be added to the
-files with a link to a github repository.
+files with a link to a github repository. At this time this is only
+supported for documents that are in the same repository.
 
 Simply add the following in case your local files are in
 `../chapter`. While specifing it in the `base`. This variabble

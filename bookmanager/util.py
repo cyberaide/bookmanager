@@ -253,7 +253,6 @@ def add_link_to_file(url, filename, variables):
 
     if 'file.base' in variables and "file.github" in variables:
         path = str(Path(variables["file.base"]).resolve())
-        print(type(path))
         lines[0] = lines[0].replace(path, variables["file.github"])
 
     lines = '\n'.join(lines)
