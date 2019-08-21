@@ -20,12 +20,20 @@ BOOK:
   - PREFACE:
     - "{git.credit}/disclaimer.md"
   - INTRODUCTION:
-    - "{git.book}/prg/SECTION-PYTHON.md"
     - "{git.book}/prg/python/python-intro.md"
-    - "{git.book}/prg/python/python-install.md"
-    - "{git.book}/prg/python/python-interactive.md"
-    - "{git.book}/prg/python/python-editor.md"
-    - "{git.book}/prg/python/python.md"
+  - INSTALATION:
+      - "{git.book}/prg/python/python-install.md"
+      - "{git.book}/prg/python/python-install-pyenv.md"
+  - FIRST_STEPS:
+      - "{git.book}/prg/python/python-interactive.md"
+      - "{git.book}/prg/python/python-editor.md"
+  - LANGUAGE:
+      - "{git.book}/prg/python/python.md"
+  - CLOUDMESH_COMMON:
+      - "{git.book}/prg/python/cloudmesh/console.md"
+      - "{git.book}/prg/python/cloudmesh/dict.md"
+      - "{git.book}/prg/python/cloudmesh/shell.md"
+      - "{git.book}/prg/python/cloudmesh/stopwatch.md"
   - LIBRARIES:
     - "{git.book}/prg/python/python-libraries.md"
     - "{git.book}/prg/python/python-data.md"
@@ -36,7 +44,6 @@ BOOK:
     - "{git.book}/prg/python/opencv/opencv.md"
     - "{git.book}/prg/python/opencv/secchi.md"
   - DATA:
-    - "{git.book}/SECTION/SECTION-DATA.md"
     - "{git.book}/data/formats.md"
   - MONGO:
     - "{git.book}/data/mongodb.md"
@@ -52,3 +59,5 @@ BOOK:
   - APPLICATIONS:
     - "{git.book}/prg/python/fingerprint/fingerprint.md"
     - "{git.book}/prg/python/facedetection/facedetection.md"
+  - REFERENCES:
+      - "{file.bookmanager}/empty.md"
