@@ -176,12 +176,16 @@ class Book:
         options = "--toc --toc-depth=6  --number-sections"
         resources = f"--resource-path={directories}"
         markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
-
+        # fonts = '-V mainfonts="DejaVu Sans"'
+        fonts = ''
         if output in ["epub", "md", "markdown"]:
 
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
-            command = f'cd dest/book; pandoc {options} {markdown} {resources} {bibfile} -o {epub} {files} {metadata}'
+            command = f'cd dest/book; pandoc {options} {markdown} ' \
+                      f' {fonts} {resources} {bibfile} ' \
+                      f' -o {epub} {files}' \
+                      f' {metadata}'
             # pprint(command.split(" "))
 
         elif output == "pdf":
@@ -190,7 +194,10 @@ class Book:
             path= Path("../../bookmanager/bookmanager/template/latex/eisvogel").resolve()
             book= "-V titlepage=true"
             latex = f"--template {path} --pdf-engine=xelatex"
-            command = f'pandoc {options} {markdown} {bibfile} {latex} {book} {resources} -o {pdf} {files} {metadata}'
+            command = f'pandoc {options} {markdown} {fonts}' \
+                      f' {bibfile} {latex} {book} {resources} ' \
+                      f' -o {pdf} {files} ' \
+                      f' {metadata}'
 
         elif output == "html":
             metadata = "./dest/metadata.txt"
