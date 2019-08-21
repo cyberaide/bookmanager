@@ -205,7 +205,20 @@ class Book:
         else:
             raise ValueError(f"this output format is not yet supported: {output}")
 
-        VERBOSE(command)
+        #if True:
+        #    cwd = os.getcwd()
+        #    command = command.split(";", 1)[1]
+        #    command = command.replace(cwd, ".")
+        #    print()
+        #    print (command)
+        #    print()
+        #    # VERBOSE(command)
+        #    os.system(command)
+        #else:
+        print()
+        print (command)
+        print()
+        # VERBOSE(command)
         os.system(command)
 
     def level(self):
