@@ -125,13 +125,13 @@ log:
 #--no-cache=true
 
 image:
-	docker build  -t cloudmesh/bookmanager:0.2.16 .
+	docker build  -t cloudmesh/bookmanager:0.2.17 .
 
 shell:
-	docker run --rm -it cloudmesh/bookmanager:0.2.16  /bin/bash
+	docker run --rm -it cloudmesh/bookmanager:0.2.17  /bin/bash
 
 cms:
-	docker run --rm -it cloudmesh/bookmanager:0.2.16
+	docker run --rm -it cloudmesh/bookmanager:0.2.17
 
 dockerclean:
 	-docker kill $$(docker ps -q)
@@ -139,7 +139,7 @@ dockerclean:
 	-docker rmi $$(docker images -q)
 
 push:
-	docker push cloudmesh/bookmanager:0.2.16
+	docker push cloudmesh/bookmanager:0.2.17
 
 run:
-	docker run cloudmesh/bookmanager:0.2.16 /bin/sh -c "cd technologies; git pull; make"
+	docker run cloudmesh/bookmanager:0.2.17 /bin/sh -c "cd technologies; git pull; make"
