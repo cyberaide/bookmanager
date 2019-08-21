@@ -16,6 +16,7 @@ metadata:
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
   "credit": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
+  "bookmanager": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager"
 BOOK:
   - PREFACE:
     - "{git.credit}/disclaimer.md"
@@ -60,4 +61,4 @@ BOOK:
     - "{git.book}/prg/python/fingerprint/fingerprint.md"
     - "{git.book}/prg/python/facedetection/facedetection.md"
   - REFERENCES:
-      - "{file.bookmanager}/empty.md"
+      - "{git.bookmanager}/empty.md"
