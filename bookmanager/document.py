@@ -70,7 +70,7 @@ class Documents(object):
         transformed = yaml.dump(b)
         # print (transformed)
 
-        lines = transformed.split("\n")
+        lines = transformed.splitlines()
 
         counter = 0
         for line in lines:

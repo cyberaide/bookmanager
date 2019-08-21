@@ -117,7 +117,7 @@ def find_smalest_headers(content):
     :rtype:
     """
     ignore = False
-    lines = content.split("\n")
+    lines = content.splitlines()
     headers = []
     for line in lines:
         if line.startswith("`"):
@@ -148,7 +148,7 @@ def reduce_headers(content, level, indent=1):
     :rtype:
     """
     ignore = False
-    lines = content.split("\n")
+    lines = content.splitlines()
     headers = []
     out = []
     for line in lines:

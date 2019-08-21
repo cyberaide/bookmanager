@@ -4,7 +4,7 @@ creator:
 - role: editor
   text: {author}
 description: {description}
-rights: (c) Gregor von Laszewski, 2018
+rights: {rights}
 language: en-US
 stylesheet: epub.css
 cover-image: cover.png

@@ -1,76 +1,120 @@
 #
-# USE ARCHLINUX
+# UBUNTU 18.04
 #
 FROM ubuntu:18.04
 
 MAINTAINER Gregor von Laszewski <laszewski@gmail.com>
 
+ENV DEBIAN_FRONTEND noninteractive
 
+#
+# UPDATE THE SYSTEM
+#
+RUN apt-get update -y
+RUN apt-get dist-upgrade
+RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get update --fix-missing
-
 
 #
 # DEVELOPMENT TOOLS
 #
-RUN apt-get update -y
-RUN apt-get install graphviz -y
-RUN apt-get install python-pip -y
-RUN apt-get install wget -y
-RUN apt-get install curl -y
-RUN apt-get install rsync -y
-RUN pip install pip -U
-RUN apt-get install git-core -y
-RUN apt-get install dnsutils -y
-RUN apt-get install -y build-essential libssl-dev libffi-dev
+RUN apt-get install -y graphviz
+RUN apt-get install -y wget
+RUN apt-get install -y curl
+RUN apt-get install -y rsync
+RUN apt-get install -y git-core
+RUN apt-get install -y dnsutils
+RUN apt-get install -y build-essential checkinstall
+RUN apt-get install -y libssl-dev
+RUN apt-get install -y libffi-dev
+RUN apt-get install -y libreadline-gplv2-dev
+RUN apt-get install -y libncursesw5-dev
+RUN apt-get install -y libsqlite3-dev
+RUN apt-get install -y libgdbm-dev
+RUN apt-get install -y libc6-dev
+RUN apt-get install -y libbz2-dev
+RUN apt-get install -y libffi-dev
+RUN apt-get install -y zlib1g-dev
 
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:ubuntu-toolchain-r/ppa
+#
+# INSTALL PYTHON 3.7 FROM SOURCE
+#
+
+WORKDIR /usr/src
+
+RUN wget https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tgz
+RUN tar xzf Python-3.7.4.tgz
+
+WORKDIR /usr/src/Python-3.7.4
+
+RUN ./configure --enable-optimizations
+
+RUN make altinstall
 
 
 #
-# INSTALL PYTHON 3.7.2
+# INSTALL PACKAGED PYTHON 3.7
 #
 
-RUN pip install --upgrade pip setuptools
-RUN apt-get install -y python3.7
-RUN apt-get install -y python3-pip
-RUN pip3 install --upgrade pip setuptools
+#RUN apt-get install -y software-properties-common
+#RUN add-apt-repository ppa:ubuntu-toolchain-r/ppa
+# RUN pip install --upgrade pip setuptools
+
+#RUN apt-get autoremove
+
+#RUN apt-get install -y python3.7
+# RUN apt-get install python3-distutils
+# RUN apt-get install python3-setuptools
+# RUN sudo easy_install3 pip
+#RUN apt-get install -y python3-pip
+#RUN pip3 install --upgrade pip setuptools
 
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 10
+RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 10
 RUN update-alternatives --config python
 
-RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10
+RUN update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip3.7 10
 RUN update-alternatives --config pip
 
 RUN yes '' | update-alternatives --force --all
 
-RUN python3 --version
+
+ENV PATH="/usr/local/bin:${PATH}"
+
+RUN python3.7 --version
 RUN python --version
+RUN pip install -U pip
 RUN pip --version
+
+
+
+WORKDIR /tmp
 
 #
 # INSTALL PANDOC
 #
-RUN wget -q https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb
-RUN dpkg -i pandoc-2.7.2-1-amd64.deb
+RUN wget -q https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+RUN dpkg -i pandoc-2.7.3-1-amd64.deb
 RUN pandoc --version
 
 
-RUN mkdir -p ~/.cloudmesh
-RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-cloud/master/cloudmesh/etc/cloudmesh4.yaml
-RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
+## RUN mkdir -p ~/.cloudmesh
+## RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
 
 #
-RUN ls
+#RUN ls
+
+WORKDIR /
+
 RUN git clone https://github.com/cyberaide/bookmanager.git
 
-WORKDIR bookmanager
+WORKDIR /bookmanager
+
 
 RUN pip install -e .
 
 
-# ENTRYPOINT ["/bookmanager/bin/pull.sh"]
+#ENTRYPOINT ["/bookmanager/bin/pull.sh"]
 
 CMD [ "/bin/bash" ]
 

@@ -51,11 +51,13 @@ class Cover(object):
         self.row = self.row + n
 
     def mesg(self, x, text, step=50, scale="normal"):
-        lines = text.split("\n")
+        lines = text.splitlines()
         for line in lines:
             font = self.set_font(scale)
-            self.draw.text((self.step * x, self.step * self.row), line,
-                           fill=self.color, font=self.font)
+            self.draw.text((self.step * x, self.step * self.row),
+                           line,
+                           fill=self.color,
+                           font=self.font)
             self.row = self.row + 1
 
     def line(self, start, stop, width=10):

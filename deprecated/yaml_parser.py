@@ -35,7 +35,7 @@ def json_flatten(data,
     verbose = False
     global counter
     counter = 0
-    r = len(yaml.dump(data).split("\n"))
+    r = len(yaml.dump(data).splitlines())
 
     out = ['undefined'] * r
     out[0] = {

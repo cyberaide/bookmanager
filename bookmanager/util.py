@@ -151,7 +151,7 @@ def find_smallest_headers(content):
     :rtype:
     """
     ignore = False
-    lines = content.split("\n")
+    lines = content.splitlines()
     headers = []
     for line in lines:
         if line.startswith("`"):
@@ -182,7 +182,7 @@ def reduce_headers(content, level, indent=1):
     :rtype:
     """
     ignore = False
-    lines = content.split("\n")
+    lines = content.splitlines()
     headers = []
     out = []
     for line in lines:
@@ -204,7 +204,11 @@ def get_file_from_git(url, directory, filename):
     d.mkdir(parents=True, exist_ok=True)
 
     if url.startswith("/"):
-        copyfile(url, Path(f"{directory}/{filename}"))
+        try:
+            copyfile(url, Path(f"{directory}/{filename}"))
+        except FileNotFoundError:
+            print(f"\n\nERROR:\n{directory}/{filename} could not be found\n\n")
+            sys.exit()
         r = ""
     else:
         r = requests.get(url, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
@@ -240,7 +244,7 @@ class Result(object):
 
 def add_link_to_file(url, filename, variables):
     lines = readfile(Path(f"{filename}"))
-    lines = lines.split("\n")
+    lines = lines.splitlines()
 
     if "{" in lines[0]:
         headline, ref = lines[0].split("{", 1)
