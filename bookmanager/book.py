@@ -177,13 +177,44 @@ class Book:
         resources = f"--resource-path={directories}"
         markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
         # fonts = '-V mainfonts="DejaVu Sans"'
-        fonts = ''
+        pdffonts = ''
+
+        embed = [
+            "DejaVuSerif-Bold.ttf",
+            "DejaVuSerif-BoldItalic.ttf",
+            "DejaVuSerif-Italic.ttf",
+            "DejaVuSerif.ttf",
+            "DejaVuSerifCondensed-Bold.ttf",
+            "DejaVuSerifCondensed-BoldItalic.ttf",
+            "DejaVuSerifCondensed-Italic.ttf",
+            "DejaVuSerifCondensed.ttf"
+        ]
+        embed = [
+            "OpenSans-Bold.ttf",
+            "OpenSans-BoldItalic.ttf",
+            "OpenSans-Emoji.ttf",
+            "OpenSans-ExtraBold.ttf",
+            "OpenSans-ExtraBoldItalic.ttf",
+            "OpenSans-Italic.ttf",
+            "OpenSans-Light.ttf",
+            "OpenSans-LightItalic.ttf",
+            "OpenSans-Regular.ttf",
+            "OpenSans-Semibold.ttf",
+            "OpenSans-SemiboldItalic.ttf",
+            "OpenSansEmoji.ttf",
+        ]
+
+        # ignoring font embedding
+        epubfonts = ''
+        #for font in embed:
+        #    epubfonts = epubfonts + f' --epub-embed-font=fonts/{font}'
+
         if output in ["epub", "md", "markdown"]:
 
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
             command = f'cd dest/book; pandoc {options} {markdown} ' \
-                      f' {fonts} {resources} {bibfile} ' \
+                      f' {epubfonts} {resources} {bibfile} ' \
                       f' -o {epub} {files}' \
                       f' {metadata}'
             # pprint(command.split(" "))
@@ -194,7 +225,7 @@ class Book:
             path= Path("../../bookmanager/bookmanager/template/latex/eisvogel").resolve()
             book= "-V titlepage=true"
             latex = f"--template {path} --pdf-engine=xelatex"
-            command = f'pandoc {options} {markdown} {fonts}' \
+            command = f'pandoc {options} {markdown} {pdffonts}' \
                       f' {bibfile} {latex} {book} {resources} ' \
                       f' -o {pdf} {files} ' \
                       f' {metadata}'
