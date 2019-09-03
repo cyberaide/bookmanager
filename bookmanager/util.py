@@ -253,7 +253,8 @@ def add_link_to_file(url, filename, variables):
         lines[0] = lines[0] + f" [:cloud:]({url})"
 
     lines[0] = lines[0].replace("raw.githubusercontent.com", "github.com")
-    lines[0] = lines[0].replace("/master/", "/master/master/")
+    #lines[0] = lines[0].replace("/master/", "/master/master/")
+    lines[0] = lines[0].replace("/master/", "/blob/master/")
 
     if 'file.base' in variables and "file.github" in variables:
         path = str(Path(variables["file.base"]).resolve())

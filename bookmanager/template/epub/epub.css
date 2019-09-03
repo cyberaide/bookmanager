@@ -6,7 +6,6 @@
 }
 
 body {
-#  margin: 1%;
   text-align: justify;
   font-size: x-small;
   line-height: 1.25;
@@ -85,16 +84,14 @@ table td {
     padding: 3px 10px;
     border-top: none;
     border-left: none;
-#    border-bottom: none;
     border-right: none;
     border-bottom: 1px solid black;
 }
 blockquote { 
-	font-style: italic;
-	border-left: 4px solid rgb(242, 242, 242);
+  font-style: italic;
+  border-left: 4px solid rgb(242, 242, 242);
   display: block;
   margin-left: 10%;
-#  margin-right: 10%;
 }
 .smalltable {
     font-size: 50%;
