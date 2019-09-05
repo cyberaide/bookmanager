@@ -1,4 +1,24 @@
-# Evaluation of Tools
+# Community Driven Creation of Educational Material with Bookmanager
+
+* Gregor von Laszewski, laszewski@gmail.com
+* G. C. Fox
+
+Digital Science Center, Indiana University, Bloomingtopn, IN 47401
+
+## Abstract
+
+We report here on the motivation and findings for Bookmanager
+
+## Introduction
+
+The pervasive importance of computing and cyberinfrastructure is broadly acknowledged in many areas of commercial, government, and academic endeavors. This is reflected in Indiana University's (IU) plan to build its new Intelligent Systems Engineering (ISE) program with a strong computational and information technology basis and situate it in the School of Informatics, Computing, and Engineering (SICE). As curriculum changes and integrates modern concepts and practices, students are changing as well, and we must support the learning modes of Generation Z.
+
+This proposal takes what we have learned from a four-year undergraduate curriculum designed ab initio and taught so far to our first two undergraduate classes, and invests it into developing active modules that are customized for Cyberinfrastructure Contributors (CIC) communities nucleated, built, and sustained via the dynamic use of GitHub.
+
+We rework carefully chosen subsets of our curriculum, including the following topics: Cloud Computing, Big Data Applications and Analytics, Networking, High Performance Computing, Artificial Intelligence/Machine Learning, and Information Visualization. The content will be offered online, in a modular format, and will reflect the needs of today’s tech-savvy students by incorporating successful community building tools. We will support Generation Z CyberTraining with all of the thriving approaches used by the Apache Software Foundation, including Meetups, Workshops or Hackathons and follow our current approach that all student projects are stored in open GitHub repositories and automatically made available for later learners and educators. While the project primarily focuses on developing content for training the CIC communities, we will offer a few modules for domain scientists and engineers, e.g. the cyberinfrastructure Users (CIU) that exploit advanced CI methods for research in nanoengineering and bioengineering. Appropriate modules will be made available on portals such as nanoHUB where appropriate to train a wider set of CIU communities. This project is leveraging the very significant IU investment in new faculty and new curricula to develop modules sourced from these curricula and customized for CIC via the GitHub based community model. All can contribute to the course improving the text, the software and providing an amazing set of examples and we hope in this project to show that we can build both learning and sustainability communities by using the proven techniques of the open source software community.
+
+
+## Evaluation of Tools
 
 We evaluated prior to developping bookmanager a number of tools. However
 none of them could deliver a tool that
