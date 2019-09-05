@@ -66,3 +66,6 @@ We evaluated Sphinx, LaTeX, and Markdown.
   their educational experience The creation of the book incontarste to
   the other systems has been drastically reduced and is now less than
   30 seconds.
+
+
+Note: all benchmarks have been conducted on a MacPro from 2017 with 16 GB RAM.
