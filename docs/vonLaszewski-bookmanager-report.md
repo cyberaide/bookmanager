@@ -101,12 +101,25 @@ of the areas:
 
 ## Evaluation of Tools
 
-One of the impoprtant precurser to our effort was to evaluate some
-existing tools to see if they could be reused without any new
-development.  However none of the tools could deliver a tool that
+One of the impoprtant precurser to our effort was to
+evaluate some existing tools to see if they could be reused without any
+new development.  However none of the tools could deliver a tool that
 
 * is easy to use by the users while setting it up and developping content
 * allows the integration of distributed documents managed in github
+
+One of our stated goals for this activity is to not only develop
+educational material by a single faculty member, but to allow multiple
+faculty members and more importantly the students from the class to
+contribute content to leverage their potential technology experiences
+into the courses. Thus we decided to use GitHub as it allows student to
+openly contribute and as it is a tool with wide community acceptance.
+However GitHub does not provide a tool that allows the easy integration
+of content developed not only in one repository, but multiple. In order
+to coordinate the creation of content from GitHub we have evaluated and
+practically used multiple technologies to identify a suitable tool for
+creating customized curricula including Sphinx, LaTeX as well as CANVAS
+and OpenEdX. 
 
 We evaluated Sphinx, LaTeX, and Markdown (in addition to Course
 management tools such as CANVAS and OpenEdX).
