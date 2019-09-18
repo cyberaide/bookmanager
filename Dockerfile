@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # UPDATE THE SYSTEM
 #
 RUN apt-get update -y
-RUN apt-get dist-upgrade
+RUN apt-get dist-upgrade -y
 RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get update --fix-missing
 
