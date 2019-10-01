@@ -6,7 +6,7 @@ from munch import munchify
 from cloudmesh.common.FlatDict import flatten as dict_flatten
 import os
 from collections import Counter
-
+import sys
 
 class Document(dotdict):
 
@@ -107,7 +107,11 @@ class Documents(object):
                     entry.uri = str(Path(entry.uri).resolve())
                 entry.dirname = os.path.dirname(entry.uri)
                 entry.basename = os.path.basename(entry.uri)
-                entry.title, entry.format = entry.basename.split(".")
+                try:
+                    entry.title, entry.format = entry.basename.split(".")
+                except:
+                    print ("ERROR: no title found in ", entry.uri)
+                    sys.exit()
                 entry.format = entry.format.lower()
                 entry.path = '/'.join(path_list[:entry.level])
 

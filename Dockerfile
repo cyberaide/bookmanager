@@ -1,7 +1,7 @@
 #
-# UBUNTU 18.04
+# UBUNTU 19.04
 #
-FROM ubuntu:18.04
+FROM ubuntu:19.04
 
 MAINTAINER Gregor von Laszewski <laszewski@gmail.com>
 
@@ -10,8 +10,8 @@ ENV DEBIAN_FRONTEND noninteractive
 #
 # UPDATE THE SYSTEM
 #
-RUN apt-get update -y
-RUN apt-get dist-upgrade
+RUN apt-get -y update
+RUN apt-get -y dist-upgrade
 RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get update --fix-missing
 
@@ -35,6 +35,8 @@ RUN apt-get install -y libc6-dev
 RUN apt-get install -y libbz2-dev
 RUN apt-get install -y libffi-dev
 RUN apt-get install -y zlib1g-dev
+RUN apt-get install -y git
+RUN apt-get install -y lsb-core
 
 #
 # INSTALL PYTHON 3.7 FROM SOURCE

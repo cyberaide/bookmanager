@@ -14,7 +14,6 @@ Usage:
   bookmanager YAML urls [--format=FORMAT]
   bookmanager YAML list [--format=FORMAT] [--details]
 
-
 Arguments:
   YAML   the yaml file
 

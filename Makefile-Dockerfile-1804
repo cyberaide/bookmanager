@@ -11,7 +11,7 @@ define banner
 	@echo "############################################################"
 endef
 
-source: 
+source:
 	cd ../cloudmesh.common; make source
 	$(call banner, "Install cloudmesh-cmd5")
 	pip install -e . -U
@@ -118,7 +118,6 @@ log:
 	gitchangelog | fgrep -v ":dev:" | fgrep -v ":new:" > ChangeLog
 	git commit -m "chg: dev: Update ChangeLog" ChangeLog
 	git push
-
 ######################################################################
 # DOCKER
 ######################################################################
@@ -126,13 +125,13 @@ log:
 #--no-cache=true
 
 image:
-	docker build  -t cloudmesh/bookmanager:0.2.21 -t cloudmesh/bookmanager:latest .
+	docker build  -t cloudmesh/bookmanager:0.2.16 .
 
 shell:
-	docker run --rm -it cloudmesh/bookmanager:0.2.21  /bin/bash
+	docker run --rm -it cloudmesh/bookmanager:0.2.16  /bin/bash
 
 cms:
-	docker run --rm -it cloudmesh/bookmanager:0.2.21
+	docker run --rm -it cloudmesh/bookmanager:0.2.16
 
 dockerclean:
 	-docker kill $$(docker ps -q)
@@ -140,8 +139,7 @@ dockerclean:
 	-docker rmi $$(docker images -q)
 
 push:
-	docker push cloudmesh/bookmanager:0.2.21
-	docker push cloudmesh/bookmanager:latest
+	docker push cloudmesh/bookmanager:0.2.16
 
 run:
-	docker run cloudmesh/bookmanager:0.2.21 /bin/sh -c "cd technologies; git pull; make"
+	docker run cloudmesh/bookmanager:0.2.16 /bin/sh -c "cd technologies; git pull; make"

@@ -96,7 +96,9 @@ blockquote {
 .smalltable {
     font-size: 50%;
 }
-
+.reporttable {
+    font-size: 50%;
+}
 .info, .success, .warning, .error, .validation {
 border: 1px solid;
 margin: 10px 0px;

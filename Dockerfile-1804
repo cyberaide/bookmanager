@@ -1,145 +1,122 @@
-package=cyberaide-bookmanager
-UNAME=$(shell uname)
-VERSION=`head -1 VERSION`
+#
+# UBUNTU 18.04
+#
+FROM ubuntu:18.04
 
-.PHONY: readme
+MAINTAINER Gregor von Laszewski <laszewski@gmail.com>
 
-define banner
-	@echo
-	@echo "############################################################"
-	@echo "# $(1) "
-	@echo "############################################################"
-endef
+ENV DEBIAN_FRONTEND noninteractive
 
-source:
-	cd ../cloudmesh.common; make source
-	$(call banner, "Install cloudmesh-cmd5")
-	pip install -e . -U
-	cms help
+#
+# UPDATE THE SYSTEM
+#
+RUN apt-get update -y
+RUN apt-get dist-upgrade
+RUN apt-get install -y --no-install-recommends apt-utils
+RUN apt-get update --fix-missing
 
-validate:
-	gem install travis
-	travis lint .travis.yml
+#
+# DEVELOPMENT TOOLS
+#
+RUN apt-get install -y graphviz
+RUN apt-get install -y wget
+RUN apt-get install -y curl
+RUN apt-get install -y rsync
+RUN apt-get install -y git-core
+RUN apt-get install -y dnsutils
+RUN apt-get install -y build-essential checkinstall
+RUN apt-get install -y libssl-dev
+RUN apt-get install -y libffi-dev
+RUN apt-get install -y libreadline-gplv2-dev
+RUN apt-get install -y libncursesw5-dev
+RUN apt-get install -y libsqlite3-dev
+RUN apt-get install -y libgdbm-dev
+RUN apt-get install -y libc6-dev
+RUN apt-get install -y libbz2-dev
+RUN apt-get install -y libffi-dev
+RUN apt-get install -y zlib1g-dev
 
-clean:
-	$(call banner, "CLEAN")
-	rm -rf dist
-	rm -rf *.zip
-	rm -rf *.egg-info
-	rm -rf *.eggs
-	rm -rf docs/build
-	rm -rf build
-	find . -type d -name __pycache__ -delete
-	find . -name '*.pyc' -delete
-	rm -rf .tox
-	rm -f *.whl
+#
+# INSTALL PYTHON 3.7 FROM SOURCE
+#
 
-readme:
-	bookmanager --help > README-helper/manual.md
-	cat README-prefix.md \
-	    README-helper/verbatim-start.md \
-	    README-helper/manual.md \
-	    README-helper/verbatim-stop.md \
-	    README-postfix.md \
-	    README-helper/verbatim-start.md \
-	    tests/python.yml \
-	    README-helper/verbatim-stop.md > README.md
-	git commit -am "Generating the README"
-	git push
+WORKDIR /usr/src
 
-######################################################################
-# PYPI
-######################################################################
+RUN wget https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tgz
+RUN tar xzf Python-3.7.4.tgz
 
+WORKDIR /usr/src/Python-3.7.4
 
-twine:
-	pip install -U twine
+RUN ./configure --enable-optimizations
 
-dist:
-	python setup.py sdist bdist_wheel
-	twine check dist/*
-
-requirements_dev:
-	pip install -r  requirements-dev.txt
-
-patch: clean requirements_dev
-	$(call banner, "build")
-	bump2version --no-tag patch
-	python setup.py sdist
-	python setup.py bdist_wheel
-	git push
-	# git push origin master --tags
-	twine check dist/*
-	twine upload --repository testpypi  dist/*
-	# $(call banner, "install")
-	# sleep 10
-	# pip install --index-url https://test.pypi.org/simple/ cloudmesh-$(package) -U
-
-minor: clean
-	$(call banner, "minor")
-	bump2version minor --allow-dirty
-	@cat VERSION
-	@echo
-
-release: clean
-	$(call banner, "release")
-	git tag "v$(VERSION)"
-	git push origin master --tags
-	python setup.py sdist bdist_wheel
-	twine check dist/*
-	twine upload --repository pypi dist/*
-	$(call banner, "install")
-	@cat VERSION
-	@echo
-	# sleep 10
-	# pip install -U cyberaide-common
+RUN make altinstall
 
 
-dev:
-	bump2version --new-version "$(VERSION)-dev0" part --allow-dirty
-	bump2version patch --allow-dirty
-	@cat VERSION
-	@echo
+#
+# INSTALL PACKAGED PYTHON 3.7
+#
 
-reset:
-	bump2version --new-version "4.0.0-dev0" part --allow-dirty
+#RUN apt-get install -y software-properties-common
+#RUN add-apt-repository ppa:ubuntu-toolchain-r/ppa
+# RUN pip install --upgrade pip setuptools
 
-upload:
-	twine check dist/*
-	twine upload dist/*
+#RUN apt-get autoremove
 
-pip:
-	pip install --index-url https://test.pypi.org/simple/ cyberaide-$(package) -U
+#RUN apt-get install -y python3.7
+# RUN apt-get install python3-distutils
+# RUN apt-get install python3-setuptools
+# RUN sudo easy_install3 pip
+#RUN apt-get install -y python3-pip
+#RUN pip3 install --upgrade pip setuptools
 
-#	    --extra-index-url https://test.pypi.org/simple
 
-log:
-	$(call banner, log)
-	gitchangelog | fgrep -v ":dev:" | fgrep -v ":new:" > ChangeLog
-	git commit -m "chg: dev: Update ChangeLog" ChangeLog
-	git push
-######################################################################
-# DOCKER
-######################################################################
+RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 10
+RUN update-alternatives --config python
 
-#--no-cache=true
+RUN update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip3.7 10
+RUN update-alternatives --config pip
 
-image:
-	docker build  -t cloudmesh/bookmanager:0.2.16 .
+RUN yes '' | update-alternatives --force --all
 
-shell:
-	docker run --rm -it cloudmesh/bookmanager:0.2.16  /bin/bash
 
-cms:
-	docker run --rm -it cloudmesh/bookmanager:0.2.16
+ENV PATH="/usr/local/bin:${PATH}"
 
-dockerclean:
-	-docker kill $$(docker ps -q)
-	-docker rm $$(docker ps -a -q)
-	-docker rmi $$(docker images -q)
+RUN python3.7 --version
+RUN python --version
+RUN pip install -U pip
+RUN pip --version
 
-push:
-	docker push cloudmesh/bookmanager:0.2.16
 
-run:
-	docker run cloudmesh/bookmanager:0.2.16 /bin/sh -c "cd technologies; git pull; make"
+
+WORKDIR /tmp
+
+#
+# INSTALL PANDOC
+#
+RUN wget -q https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+RUN dpkg -i pandoc-2.7.3-1-amd64.deb
+RUN pandoc --version
+
+
+## RUN mkdir -p ~/.cloudmesh
+## RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
+
+#
+#RUN ls
+
+WORKDIR /
+
+RUN git clone https://github.com/cyberaide/bookmanager.git
+
+WORKDIR /bookmanager
+
+
+RUN pip install -e .
+
+
+#ENTRYPOINT ["/bookmanager/bin/pull.sh"]
+
+CMD [ "/bin/bash" ]
+
+
+
