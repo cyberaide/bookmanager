@@ -40,7 +40,7 @@ BOOK:
     - "{git.book}/prg/python/python-data.md"
     - "{git.book}/prg/python/python-matplotlib.md"
     - "{git.book}/prg/python/python-docopts.md"
-    - "{git.book}/prg/python/python-cmd5.md"
+    - "{git.book}/prg/python/cloudmesh/python-cmd5.md"
     - "{git.book}/prg/python/python-cmd.md"
     - "{git.book}/prg/python/opencv/opencv.md"
     - "{git.book}/prg/python/opencv/secchi.md"
