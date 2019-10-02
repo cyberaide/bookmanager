@@ -100,12 +100,6 @@ RUN dpkg -i pandoc-2.7.3-1-amd64.deb
 RUN pandoc --version
 
 
-## RUN mkdir -p ~/.cloudmesh
-## RUN wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-common/master/cloudmesh/etc/cloudmesh.yaml
-
-#
-#RUN ls
-
 WORKDIR /
 
 RUN git clone https://github.com/cyberaide/bookmanager.git
