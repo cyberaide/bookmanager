@@ -70,7 +70,7 @@ class Book:
 
             pprint(self.docs.entries)
 
-        elif output=="csv":
+        elif outputy=="csv":
 
             r = self.docs.printer(
                 section="{counter},{level},{path},{kind},{indent},{title},{topic},{uri}",
