@@ -46,9 +46,17 @@ class Book:
         print('\n'.join(r))
 
 
-    def list(self, output="markdown", details=False):
+    def list(self, output="markdown", details=False, csvchar=","):
         banner("list")
 
+        #
+        # UPDATE THE DOCUMENT TITLE
+        #
+        self.get_titles()
+
+        #
+        # PRINT THE LIST
+        #
 
         if output == "markdown":
 
@@ -70,11 +78,11 @@ class Book:
 
             pprint(self.docs.entries)
 
-        elif outputy=="csv":
+        elif output=="csv":
 
             r = self.docs.printer(
-                section="{counter},{level},{path},{kind},{indent},{title},{topic},{uri}",
-                header="{counter},{level},{path},{kind},{indent},{title},{topic},{uri}",
+                section="{counter},{level},{path},{kind},{indent},{documenttitle},{title},{topic},{uri}",
+                header="{counter},{level},{path},{kind},{indent},{documenttitle},{title},{topic},{uri}",
             )
 
             print('\n'.join(r))
@@ -110,6 +118,57 @@ class Book:
                 print()
             elif entry.kind == 'header':
                 print(entry.level * "   ", entry.counter, entry.title)
+
+        self.get_titles()
+
+
+    def find_title(self, markdown):
+        """
+        must be called after download
+        :param markdown:
+        :return:
+        """
+        title = None
+        with open(markdown, "r") as f:
+            lines = f.readlines()
+            previous=lines[0] or ""
+            found = None
+
+            for line in lines:
+                if "# " in line:
+                    found = line.split("# ", 1)[1]
+
+                elif line[0] in ["=-~^"]:
+                    found = previous
+                if found:
+                    if "[" in found:
+                        title = found.split("[")[0].strip()
+                    return title
+                previous = line
+        return title
+
+    def get_titles(self):
+
+        #
+        # this function must be called after download
+        #
+        banner("get titles")
+
+        for entry in self.docs.entries:
+            if entry["kind"] == "section":
+                #
+                # find the title in teh downloaded document
+                #
+                title = self.find_title(entry.destination)
+                if title == None:
+                    entry.documenttitle = entry.title
+                else:
+                    entry.documenttitle = title
+
+            elif entry.kind == 'header':
+                entry.documenttitle = entry.title
+
+        pprint (self.docs.entries)
 
     def urls(self):
 
