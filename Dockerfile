@@ -101,13 +101,14 @@ RUN pandoc --version
 
 RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1a/linux-pandoc_2_7_3.tar.gz
 RUN tar xvf linux-pandoc_2_7_3.tar.gz
-RUN cp linux-pandoc_2_7_3/pandoc-crosref /usr/local/bin
 
-WORKDIR /
+RUN mv pandoc-crossref /usr/local/bin
+
+
 
 RUN git clone https://github.com/cyberaide/bookmanager.git
 
-WORKDIR /bookmanager
+WORKDIR /tmp/bookmanager
 
 
 RUN pip install -e .
