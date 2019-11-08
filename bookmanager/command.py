@@ -146,6 +146,11 @@ def main():
         details = arguments["--details"]
         book.list("csv", details)
 
+    elif arguments.list and (arguments.FORMAT in ["jstree"]):
+
+        book.list("jstree")
+
+
     elif arguments.list and (arguments.FORMAT in ["list"]):
 
         book.list("list")

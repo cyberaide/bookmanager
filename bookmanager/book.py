@@ -14,6 +14,8 @@ from bookmanager.util import create_section
 from bookmanager.util import download as page_download
 from cloudmesh.common.debug import VERBOSE
 from cloudmesh.common.dotdict import dotdict
+from cloudmesh.common.FlatDict import FlatDict2
+
 from cloudmesh.common.util import banner, path_expand, readfile
 from tabulate import tabulate
 from bookmanager.document import Documents
@@ -86,6 +88,62 @@ class Book:
             )
 
             print('\n'.join(r))
+
+        elif output=="jstree":
+
+            """
+            <code>[
+              { "id": "root", "parent": "#", "text": "ROOT" },
+              { "id": "external", "parent": "root", "text": "external" },
+              { "id": "teachers", "parent": "root", "text": "teachers" },
+              { "id": "companyBV", "parent": "root", "text": "company BV" },
+              { "id": "buying", "parent": "companyBV", "text": "Buying" },
+              { "id": "finance", "parent": "companyBV", "text": "finance" },
+              { "id": "buyingCenter", "parent": "buying", "text": "buying center" },
+              { "id": "buyingGeneric", "parent": "buying", "text": "buying generic" },
+              { "id": "buyingSCenter", "parent": "buying", "text": "buying service center" }
+            ]</code>
+            On client side just feed it to the jsTree config:
+
+            <code>$('#jstree').jstree({
+                core: {
+                  data: data
+                }
+            })</code>
+            """
+
+            banner("JSTREE")
+
+            tree = []
+
+
+
+            for entry in self.docs.entries:
+                if entry.kind == "header":
+                    if "/" in entry.path:
+                        parent = "/".join(entry.path.split("/")[:-1])
+                    else:
+                        parent = "#"
+                    e = {
+                        "id": entry.path,
+                        "parent": parent,
+                        "text": entry.title
+                    }
+                elif entry.kind == "section":
+                    if "/" in entry.path:
+                        parent = "/".join(entry.path.split("/")[:-1])
+                    else:
+                        parent = "#"
+                    e = {
+                        "id": entry.path + "_" + entry.title.replace("-", "_"),
+                        "parent": entry.path,   # THIS IS A BUG AND DOES NOT WORK IF PARENT IS A SECTION
+                        "text": entry.documenttitle
+                    }
+                    print (e)
+
+                    tree.append(e)
+            for entry in tree:
+                print (entry)
 
 
     def check(self):
