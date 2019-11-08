@@ -52,10 +52,29 @@ Description:
 
         lists all urls of the yaml file
 
-      bookmanager YAML list [--format=FORMAT]
+      bookmanager YAML list [--format=FORMAT] [--details]
 
         lists the yaml file
 
+        If you specify as format list, you get presented with a list of dicts
+        that can be used for further processing
+
+        The list contains the attributes
+
+          basename - the name of the md file without path
+          counter - the counter in which the entry appears in the yaml file
+          destination - the destination to which the file is copied
+          dirname - the path without the basename
+          format - the format (md for markdown)
+          indent - a default indent that is used for easy printing in hierarchical format
+          kind - section or header (a section is a document)
+          level - the level this entry occurs
+          name - if its a section it defines the section name
+          path - the parent path
+          prefix - the file prefix (http* or file*)
+          title - this is tha basename (we need to add a new mdtitle)
+          topic - not used so far
+          uri - the location wheer to find the file
 
     Not implemented are the following features:
 
@@ -121,6 +140,11 @@ def main():
 
         details = arguments["--details"]
         book.list("markdown", details)
+
+    elif arguments.list and (arguments.FORMAT in ["csv"]):
+
+        details = arguments["--details"]
+        book.list("csv", details)
 
     elif arguments.list and (arguments.FORMAT in ["list"]):
 

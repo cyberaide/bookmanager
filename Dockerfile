@@ -99,6 +99,9 @@ RUN wget -q https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1
 RUN dpkg -i pandoc-2.7.3-1-amd64.deb
 RUN pandoc --version
 
+RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1a/linux-pandoc_2_7_3.tar.gz
+RUN tar xvf linux-pandoc_2_7_3.tar.gz
+RUN cp linux-pandoc_2_7_3/pandoc-crosref /usr/local/bin
 
 WORKDIR /
 

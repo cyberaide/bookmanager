@@ -46,14 +46,17 @@ class Book:
         print('\n'.join(r))
 
 
-    def list(self, output, details):
+    def list(self, output="markdown", details=False):
         banner("list")
 
-        banner("MARDOWN")
 
         if output == "markdown":
 
+            banner("MARDOWN")
+            print(details)
+
             if details:
+
                 self.printer(
                     section="{level:3} {path:20} {kind} {indent}- [ ] [{topic}]({url})",
                     header="{level:3} {path:20} {kind} {indent}- [ ]  {topic}",
@@ -64,6 +67,26 @@ class Book:
                     header="{indent}- [ ]  {topic}",
                 )
 
+        elif output=="list":
+
+            #r = self.docs.printer(
+            #    section="{level},{path},{kind},{indent},{title},{topic}",
+            #    header="{level},{path},{kind},{indent},{title},{topic}",
+            #)
+            #
+            #print('\n'.join(r))
+
+            #pprint(self.docs)
+            pprint(self.docs.entries)
+
+        elif output=="csv":
+
+            r = self.docs.printer(
+                section="{counter},{level},{path},{kind},{indent},{title},{topic},{uri}",
+                header="{counter},{level},{path},{kind},{indent},{title},{topic},{uri}",
+            )
+
+            print('\n'.join(r))
 
 
     def check(self):

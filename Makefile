@@ -93,7 +93,8 @@ release: clean
 	@echo
 	# sleep 10
 	# pip install -U cyberaide-common
-
+	make -f Makefile image
+	make -f Makefile push
 
 dev:
 	bump2version --new-version "$(VERSION)-dev0" part --allow-dirty
@@ -144,4 +145,4 @@ push:
 	docker push cloudmesh/bookmanager:latest
 
 run:
-	docker run cloudmesh/bookmanager:0.2.24 /bin/sh -c "cd technologies; git pull; make"
+	docker run cloudmesh/bookmanager:0.2.24 /bin/sh -c "cd books/book/cloud; git pull; make"
