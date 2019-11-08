@@ -93,8 +93,8 @@ release: clean
 	@echo
 	# sleep 10
 	# pip install -U cyberaide-common
-	#make -f Makefile image
-	#make -f Makefile push
+	make -f Makefile image
+	make -f Makefile push
 
 dev:
 	bump2version --new-version "$(VERSION)-dev0" part --allow-dirty

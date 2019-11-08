@@ -113,6 +113,7 @@ WORKDIR /tmp/bookmanager
 
 RUN pip install -e .
 
+WORKDIR /root
 
 #ENTRYPOINT ["/bookmanager/bin/pull.sh"]
 
