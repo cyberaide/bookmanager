@@ -129,6 +129,8 @@ class Book:
                         "parent": parent,
                         "text": entry.title
                     }
+                    tree.append(e)
+
                 elif entry.kind == "section":
                     if "/" in entry.path:
                         parent = "/".join(entry.path.split("/")[:-1])
@@ -139,7 +141,6 @@ class Book:
                         "parent": entry.path,   # THIS IS A BUG AND DOES NOT WORK IF PARENT IS A SECTION
                         "text": entry.documenttitle
                     }
-                    print (e)
 
                     tree.append(e)
             for entry in tree:
