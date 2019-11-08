@@ -53,7 +53,6 @@ class Book:
         if output == "markdown":
 
             banner("MARDOWN")
-            print(details)
 
             if details:
 
@@ -69,14 +68,6 @@ class Book:
 
         elif output=="list":
 
-            #r = self.docs.printer(
-            #    section="{level},{path},{kind},{indent},{title},{topic}",
-            #    header="{level},{path},{kind},{indent},{title},{topic}",
-            #)
-            #
-            #print('\n'.join(r))
-
-            #pprint(self.docs)
             pprint(self.docs.entries)
 
         elif output=="csv":
