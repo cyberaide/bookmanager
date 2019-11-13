@@ -116,8 +116,6 @@ class Book:
 
             tree = []
 
-
-
             for entry in self.docs.entries:
                 if entry.kind == "header":
                     if "/" in entry.path:
@@ -145,6 +143,8 @@ class Book:
                     tree.append(e)
             for entry in tree:
                 print (entry)
+
+            return tree
 
 
     def check(self):
