@@ -13,6 +13,7 @@ Usage:
   bookmanager YAML check [--format=FORMAT]
   bookmanager YAML urls [--format=FORMAT]
   bookmanager YAML list [--format=FORMAT] [--details]
+  bookmanager YAML pdfget [--force]
 
 Arguments:
   YAML   the yaml file
@@ -31,12 +32,13 @@ Description:
 
       bookmanager YAML get [--format=FORMAT]
 
-    The command searches for all images within the markdown document and fetches
-    them so the document can be created locally with the images. We assume all
-    images in the md document are for now not specified via http locations but
-    via relative locations.
+        The command searches for all documents within the markdown document and
+        fetches them so the document can be created locally. We assume all
+        images in the md document are for now not specified via http locations
+        but via relative locations. E.g. the images must be in an images folder
+        next to the document.
 
-    To view the document use your favourite ePub Reader
+        To view the document use your favourite ePub Reader
 
     Other commands include:
 
@@ -76,9 +78,15 @@ Description:
           topic - not used so far
           uri - the location wheer to find the file
 
+
     Not implemented are the following features:
 
-    1) pdf:  bookmanager pdf book.yml
+    bookmanager YAML pdfget [--force]
+
+        The command searches for all documents within the markdown document and
+        fetches them so the document can be created locally. In contrast to the
+        get command this command only takes PDF documents as input. The output
+        will be a PDF document only.
 
     YAML Table of Contents format:
 
