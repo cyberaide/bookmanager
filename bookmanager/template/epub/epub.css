@@ -49,9 +49,9 @@ h1 {
 h2 {
     text-align: left;    
     font-family: OpenSans;
-    border-top: 2px solid black;
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 2px solid black;
+    border-left: 4px solid black;
     border-right: 1px solid black;
     font-variant: small-caps;
 }
