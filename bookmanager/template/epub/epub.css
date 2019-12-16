@@ -50,12 +50,18 @@ h2 {
     text-align: left;    
     font-family: OpenSans;
     border-top: 1px solid black;
-    border-bottom: 2px solid black;
-    border-left: 4px solid black;
+    border-bottom: 1px solid black;
+    border-left: 6px solid black;
     border-right: 1px solid black;
     font-variant: small-caps;
 }
-h3, h4, h5, h6 {
+h3 {
+    text-align: left;
+    font-family: OpenSans;
+    border-top: 1px solid black;
+    font-variant: small-caps;
+}
+h4, h5, h6 {
     font-family: OpenSans;
 }
 h1.title { }
