@@ -33,6 +33,8 @@ class Book:
 
 
         self.metadata = self.docs.metadata
+        if "filename" not in self.metadata:
+            self.metadata["filename"] = arguments.YAML
         self.arguments = arguments
 
     def printer(self,
