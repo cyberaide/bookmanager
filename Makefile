@@ -127,19 +127,19 @@ log:
 #--no-cache=true
 
 image:
-	docker build  -t cloudmesh/bookmanager:0.2.29 -t cloudmesh/bookmanager:latest .
+	docker build  -t cloudmesh/bookmanager:0.2.30 -t cloudmesh/bookmanager:latest .
 
 #
 # cm munts all parent directories into the container 
 #
 cm:
-	docker run -v `pwd`/..:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.29  /bin/bash
+	docker run -v `pwd`/..:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.30  /bin/bash
 
 shell:
-	docker run --rm -it cloudmesh/bookmanager:0.2.29  /bin/bash
+	docker run --rm -it cloudmesh/bookmanager:0.2.30  /bin/bash
 
 cms:
-	docker run --rm -it cloudmesh/bookmanager:0.2.29
+	docker run --rm -it cloudmesh/bookmanager:0.2.30
 
 dockerclean:
 	-docker kill $$(docker ps -q)
@@ -147,8 +147,8 @@ dockerclean:
 	-docker rmi $$(docker images -q)
 
 push:
-	docker push cloudmesh/bookmanager:0.2.29
+	docker push cloudmesh/bookmanager:0.2.30
 	docker push cloudmesh/bookmanager:latest
 
 run:
-	docker run cloudmesh/bookmanager:0.2.29 /bin/sh -c "cd books/book/cloud; git pull; make"
+	docker run cloudmesh/bookmanager:0.2.30 /bin/sh -c "cd books/book/cloud; git pull; make"
