@@ -42,6 +42,7 @@ munch
 pillow
 markdown
 cloudmesh-common
+ebooklib
 """.splitlines()
 
 # dependency_links = ['http://github.com/nicolaiarocci/eve.git@develop']

@@ -38,13 +38,13 @@ class Book:
         self.arguments = arguments
 
     def printer(self,
-                section="{counter:3} {level:3} {path:20} {indent} - [ ] {title}",
-                header="{counter:3} {level:3} {path:20} {indent} - [ ] {title}"
+                section="{counter:3} {level:3} {path:20} {indent} - [ ] {documenttitle} {title}",
+                header="{counter:3} {level:3} {path:20} {indent} - [ ] {documenttitle} {title}"
                 ):
 
         r = self.docs.printer(
-                    section="{counter:3} {level:3} {path:20} {indent} - [ ] {title}",
-                    header="{counter:3} {level:3} {path:20} {indent} - [ ] {title}"
+                    section=section,
+                    header=header
                     )
 
         print('\n'.join(r))
@@ -69,13 +69,14 @@ class Book:
             if details:
 
                 self.printer(
-                    section="{level:3} {path:20} {kind} {indent}- [ ] [{topic}]({url})",
-                    header="{level:3} {path:20} {kind} {indent}- [ ]  {topic}",
+                    section="{level:3} {path:20} {kind} {indent}- [ ] {documenttitle} [{topic}]({uri})",
+                    header="{level:3} {path:20} {kind} {indent}- [ ] {documenttitle} {topic}",
                 )
             else:
+
                 self.printer(
-                    section="{indent}- [ ] [{topic}]({url})",
-                    header="{indent}- [ ]  {topic}",
+                    section="{indent}- [ ] {documenttitle}",
+                    header="{indent}- [ ]  {documenttitle}",
                 )
 
         elif output=="list":

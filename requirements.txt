@@ -7,3 +7,4 @@ munch
 pillow
 markdown
 cloudmesh-common
+ebooklib
