@@ -1,7 +1,7 @@
 #
-# UBUNTU 19.04
+# UBUNTU 19.10
 #
-FROM ubuntu:19.04
+FROM ubuntu:19.10
 
 MAINTAINER Gregor von Laszewski <laszewski@gmail.com>
 
@@ -39,15 +39,15 @@ RUN apt-get install -y git
 RUN apt-get install -y lsb-core
 
 #
-# INSTALL PYTHON 3.7 FROM SOURCE
+# INSTALL PYTHON 3.8 FROM SOURCE
 #
 
 WORKDIR /usr/src
 
-RUN wget https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tgz
-RUN tar xzf Python-3.7.4.tgz
+RUN wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
+RUN tar xzf Python-3.8.1.tgz
 
-WORKDIR /usr/src/Python-3.7.4
+WORKDIR /usr/src/Python-3.8.1
 
 RUN ./configure --enable-optimizations
 
@@ -55,7 +55,7 @@ RUN make altinstall
 
 
 #
-# INSTALL PACKAGED PYTHON 3.7
+# INSTALL PACKAGED PYTHON 3.8
 #
 
 #RUN apt-get install -y software-properties-common
@@ -64,7 +64,7 @@ RUN make altinstall
 
 #RUN apt-get autoremove
 
-#RUN apt-get install -y python3.7
+#RUN apt-get install -y python3.8
 # RUN apt-get install python3-distutils
 # RUN apt-get install python3-setuptools
 # RUN sudo easy_install3 pip
@@ -72,10 +72,10 @@ RUN make altinstall
 #RUN pip3 install --upgrade pip setuptools
 
 
-RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 10
+RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.8 10
 RUN update-alternatives --config python
 
-RUN update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip3.7 10
+RUN update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip3.8 10
 RUN update-alternatives --config pip
 
 RUN yes '' | update-alternatives --force --all
@@ -83,7 +83,7 @@ RUN yes '' | update-alternatives --force --all
 
 ENV PATH="/usr/local/bin:${PATH}"
 
-RUN python3.7 --version
+RUN python3.8 --version
 RUN python --version
 RUN pip install -U pip
 RUN pip --version
@@ -94,16 +94,15 @@ WORKDIR /tmp
 
 #
 # INSTALL PANDOC
-#
-RUN wget -q https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
-RUN dpkg -i pandoc-2.7.3-1-amd64.deb
+#           
+RUN wget -q https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-1-amd64.deb
+RUN dpkg -i pandoc-2.9.1.1-1-amd64.deb
 RUN pandoc --version
 
-RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.4.1a/linux-pandoc_2_7_3.tar.gz
-RUN tar xvf linux-pandoc_2_7_3.tar.gz
+RUN wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.6.1b/linux-pandoc_2_9_1_1.tar.gz
+RUN tar xvf linux-pandoc_2_9_1_1.tar.gz
 
 RUN mv pandoc-crossref /usr/local/bin
-
 
 
 RUN git clone https://github.com/cyberaide/bookmanager.git
