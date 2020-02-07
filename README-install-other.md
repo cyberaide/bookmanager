@@ -76,33 +76,7 @@ In the container you need to do the following:
  
 ```bash
 /cm# cd book
-
 /cm/book# cd books/cd 516-sp20/
-
-:/cm/book/books/516-sp20# ls -1
-
-Makefile
-
-aa.yaml
-
-dest
-
-e516-datacenter.yaml
-
-e516-draft.yaml
-
-e516-sp20-proceedings.yaml
-
-e516-sp20-proceedings.yaml.bak
-
-e516-sp20-syllabus.yaml
-
-e516-sp20.yaml
-
-e516.yaml
-
-reports.md
-
 :/cm/book/books/516-sp20# time make proceedings
 ```
  
@@ -110,30 +84,12 @@ reports.md
 The output is in `/cm/pub/docs` in teh container or the `pub` folder on
 your native OS that you previously created.
 
-To show you the performance differences I copied some information from
-my computer:
+To show you the performance differences on this more complex example I
+copied some information from my computer:
   
 
-Native:
-
-```
-real 0m34.948s
-user 0m13.971s
-sys 0m2.680s
-```
- 
-Container with mount of cm in host system e.g. osx:
- 
-```
-real 0m48.782s
-user 0m16.872s
-sys 0m2.428s
-```
- 
-Container with locally checked out books folder
-
-```
-real 0m40.372s
-user 0m13.606s
-sys 0m1.670s
-```
+| Mode | time on Gregor's macOS |
+| ------ | ------ |
+| Native | 34.948s |
+| Container with mount of cm in host system | 48.782s |
+| Container with locally checked out book folder | 40.372s |
