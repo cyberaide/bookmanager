@@ -1,6 +1,7 @@
 
 # Bookmanager
 
+[![DOI](https://zenodo.org/badge/180580449.svg)](https://zenodo.org/badge/latestdoi/180580449)
 [![Version](https://img.shields.io/pypi/v/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/cyberaide/bookmanager/blob/master/LICENSE)
 [![Python](https://img.shields.io/pypi/pyversions/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
@@ -14,7 +15,7 @@
 Bookmanager is a tool to create a publication from a number of sources on the
 internet. It is especially useful to create customized books, lecture notes, or
 handouts. Content is best integrated in markdown format as it is very fast to
-produce the output. At present we only produce ePubs, but it will be easy to
+produce the output. At present we only produce epubs, but it will be easy to
 also create pdf, html, work, odt and others. As we use pandoc we can support the
 formats supported by it.
 
@@ -44,7 +45,7 @@ $ pip install cyberaide-bookmanager
 
 
 ```
-bookmanager -- a helper to create books from mardown files in a yaml TOC.
+bookmanager -- a helper to create books from markdown files in a yaml TOC.
 
 Usage:
   bookmanager version
@@ -53,13 +54,13 @@ Usage:
   bookmanager YAML download
   bookmanager YAML level
   bookmanager YAML epub [--force]
-  bookmanager YAML pdf [--force]
+  bookmanager YAML pdf
   bookmanager YAML html
   bookmanager YAML docx
   bookmanager YAML check [--format=FORMAT]
   bookmanager YAML urls [--format=FORMAT]
   bookmanager YAML list [--format=FORMAT] [--details]
-  bookmanager YAML pdfget [--force]
+
 
 Arguments:
   YAML   the yaml file
@@ -78,13 +79,12 @@ Description:
 
       bookmanager YAML get [--format=FORMAT]
 
-        The command searches for all documents within the markdown document and
-        fetches them so the document can be created locally. We assume all
-        images in the md document are for now not specified via http locations
-        but via relative locations. E.g. the images must be in an images folder
-        next to the document.
+    The command searches for all images within the markdown document and fetches
+    them so the document can be created locally with the images. We assume all
+    images in the md document are for now not specified via http locations but
+    via relative locations.
 
-        To view the document use your favourite ePub Reader
+    To view the document use your favourite ePub Reader
 
     Other commands include:
 
@@ -100,39 +100,14 @@ Description:
 
         lists all urls of the yaml file
 
-      bookmanager YAML list [--format=FORMAT] [--details]
+      bookmanager YAML list [--format=FORMAT]
 
         lists the yaml file
-
-        If you specify as format list, you get presented with a list of dicts
-        that can be used for further processing
-
-        The list contains the attributes
-
-          basename - the name of the md file without path
-          counter - the counter in which the entry appears in the yaml file
-          destination - the destination to which the file is copied
-          dirname - the path without the basename
-          format - the format (md for markdown)
-          indent - a default indent that is used for easy printing in hierarchical format
-          kind - section or header (a section is a document)
-          level - the level this entry occurs
-          name - if its a section it defines the section name
-          path - the parent path
-          prefix - the file prefix (http* or file*)
-          title - this is tha basename (we need to add a new mdtitle)
-          topic - not used so far
-          uri - the location wheer to find the file
 
 
     Not implemented are the following features:
 
-    bookmanager YAML pdfget [--force]
-
-        The command searches for all documents within the markdown document and
-        fetches them so the document can be created locally. In contrast to the
-        get command this command only takes PDF documents as input. The output
-        will be a PDF document only.
+    1) pdf:  bookmanager pdf book.yml
 
     YAML Table of Contents format:
 
@@ -158,9 +133,9 @@ Book manager can create a simple cover page for you.
 and example is given at 
 
 
-* <https://github.com/cyberaide/bookmanager/blob/master/tests/exmaple/cover.png>
+* <https://github.com/cyberaide/bookmanager/blob/master/tests/example/cover.png>
 
-![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/exmaple/cover-thumb.png)
+![Cover Page](https://github.com/cyberaide/bookmanager/raw/master/tests/example/cover-thumb.png)
 
 
 ## Example creation
@@ -175,7 +150,7 @@ $ open dest/book.epub
 
 ## References
 
-* Example Yaml file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
+* Example Yamle file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
 * Home page: <https://github.com/cyberaide/bookmanager>
 
 ## Requirements
@@ -220,38 +195,30 @@ metadata:
   stylesheet: "epub.css"
   dest: "./dest/book"
   filename: "vonLaszewski-python.epub"
-  rights: (c) Gregor von Laszewski, 2018, 2019
 git:
   "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
-  "bookmanager": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
+  "credit": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
 BOOK:
   - PREFACE:
-      - "{git.bookmanager}/disclaimer.md"
+    - "{git.credit}/disclaimer.md"
   - INTRODUCTION:
+    - "{git.book}/prg/SECTION-PYTHON.md"
     - "{git.book}/prg/python/python-intro.md"
-  - INSTALATION:
-      - "{git.book}/prg/python/python-install.md"
-      - "{git.book}/prg/python/python-install-pyenv.md"
-  - FIRST_STEPS:
-      - "{git.book}/prg/python/python-interactive.md"
-      - "{git.book}/prg/python/python-editor.md"
-  - LANGUAGE:
-      - "{git.book}/prg/python/python.md"
-  - CLOUDMESH_COMMON:
-      - "{git.book}/prg/python/cloudmesh/console.md"
-      - "{git.book}/prg/python/cloudmesh/dict.md"
-      - "{git.book}/prg/python/cloudmesh/shell.md"
-      - "{git.book}/prg/python/cloudmesh/stopwatch.md"
+    - "{git.book}/prg/python/python-install.md"
+    - "{git.book}/prg/python/python-interactive.md"
+    - "{git.book}/prg/python/python-editor.md"
+    - "{git.book}/prg/python/python.md"
   - LIBRARIES:
     - "{git.book}/prg/python/python-libraries.md"
     - "{git.book}/prg/python/python-data.md"
     - "{git.book}/prg/python/python-matplotlib.md"
     - "{git.book}/prg/python/python-docopts.md"
-    - "{git.book}/prg/python/cloudmesh/python-cmd5.md"
+    - "{git.book}/prg/python/python-cmd5.md"
     - "{git.book}/prg/python/python-cmd.md"
     - "{git.book}/prg/python/opencv/opencv.md"
     - "{git.book}/prg/python/opencv/secchi.md"
   - DATA:
+    - "{git.book}/SECTION/SECTION-DATA.md"
     - "{git.book}/data/formats.md"
   - MONGO:
     - "{git.book}/data/mongodb.md"
@@ -267,146 +234,86 @@ BOOK:
   - APPLICATIONS:
     - "{git.book}/prg/python/fingerprint/fingerprint.md"
     - "{git.book}/prg/python/facedetection/facedetection.md"
-  - REFERENCES:
-      - "{git.bookmanager}/empty.md"
 ```
 
-## Alternative Instalations
+In case you have local files, you can add them with `file://`.
 
-The pip install requires that you have pandoc and pandoc-citeref
-installed. A NAtive install with pip has the advantage that it may be
-much faster than for example an instalation in a virtual machine via
-vagrant or a container.
-
-However, these instalation methods may be much easier as you do not have
-toinstall that dependencies yourself.
-
-### Instalation in a Container
-
-The image for bookmanager is available at 
-
-* <https://hub.docker.com/repository/docker/cloudmesh/bookmanager>
-
-To pull the premade image please use
+Let us assume you have the files all stored in a chapters directory, than
+you could use the following yaml file.
 
 ```
-docker pull cloudmesh/bookmanager:latest
+---
+metadata:
+  image: "cover.png"
+  title: "Introduction to Python"
+  subtitle: "for Cloud Computing"
+  author: 'Gregor von Laszewski'
+  subauthor: "Editor"
+  email: "laszewski@gmail.com"
+  url: "https://github.com/cyberaide/bookmanager"
+  description: "Book creator"
+  abstract: "my abstract"
+  keywords: "pandoc"
+  stylesheet: "epub.css"
+  dest: "./dest/book"
+  filename: "vonLaszewski-python.epub"
+git:
+  "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
+  "book": "https://raw.githubusercontent.com/cloudmesh-community/book/master/chapters"
+  "credit": "https://raw.githubusercontent.com/cyberaide/bookmanager/master/bookmanager/template"
+file:
+  "chapter": "file://../chapters"
+BOOK:
+  - PREFACE:
+    - "{git.credit}/disclaimer.md"
+  - INTRODUCTION:
+    - "{file.chapter}/prg/SECTION-PYTHON.md"
+    - "{file.chapter}/prg/python/python-intro.md"
+    - "{file.chapter}/prg/python/python-install.md"
+    - "{file.chapter}/prg/python/python-interactive.md"
+    - "{file.chapter}/prg/python/python-editor.md"
+    - "{file.chapter}/prg/python/python.md"
+  - LIBRARIES:
+    - "{file.chapter}/prg/python/python-libraries.md"
+    - "{file.chapter}/prg/python/python-data.md"
+    - "{file.chapter}/prg/python/python-matplotlib.md"
+    - "{file.chapter}/prg/python/python-docopts.md"
+    - "{file.chapter}/prg/python/python-cmd5.md"
+    - "{file.chapter}/prg/python/python-cmd.md"
+    - "{file.chapter}/prg/python/opencv/opencv.md"
+    - "{file.chapter}/prg/python/opencv/secchi.md"
+  - DATA:
+    - "{file.chapter}/SECTION/SECTION-DATA.md"
+    - "{file.chapter}/data/formats.md"
+  - MONGO:
+    - "{file.chapter}/data/mongodb.md"
+    - "{file.chapter}/data/mongoengine.md"
+  - OTHER:
+    - "{file.chapter}/prg/python/python-wordcount.md"
+    - "{file.chapter}/prg/python/numpy/numpy.md"
+    - "{file.chapter}/prg/python/scipy/scipy.md"
+    - "{file.chapter}/prg/python/scikit-learn/scikit-learn.md"
+    - "{file.chapter}/prg/python/random-forest/random-forest.md"
+    - "{file.chapter}/prg/python/python-parallel.md"
+    - "{file.chapter}/prg/python/dask/dask.md"
+  - APPLICATIONS:
+    - "{file.chapter}/prg/python/fingerprint/fingerprint.md"
+    - "{file.chapter}/prg/python/facedetection/facedetection.md"
 ```
 
-Now you can list the images with 
+## Automated github links
+
+It is possible to replace the local link that will be added to the
+files with a link to a github repository. At this time this is only
+supported for documents that are in the same repository.
+
+Simply add the following in case your local files are in
+`../chapter`. While specifying it in the `base`. This variable
+specifies the link to the source. The variable github, will be used to
+replace the base with a link to the github repository.
 
 ```
-docker image list
-```
-
-to run a shell in a container that includes bookmanager, please use 
-
-```bash
-docker run -v `pwd`:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.30  /bin/bash
-```
-
-In that shell you can call `bookmanager`
-
-### Instalation for Developers on macOS and Linux
-
-See the next section and execute the commands we give in the Makefile
-targets while completing the variables accordingly. You can also install
-make via choco and use the Makefile.
-
-We ar looking a Windows user that can contribute a bat file or a
-packaged .exe, or give us the example command for docker
-
-### Instalation for Developers on macOS and Linux
- 
-
-Here the preparation steps:
-
- 
-```bash
-mkdir cm
-cd cm
-git clone https://github.com/cyberaide/bookmanager.git
-cd bookmanager
-make image
-```
-
-Now you can use that image to create books. We will explain here a more advanced example
-
-
-
-TODO: give an example here while compiling our cloud computing book
-
-```bash cd cm mkdir cm/pub git clone
-https://github.com/cloudmesh-community/book.git make cm 
-``` 
-
-This will log you into the container that alsoo has the cm volume
-mounted in /cm now you can use the bookmanager in cm while using the
-content that you have in your native OS.
- 
-In the container you need to do the following:
-
- 
-```bash
-/cm# cd book
-
-/cm/book# cd books/cd 516-sp20/
-
-:/cm/book/books/516-sp20# ls -1
-
-Makefile
-
-aa.yaml
-
-dest
-
-e516-datacenter.yaml
-
-e516-draft.yaml
-
-e516-sp20-proceedings.yaml
-
-e516-sp20-proceedings.yaml.bak
-
-e516-sp20-syllabus.yaml
-
-e516-sp20.yaml
-
-e516.yaml
-
-reports.md
-
-:/cm/book/books/516-sp20# time make proceedings
-```
- 
-
-The output is in `/cm/pub/docs` in teh container or the `pub` folder on
-your native OS that you previously created.
-
-To show you the performance differences I copied some information from
-my computer:
-  
-
-Native:
-
-```
-real 0m34.948s
-user 0m13.971s
-sys 0m2.680s
-```
- 
-Container with mount of cm in host system e.g. osx:
- 
-```
-real 0m48.782s
-user 0m16.872s
-sys 0m2.428s
-```
- 
-Container with locally checked out books folder
-
-```
-real 0m40.372s
-user 0m13.606s
-sys 0m1.670s
+file:
+  "github": "https://github.com/cloudmesh-community/book/blob/master/chapters"
+  "base": "../chapters"
 ```

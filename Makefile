@@ -43,7 +43,8 @@ readme:
 	    README-postfix.md \
 	    README-helper/verbatim-start.md \
 	    tests/python.yml \
-	    README-helper/verbatim-stop.md > README.md
+	    README-helper/verbatim-stop.md \
+	    README-install-other.md > README.md
 	git commit -am "Generating the README"
 	git push
 
