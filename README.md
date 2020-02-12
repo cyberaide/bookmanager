@@ -197,7 +197,16 @@ wget -q https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd
 sudo dpkg -i pandoc-2.7.2-1-amd64.deb
 pandoc --version
 ```
-We recommend pandoc version 2.7.2.
+
+We recommend a very new version of pandoc and pandoc-crossref. Look in
+our Dockerfile to see how you can install them from source.
+
+## Bookmanager Service
+
+A graphical user interface for selecting chapters and changing their order is available at 
+
+* <https://github.com/cyberaide/bookmanager-service/blob/master/README.md>
+
 
 ## Example Yaml file
 
