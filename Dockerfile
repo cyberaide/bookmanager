@@ -39,6 +39,17 @@ RUN apt-get install -y git
 RUN apt-get install -y lsb-core
 
 #
+# install
+#
+RUN apt-get install -y emacs-nox
+
+#RUN yes | pacman -Sy biber
+#RUN yes | pacman -Sy emacs
+#RUN yes | pacman -Sy lsb-release
+
+
+
+#
 # INSTALL PYTHON 3.8 FROM SOURCE
 #
 
