@@ -42,6 +42,7 @@ RUN apt-get install -y lsb-core
 # install
 #
 RUN apt-get install -y emacs-nox
+RUN apt-get -y install biber
 
 #RUN yes | pacman -Sy biber
 #RUN yes | pacman -Sy emacs
@@ -55,10 +56,10 @@ RUN apt-get install -y emacs-nox
 
 WORKDIR /usr/src
 
-RUN wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
-RUN tar xzf Python-3.8.1.tgz
+RUN wget https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tgz
+RUN tar xzf Python-3.8.2.tgz
 
-WORKDIR /usr/src/Python-3.8.1
+WORKDIR /usr/src/Python-3.8.2
 
 RUN ./configure --enable-optimizations
 
