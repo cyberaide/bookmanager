@@ -149,9 +149,9 @@ cms:
 	docker run --rm -it cloudmesh/bookmanager:0.2.32
 
 dockerclean:
-	-docker kill $$(docker ps -q)
-	-docker rm $$(docker ps -a -q)
-	-docker rmi $$(docker images -q)
+	-docker kill $$(docker ps -q) --force
+	-docker rm $$(docker ps -a -q) --force
+	-docker rmi $$(docker images -q) --force
 
 push:
 	docker push cloudmesh/bookmanager:0.2.32
