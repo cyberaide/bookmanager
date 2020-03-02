@@ -11,11 +11,11 @@ define banner
 	@echo "############################################################"
 endef
 
-source: 
-	cd ../cloudmesh.common; make source
-	$(call banner, "Install cloudmesh-cmd5")
-	pip install -e . -U
-	cms help
+#source:
+#	cd ../cloudmesh.common; make source
+#	$(call banner, "Install cloudmesh-cmd5")
+#	pip install -e . -U
+#	cms help
 
 validate:
 	gem install travis
