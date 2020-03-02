@@ -17,13 +17,9 @@ RUN apt-get install -y --no-install-recommends apt-utils
 #
 # DEVELOPMENT TOOLS
 #
-RUN apt-get install -y graphviz
-RUN apt-get install -y wget
-RUN apt-get install -y curl
-RUN apt-get install -y rsync
-RUN apt-get install -y git-core
-RUN apt-get install -y dnsutils
 RUN apt-get install -y build-essential checkinstall --fix-missing
+RUN apt-get install -y lsb-core
+RUN apt-get install -y dnsutils
 RUN apt-get install -y libssl-dev
 RUN apt-get install -y libffi-dev
 RUN apt-get install -y libreadline-gplv2-dev
@@ -34,8 +30,16 @@ RUN apt-get install -y libc6-dev
 RUN apt-get install -y libbz2-dev
 RUN apt-get install -y libffi-dev
 RUN apt-get install -y zlib1g-dev
+
+RUN apt-get install -y git-core
 RUN apt-get install -y git
-RUN apt-get install -y lsb-core
+
+RUN apt-get install -y wget
+RUN apt-get install -y curl
+RUN apt-get install -y rsync
+
+RUN apt-get install -y graphviz
+
 
 #
 # install
