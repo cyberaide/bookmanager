@@ -105,7 +105,7 @@ RUN pip --version
 
 
 
-WORKDIR /tmp
+WORKDIR /usr/local/code
 
 #
 # INSTALL PANDOC
@@ -122,7 +122,7 @@ RUN mv pandoc-crossref /usr/local/bin
 
 RUN git clone https://github.com/cyberaide/bookmanager.git
 
-WORKDIR /tmp/bookmanager
+WORKDIR /usr/local/code/bookmanager
 
 
 RUN pip install -e .
