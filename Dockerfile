@@ -23,7 +23,7 @@ RUN apt-get install -y curl
 RUN apt-get install -y rsync
 RUN apt-get install -y git-core
 RUN apt-get install -y dnsutils
-RUN apt-get install -y build-essential checkinstall
+RUN apt-get install -y build-essential checkinstall --fix-missing
 RUN apt-get install -y libssl-dev
 RUN apt-get install -y libffi-dev
 RUN apt-get install -y libreadline-gplv2-dev
