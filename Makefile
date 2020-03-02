@@ -136,6 +136,9 @@ image:
 cm:
 	docker run -v `pwd`/..:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
 
+wincm:
+	winpty docker run -v `pwd`/..:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
+
 shell:
 	docker run --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
 
