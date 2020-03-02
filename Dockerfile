@@ -10,10 +10,9 @@ ENV DEBIAN_FRONTEND noninteractive
 #
 # UPDATE THE SYSTEM
 #
-RUN apt-get -y update
+RUN apt-get -y update --fix-missing
 RUN apt-get -y dist-upgrade
 RUN apt-get install -y --no-install-recommends apt-utils
-RUN apt-get update --fix-missing
 
 #
 # DEVELOPMENT TOOLS
