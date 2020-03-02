@@ -1,15 +1,8 @@
 package=cyberaide-bookmanager
-UNAME=$(shell uname)
 VERSION=`head -1 VERSION`
+CM=$(shell dirname `pwd`)
 
 .PHONY: readme
-
-define banner
-	@echo
-	@echo "############################################################"
-	@echo "# $(1) "
-	@echo "############################################################"
-endef
 
 #source:
 #	cd ../cloudmesh.common; make source
@@ -22,7 +15,9 @@ validate:
 	travis lint .travis.yml
 
 clean:
-	$(call banner, "CLEAN")
+	@echo "############################################################"
+	@echo "# CLEAN "
+	@echo "############################################################"
 	rm -rf dist
 	rm -rf *.zip
 	rm -rf *.egg-info
@@ -64,7 +59,9 @@ requirements_dev:
 	pip install -r  requirements-dev.txt
 
 patch: clean requirements_dev
-	$(call banner, "build")
+	@echo "############################################################"
+	@echo "# BUILD "
+	@echo "############################################################"
 	bump2version --no-tag patch
 	python setup.py sdist
 	python setup.py bdist_wheel
@@ -77,13 +74,17 @@ patch: clean requirements_dev
 	# pip install --index-url https://test.pypi.org/simple/ cloudmesh-$(package) -U
 
 minor: clean
-	$(call banner, "minor")
+	@echo "############################################################"
+	@echo "# MINOR "
+	@echo "############################################################"
 	bump2version minor --allow-dirty
 	@cat VERSION
 	@echo
 
 release: clean
-	$(call banner, "release")
+	@echo "############################################################"
+	@echo "# CLEAN "
+	@echo "############################################################"
 	git tag "v$(VERSION)"
 	git push origin master --tags
 	python setup.py sdist bdist_wheel
@@ -116,7 +117,9 @@ pip:
 #	    --extra-index-url https://test.pypi.org/simple
 
 log:
-	$(call banner, log)
+	@echo "############################################################"
+	@echo "# LOG "
+	@echo "############################################################"
 	gitchangelog | fgrep -v ":dev:" | fgrep -v ":new:" > ChangeLog
 	git commit -m "chg: dev: Update ChangeLog" ChangeLog
 	git push
@@ -134,10 +137,10 @@ image:
 # cm munts all parent directories into the container
 #
 cm:
-	docker run -v `pwd`/..:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
+	docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
 
 wincm:
-	winpty docker run -v `pwd`/..:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
+	winpty docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
 
 shell:
 	docker run --rm -it cloudmesh/bookmanager:0.2.32  /bin/bash
