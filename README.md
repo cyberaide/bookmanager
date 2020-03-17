@@ -193,13 +193,28 @@ pandoc documentation on how to do this. Unfortunately the versions distributed
 with ubuntu are outdated. On ubuntu you can say:
 
 ```bash
-wget -q https://github.com/jgm/pandoc/releases/download/2.7.2/pandoc-2.7.2-1-amd64.deb
-sudo dpkg -i pandoc-2.7.2-1-amd64.deb
+wget -q https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-1-amd64.deb
+sudo dpkg -i pandoc-2.9.1.1-1-amd64.deb
 pandoc --version
+
+wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.6.1b/linux-pandoc_2_9_1_1.tar.gz
+tar xvf linux-pandoc_2_9_1_1.tar.gz
+
+sudo mv pandoc-crossref /usr/local/bin
 ```
+
+
 
 We recommend a very new version of pandoc and pandoc-crossref. Look in
 our Dockerfile to see how you can install them from source.
+
+We also install calibre to convert the epub to pdf
+
+```
+sudo apt-get install calibre
+```
+
+
 
 ## Bookmanager Service
 
