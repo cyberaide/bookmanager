@@ -17,9 +17,10 @@ pre {
     background-color: rgb(242, 242, 242);
 }
 code {
+#    color: black;
     font-family: monospace;
     font-size: xx-small;
-    background-color: rgb(242, 242, 242);
+#    background-color: rgb(242, 242, 242);
 }
 h3 { text-align: left; }
 h4 { text-align: left; }
