@@ -223,17 +223,21 @@ stack install
 `~/.local/bin` needs to be added to your PATH
 
 
+## Pandoc Version Requirements
 
-We recommend a very new version of pandoc and pandoc-crossref. Look in
-our Dockerfile to see how you can install them from source.
+We recommend a version of pandoc and pandoc-crossref greater than 2.10. Older
+versions may not work. Look in our Dockerfile to see how you can install them
+from source.
 
-We also install calibre to convert the epub to pdf
+## Calibre
+
+Calibre is a very good epub browser. It can be installed on Ubuntu with
 
 ```
 sudo apt-get install calibre
 ```
 
-
+For other operating systems, please visit the calibre Web page.
 
 ## Bookmanager Service
 
