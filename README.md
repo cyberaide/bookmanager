@@ -203,6 +203,25 @@ tar xvf linux-pandoc_2_9_1_1.tar.gz
 sudo mv pandoc-crossref /usr/local/bin
 ```
 
+##  Install on macOS
+
+```bash
+mkdir pandoc
+cd pandoc
+wget https://hackage.haskell.org/package/pandoc-2.10.1/pandoc-2.10.1.tar.gz
+tar xvf pandoc-2.10.1.tar.gz  
+cd pandoc-2.10.1
+stack setup
+stack install
+
+cd ..
+git clone https://github.com/lierdakil/pandoc-crossref.git
+cd pandoc-crossref
+stack install
+```
+
+`~/.local/bin` needs to be added to your PATH
+
 
 
 We recommend a very new version of pandoc and pandoc-crossref. Look in
