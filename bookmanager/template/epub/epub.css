@@ -10,15 +10,9 @@ body {
   font-size: x-small;
   line-height: 1.25;
 }
-
-pre {
-    font-family: monospace;
-    font-size: xx-small;
-    background-color: rgb(242, 242, 242);
-}
-code {
-    font-family: monospace;
-    font-size: xx-small;
+pre, code {
+    font-family: monospace, monospace;
+    font-size: 0.70em;
     background-color: rgb(242, 242, 242);
 }
 h3 { text-align: left; }
@@ -152,7 +146,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   .sourceCode {
       overflow: visible !important;
       white-space: pre-wrap !important;
-      font-family: monospace;
-      font-size: xx-small;
+      font-family: monospace, monospace;
+      font-size: 0.70em;
   }
 }
