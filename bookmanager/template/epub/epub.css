@@ -2,7 +2,7 @@
 @font-face {
   font-style: normal;
   font-weight: lighter;
-  font-size: x-small;  
+  font-size: x-small;
 }
 
 body {
@@ -17,10 +17,9 @@ pre {
     background-color: rgb(242, 242, 242);
 }
 code {
-#    color: black;
     font-family: monospace;
     font-size: xx-small;
-#    background-color: rgb(242, 242, 242);
+    background-color: rgb(242, 242, 242);
 }
 h3 { text-align: left; }
 h4 { text-align: left; }
@@ -32,7 +31,7 @@ h1 {
     border-top: 2px solid black;
     border-bottom: 2px solid black;
     border-left: 12px solid black;
-    border-right: 2px solid black;   
+    border-right: 2px solid black;
     page-break-before: always;
     background-color: WhiteSmoke;
     padding: 2px;
@@ -48,7 +47,7 @@ h1 {
     padding-top: 2px;
 }
 h2 {
-    text-align: left;    
+    text-align: left;
     font-family: OpenSans;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
@@ -97,7 +96,7 @@ table td {
     border-right: none;
     border-bottom: 1px solid black;
 }
-blockquote { 
+blockquote {
   font-style: italic;
   border-left: 4px solid rgb(242, 242, 242);
   display: block;
@@ -135,4 +134,25 @@ background-image: url('https://github.com/cyberaide/bookmanager/raw/master/bookm
 color: #D8000C;
 background-color: #FFBABA;
 background-image: url('https://github.com/cyberaide/bookmanager/raw/master/bookmanager/template/epub/images/no.png');
+}
+nav#toc ol,
+nav#landmarks ol { padding: 0; margin-left: 1em; }
+nav#toc ol li,
+nav#landmarks ol li { list-style-type: none; margin: 0; padding: 0; }
+a.footnote-ref { vertical-align: super; }
+em, em em em, em em em em em { font-style: italic;}
+em em, em em em em { font-style: normal; }
+code{ white-space: pre-wrap; }
+span.smallcaps{ font-variant: small-caps; }
+span.underline{ text-decoration: underline; }
+q { quotes: "“" "”" "‘" "’"; }
+div.column{ display: inline-block; vertical-align: top; width: 50%; }
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+@media screen { /* Workaround for iBooks issue; see #6242 */
+  .sourceCode {
+      overflow: visible !important;
+      white-space: pre-wrap !important;
+      font-family: monospace;
+      font-size: xx-small;
+  }
 }
