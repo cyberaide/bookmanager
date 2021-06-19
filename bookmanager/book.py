@@ -300,7 +300,8 @@ class Book:
 
         bib = path_expand("./dest/all.bib")
         csl = path_expand("./dest/book/ieee-with-url.csl")
-        bibfile = f"--filter pandoc-citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
+        ## bibfile = f"--filter pandoc-citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
+        bibfile = f"--citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
         all_bibs = readfile("./dest/all.bib")
         css_style = pkg_resources.resource_filename("bookmanager",
                                                     'template/epub/ieee-with-url.csl')
@@ -313,6 +314,8 @@ class Book:
         options = "--toc --toc-depth=6  --number-sections"
         resources = f"--resource-path={directories}"
         markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
+
+        # GGGG markdown = "--verbose -f markdown+emoji --indented-code-classes=bash,python,yaml"
         # fonts = '-V mainfonts="DejaVu Sans"'
         pdffonts = ''
 
