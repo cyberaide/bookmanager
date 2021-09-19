@@ -300,7 +300,7 @@ class Book:
 
         bib = path_expand("./dest/all.bib")
         csl = path_expand("./dest/book/ieee-with-url.csl")
-        bibfile = f"--filter pandoc-citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
+        bibfile = f" --citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
         all_bibs = readfile("./dest/all.bib")
         css_style = pkg_resources.resource_filename("bookmanager",
                                                     'template/epub/ieee-with-url.csl')
