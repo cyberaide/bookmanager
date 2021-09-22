@@ -223,6 +223,23 @@ stack install
 `~/.local/bin` needs to be added to your PATH
 
 
+
+## Install on Ubuntu
+
+You will need too install pandoc-crossref as follows
+
+```
+wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.12.0c/pandoc-crossref-Linux.tar.xz
+tar cvf pandoc-crossref-Linux.tar.xz
+sudo mv pandoc-crossref /usr/local/bin
+```
+
+As ebook reader we recommend calibre. Howver the apt install is installing an incompatible version. Please use instead
+
+```
+sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+```
+
 ## Pandoc Version Requirements
 
 We recommend a version of pandoc and pandoc-crossref greater than 2.10. Older
