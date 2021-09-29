@@ -40,6 +40,10 @@ pandoc documentation on how to do this. Unfortunately the versions distributed
 with ubuntu are outdated. On ubuntu you can say:
 
 ```bash
+
+sudo apt install -y librsvg2-bin
+sudo apt install -y librsvg2-dev
+
 wget -q https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-1-amd64.deb
 sudo dpkg -i pandoc-2.9.1.1-1-amd64.deb
 pandoc --version

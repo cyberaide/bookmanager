@@ -9,6 +9,8 @@ Usage:
   bookmanager YAML epub [--force]
   bookmanager YAML pdf [--force]
   bookmanager YAML html
+  bookmanager YAML md
+  bookmanager YAML tex
   bookmanager YAML docx
   bookmanager YAML check [--format=FORMAT]
   bookmanager YAML urls [--format=FORMAT]
@@ -205,6 +207,14 @@ def main():
     elif arguments.docx:
 
         book.generate("docx")
+
+    elif arguments.md:
+
+        book.generate("md")
+
+    elif arguments.tex:
+
+        book.generate("tex")
 
     elif arguments.level:
 

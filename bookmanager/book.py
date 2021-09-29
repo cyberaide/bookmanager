@@ -346,7 +346,7 @@ class Book:
         #for font in embed:
         #    epubfonts = epubfonts + f' --epub-embed-font=fonts/{font}'
 
-        if output in ["epub", "md", "markdown"]:
+        if output in ["epub"]:
 
             epub = path_expand(f"./dest/{filename}")
             # noinspection PyPep8
@@ -377,6 +377,16 @@ class Book:
             options = "--toc --number-sections"
             command = f'pandoc {options} -o ./dest/book.docx {files}'
 
+        elif output in ["md", "markdown"]:
+            metadata = "./dest/metadata.txt"
+            options = "--toc --number-sections"
+            command = f'pandoc {options} -o ./dest/book.md {files}'
+
+        elif output in ["tex"]:
+            metadata = "./dest/metadata.txt"
+            options = "--toc --number-sections"
+            command = f'pandoc {options} -o ./dest/book.tex {files}'
+
         else:
             raise ValueError(f"this output format is not yet supported: {output}")
 
@@ -395,6 +405,10 @@ class Book:
         print()
         # VERBOSE(command)
         os.system(command)
+        try:
+            os.system("sync")
+        except:
+            pass
 
     def level(self):
 
