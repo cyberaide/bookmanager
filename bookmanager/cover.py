@@ -84,6 +84,9 @@ class Cover(object):
                  webpage="https://github.com/cyberaide/bookmanager",
                  date=None):
 
+        if "\n" in author:
+            subauthor = "Editors"
+            
         if background is None:
             background = pkg_resources.resource_filename(
                 "bookmanager",
