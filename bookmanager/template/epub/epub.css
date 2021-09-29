@@ -2,17 +2,18 @@
 @font-face {
   font-style: normal;
   font-weight: lighter;
-  font-size: x-small;
+  font-size: 100%;
 }
 
 body {
   text-align: justify;
-  font-size: x-small;
+  font-size: 100%;
   line-height: 1.25;
 }
 pre, code {
+    # white-space: pre-wrap;
     font-family: monospace, monospace;
-    font-size: 0.70em;
+    # font-size: 50%;
     background-color: rgb(242, 242, 242);
 }
 h3 { text-align: left; }
@@ -64,9 +65,15 @@ h3.date { }
 ol.toc { padding: 0; margin-left: 1em; }
 ol.toc li { list-style-type: none; margin: 0; padding: 0; }
 
-p { }
-ul { }
-ol { }
+p {
+      font-size: 100%;
+}
+ul {
+      font-size: 100%;
+}
+ol {
+      font-size: 100%;
+}
 table {
     margin-left: auto;
     margin-right: auto;
@@ -74,6 +81,7 @@ table {
     border-spacing: 0;
     border-bottom: 2px solid black;
     border-top: 2px solid black;
+    font-size: 100%;
 }
 table th {
     padding: 3px 10px;
@@ -82,6 +90,7 @@ table th {
     border-left: none;
     border-right: none;
     border-bottom: 1px solid black;
+    font-size: 100%;
 }
 table td {
     padding: 3px 10px;
@@ -89,18 +98,20 @@ table td {
     border-left: none;
     border-right: none;
     border-bottom: 1px solid black;
+    font-size: 100%;
 }
 blockquote {
-  font-style: italic;
-  border-left: 4px solid rgb(242, 242, 242);
-  display: block;
-  margin-left: 10%;
+    font-style: italic;
+    border-left: 4px solid rgb(242, 242, 242);
+    display: block;
+    margin-left: 10%;
+    font-size: 100%;
 }
 .smalltable {
-    font-size: 50%;
+    font-size: 100%;
 }
 .reporttable {
-    font-size: 50%;
+    font-size: 100%;
 }
 .info, .success, .warning, .error, .validation {
 border: 1px solid;
@@ -132,11 +143,10 @@ background-image: url('https://github.com/cyberaide/bookmanager/raw/master/bookm
 nav#toc ol,
 nav#landmarks ol { padding: 0; margin-left: 1em; }
 nav#toc ol li,
-nav#landmarks ol li { list-style-type: none; margin: 0; padding: 0; }
+nav#landmarks ol li { list-style-type: none; margin: 0; padding: 0; }<
 a.footnote-ref { vertical-align: super; }
 em, em em em, em em em em em { font-style: italic;}
 em em, em em em em { font-style: normal; }
-code{ white-space: pre-wrap; }
 span.smallcaps{ font-variant: small-caps; }
 span.underline{ text-decoration: underline; }
 q { quotes: "“" "”" "‘" "’"; }
@@ -147,6 +157,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
       overflow: visible !important;
       white-space: pre-wrap !important;
       font-family: monospace, monospace;
-      font-size: 0.70em;
+      # font-size: 100%;
+      font-size: 100%;
   }
 }
