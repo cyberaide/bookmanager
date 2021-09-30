@@ -57,7 +57,6 @@ RUN ln -snf /usr/share/zoneinfo/Etc/UTC /etc/localtime \
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y install texlive-latex-extra
 RUN apt-get -y install texlive-fonts-recommended texlive-fonts-extra
-RUN apt-get -y install texlive-xetex
 RUN unset DEBIAN_FRONTEND
 RUN apt-get -y install biber
 
@@ -120,8 +119,6 @@ RUN python --version
 RUN pip install -U pip
 RUN pip --version
 RUN pandoc --version
-
-COPY bookmanager/template /root/template
 
 WORKDIR /root
 

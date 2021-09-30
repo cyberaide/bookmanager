@@ -1,6 +1,8 @@
 package=cyberaide-bookmanager
-VERSION=`head -1 VERSION`
+VERSION=$(shell head -1 VERSION)
 CM=$(shell dirname `pwd`)
+
+
 
 .PHONY: readme
 
@@ -130,22 +132,22 @@ log:
 #--no-cache=true
 
 image:
-	docker build  -t cloudmesh/bookmanager:0.2.35 -t cloudmesh/bookmanager:latest .
+	docker build  -t cloudmesh/bookmanager:${VERSION} -t cloudmesh/bookmanager:latest .
 
 #
 # cm munts all parent directories into the container
 #
 cm:
-	docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.35  /bin/bash
+	docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:${VERSION}  /bin/bash
 
 wincm:
-	winpty docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.35  /bin/bash
+	winpty docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:${VERSION}  /bin/bash
 
 shell:
-	docker run --rm -it cloudmesh/bookmanager:0.2.35  /bin/bash
+	docker run --rm -it cloudmesh/bookmanager:${VERSION}  /bin/bash
 
 cms:
-	docker run --rm -it cloudmesh/bookmanager:0.2.35
+	docker run --rm -it cloudmesh/bookmanager:${VERSION}
 
 dockerclean:
 	-docker kill $$(docker ps -q) --force
@@ -153,8 +155,8 @@ dockerclean:
 	-docker rmi $$(docker images -q) --force
 
 push:
-	docker push cloudmesh/bookmanager:0.2.35
+	docker push cloudmesh/bookmanager:0.2.36
 	docker push cloudmesh/bookmanager:latest
 
 run:
-	docker run cloudmesh/bookmanager:0.2.35 /bin/sh -c "cd books/book/cloud; git pull; make"
+	docker run cloudmesh/bookmanager:${VERSION} /bin/sh -c "cd books/book/cloud; git pull; make"

@@ -8,3 +8,5 @@ pillow
 markdown
 cloudmesh-common
 ebooklib
+pandoc-xnos
+pandoc-include

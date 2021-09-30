@@ -311,9 +311,9 @@ class Book:
         if "@" not in all_bibs:
             bibfile = ""
 
-        options = "--toc --toc-depth=6  --number-sections"
+        options = "--toc --toc-depth=6  --number-sections -F pandoc-crossref --from markdown-smart"
         resources = f"--resource-path={directories}"
-        markdown = "--verbose --filter pandoc-crossref -f markdown+emoji --indented-code-classes=bash,python,yaml"
+        markdown = "--verbose --filter pandoc-crossref -f markdown+emoji+smart --indented-code-classes=bash,python,yaml"
 
         # GGGG markdown = "--verbose -f markdown+emoji --indented-code-classes=bash,python,yaml"
         # fonts = '-V mainfonts="DejaVu Sans"'
@@ -362,9 +362,10 @@ class Book:
         elif output == "pdf":
             # bug hard code for now
             pdf = path_expand(f"./dest/{filename}").replace(".epub", ".pdf")
-            path= Path("../../bookmanager/bookmanager/template/latex/eisvogel").resolve()
+            # path= Path("../../bookmanager/bookmanager/template/latex/eisvogel").resolve()
             book= "-V titlepage=true"
             latex = f"--template {path} --pdf-engine=xelatex"
+            latex = f"--pdf-engine=pdflatex --indented-code-classes=bash,python,yaml"
             command = f'pandoc {options} {markdown} {pdffonts}' \
                       f' {bibfile} {latex} {book} {resources} ' \
                       f' -o {pdf} {files} ' \
@@ -382,7 +383,7 @@ class Book:
 
         elif output in ["md", "markdown"]:
             metadata = "./dest/metadata.txt"
-            options = "--toc --number-sections"
+            options = "--toc --number-sections -f markdown+smart"
             command = f'pandoc {options} -o ./dest/book.md {files}'
 
         elif output in ["tex"]:
@@ -404,6 +405,7 @@ class Book:
         #    os.system(command)
         #else:
         print()
+        banner("COMMAND")
         print (command)
         print()
         # VERBOSE(command)
