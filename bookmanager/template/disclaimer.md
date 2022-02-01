@@ -37,7 +37,7 @@ The bibtex entry is
 
 ```bash
 @Misc{www-cyberaide-bookmanager,
-  author = 	 {Gregor von Laszewski},
+  author = 	 {von Laszewski, Gregor},
   title = 	 {{Cyberaide Book Manager}},
   howpublished = {pypi},
   month = 	 apr,
