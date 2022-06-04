@@ -84,8 +84,8 @@ WORKDIR /usr/local/code
 #
 # INSTALL PANDOC
 #
-# https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb
 # https://github.com/jgm/pandoc/releases/download/2.18/pandoc-2.18-1-amd64.deb
+
 ENV PANDOC_MAJOR="2.18"
 ENV PANDOC_MINOR="-1"
 ENV PANDOC_VERSION="$PANDOC_MAJOR$PANDOC_MINOR"
@@ -93,12 +93,10 @@ ENV PANDOC_VERSION="$PANDOC_MAJOR$PANDOC_MINOR"
 RUN echo $PANDOC_VERSION
 RUN wget -q https://github.com/jgm/pandoc/releases/download/${PANDOC_MAJOR}/pandoc-${PANDOC_VERSION}-amd64.deb
 RUN dpkg -i pandoc-${PANDOC_VERSION}-amd64.deb
-RUN pandoc --version
 
 # INSTALL STACK FOR CROSSREF  \
 
 RUN wget -qO- https://get.haskellstack.org/ | sh
-
 
 # CROSSREFF FROM SOURCE
 # https://github.com/lierdakil/pandoc-crossref/archive/refs/tags/v0.3.13.0.tar.gz
@@ -107,8 +105,9 @@ RUN git clone https://github.com/lierdakil/pandoc-crossref.git
 
 WORKDIR /usr/local/code/pandoc-crossref
 
+RUN mkdir -p /root/.local/bin
 RUN stack install
-RUN mv pandoc-crossref /usr/local/bin
+RUN cp /root/.local/bin/pandoc-crossref /usr/local/bin
 
 # https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.12.0c/pandoc-crossref-Linux.tar.xz
 #ENV CROSSREF_VERSION=v0.3.13.0
@@ -121,9 +120,12 @@ RUN mv pandoc-crossref /usr/local/bin
 RUN pip install pandoc-include
 RUN pip install pandoc-xnos
 
+RUN pip install pip -U
 #
 # BOOKMANAGER
 #
+WORKDIR /usr/local/code
+
 RUN git clone https://github.com/cyberaide/bookmanager.git
 
 WORKDIR /usr/local/code/bookmanager
