@@ -140,6 +140,7 @@ RUN python --version
 RUN pip install -U pip
 RUN pip --version
 RUN pandoc --version
+RUN pandoc-crossref --numeric-version
 
 WORKDIR /root
 

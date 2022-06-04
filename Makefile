@@ -131,6 +131,7 @@ log:
 
 image:
 	docker build  -t cloudmesh/bookmanager:${VERSION} -t cloudmesh/bookmanager:latest .
+	@echo Size: `docker inspect -f "{{ .Size }}" cloudmesh/bookmanager | numfmt --to=si`
 
 #
 # cm mounts all ./* directories into the container
@@ -155,3 +156,4 @@ push:
 
 run:
 	docker run cloudmesh/bookmanager:${VERSION} /bin/sh -c "cd books/book/cloud; git pull; make"
+
