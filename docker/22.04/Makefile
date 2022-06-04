@@ -55,16 +55,13 @@ image:
 	docker build  -t cloudmesh/bookmanager:${VERSION} -t cloudmesh/bookmanager:latest .
 
 #
-# cm munts all parent directories into the container
+# cm mounts all ./* directories into the container
 #
-cm:
+shell:
 	docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:${VERSION}  /bin/bash
 
-wincm:
+winshell:
 	winpty docker run -v $(CM):/cm -w /cm --rm -it cloudmesh/bookmanager:${VERSION}  /bin/bash
-
-shell:
-	docker run --rm -it cloudmesh/bookmanager:${VERSION}  /bin/bash
 
 cms:
 	docker run --rm -it cloudmesh/bookmanager:${VERSION}
