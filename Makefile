@@ -2,8 +2,6 @@ package=cyberaide-bookmanager
 VERSION=$(shell head -1 VERSION)
 CM=$(shell dirname `pwd`)
 
-
-
 .PHONY: readme
 
 #source:
