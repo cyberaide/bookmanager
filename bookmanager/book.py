@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from pathlib import Path
 from pprint import pprint
 from shutil import copyfile
@@ -16,7 +17,7 @@ from cloudmesh.common.debug import VERBOSE
 from cloudmesh.common.dotdict import dotdict
 from cloudmesh.common.FlatDict import FlatDict2
 
-from cloudmesh.common.util import banner, path_expand, readfile
+from cloudmesh.common.util import banner, path_expand, readfile, writefile
 from tabulate import tabulate
 from bookmanager.document import Documents
 
@@ -314,6 +315,8 @@ class Book:
         options = "--toc --toc-depth=6  --number-sections -F pandoc-crossref --from markdown-smart"
         resources = f"--resource-path={directories}"
         markdown = "--verbose --filter pandoc-crossref -f markdown+emoji+smart --indented-code-classes=bash,python,yaml"
+        pdf_options = "--verbose -f markdown+emoji+smart --indented-code-classes=bash,python,yaml" \
+                      " --include-in-header ../../latex/listings-setup.tex --template ../../latex/eisvogel --listings"
 
         # GGGG markdown = "--verbose -f markdown+emoji --indented-code-classes=bash,python,yaml"
         # fonts = '-V mainfonts="DejaVu Sans"'
@@ -362,14 +365,39 @@ class Book:
         elif output == "pdf":
             # bug hard code for now
             pdf = path_expand(f"./dest/{filename}").replace(".epub", ".pdf")
+            tex = path_expand(f"./dest/{filename}").replace(".epub", ".tex")
+            md = path_expand(f"./dest/{filename}").replace(".epub", ".md")
+            metadata = "./dest/book/metadata.txt"
+
             # path= Path("../../bookmanager/bookmanager/template/latex/eisvogel").resolve()
             book= "-V titlepage=true"
-            latex = f"--template {path} --pdf-engine=xelatex"
+            #latex = f"--template {path} --pdf-engine=xelatex"
+            # latex = f"--pdf-engine=pdflatex --indented-code-classes=bash,python,yaml"
             latex = f"--pdf-engine=pdflatex --indented-code-classes=bash,python,yaml"
-            command = f'pandoc {options} {markdown} {pdffonts}' \
+
+            command = f'pandoc' \
+                      f' {files} ' \
+                      f' --to=markdown > {md}'
+            os.system(command)
+
+            content = readfile(md)
+            content = content \
+                .replace("µ","micro") \
+                .replace(":cloud:","\\faGithub")\
+                .replace(":o2:","\\faBug")\
+                .replace("\\lstinline!\\faBug!","\\faBug")
+            writefile(md, content)
+            try:
+                os.system("sync")
+            except:
+                pass
+            print(content)
+            print(md)
+            command = f'pandoc -s {options} {pdf_options} {pdffonts}' \
                       f' {bibfile} {latex} {book} {resources} ' \
-                      f' -o {pdf} {files} ' \
-                      f' {metadata}'
+                      f' {md} ' \
+                      f' {metadata} --from=markdown -o {pdf}'
+            os.system(command)
 
         elif output == "html":
             metadata = "./dest/metadata.txt"
