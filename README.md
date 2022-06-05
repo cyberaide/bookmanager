@@ -1,4 +1,3 @@
-
 # Bookmanager
 
 [![Version](https://img.shields.io/pypi/v/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
