@@ -279,7 +279,7 @@ class Book:
             dirs = set(dirs)
             # dirs = find_image_dirs(directory='./dest')
 
-            create_metadata(self.metadata, "./dest/book/metadata.txt")
+            create_metadata(self.metadata, "./dest/book/metadata.txt", kind="epub")
             create_css(self.metadata, "./dest/book/epub.css")
 
             # pprint(self.metadata)

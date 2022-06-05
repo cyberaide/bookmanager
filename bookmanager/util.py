@@ -74,22 +74,23 @@ def git_download(repo, path, destination):
     except:
         print("ERROR: file not found", repo, path)
 
-def create_metadata(metadata, location):
+def create_metadata(metadata, location, kind="epub"):
+
     location = path_expand(location)
     Path(os.path.dirname(location)).mkdir(parents=True, exist_ok=True)
-    if not os.path.isfile(location):
-        metadata_file = pkg_resources.resource_filename(
-            "bookmanager",
-            'template/epub/metadata.txt')
+    metadata_file = pkg_resources.resource_filename(
+        "bookmanager",
+        f'template/{kind}/metadata.txt')
 
-        meta = copy.deepcopy(metadata)
-        for field in ["author", "title"]:
-            meta[field] = meta[field].replace("\n", " ")
+    meta = copy.deepcopy(metadata)
+    for field in ["author", "title"]:
+        meta[field] = meta[field].replace("\n", " ")
 
-        content = readfile(metadata_file)
-        content = content.format(**meta)
-        writefile(location, content)
+    content = readfile(metadata_file)
 
+    content = content.format(**meta)
+    writefile(location, content)
+    os.system("sync")
 
 def create_css(metadata, location):
     location = path_expand(location)

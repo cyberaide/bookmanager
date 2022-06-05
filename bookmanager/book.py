@@ -20,11 +20,18 @@ from cloudmesh.common.FlatDict import FlatDict2
 from cloudmesh.common.util import banner, path_expand, readfile, writefile
 from tabulate import tabulate
 from bookmanager.document import Documents
+import shlex
 
 debug = False
 
 # noinspection PyPep8
 class Book:
+
+    def print_command(self, command):
+        banner("COMMAND")
+        _command = "\n".join(shlex.split(command))
+        print(_command)
+
 
     def __init__(self, arguments):
 
@@ -184,7 +191,6 @@ class Book:
 
         self.get_titles()
 
-
     def find_title(self, markdown):
         """
         must be called after download
@@ -253,7 +259,7 @@ class Book:
 
     def generate(self, output):
 
-        banner(f"Creating {output}")
+        banner(f"Creating {output}", c="&")
 
         files = []
         for entry in self.docs.entries:
@@ -285,7 +291,15 @@ class Book:
         dirs = set(dirs)
         # dirs = find_image_dirs(directory='./dest')
 
-        create_metadata(self.metadata, "./dest/book/metadata.txt")
+        if output in ["pdf"]:
+            create_metadata(self.metadata, "./dest/book/metadata.txt", kind="latex")
+        else:
+            create_metadata(self.metadata, "./dest/book/metadata.txt", kind="epub")
+
+        from cloudmesh.common.Shell import Shell
+        r = Shell.cat("./dest/book/metadata.txt")
+        banner(r)
+
         create_css(self.metadata, "./dest/book/epub.css")
 
         directories = (":".join(dirs))
@@ -360,10 +374,12 @@ class Book:
                       f' {epubfonts} {resources} {bibfile} ' \
                       f' -o {epub} {files}' \
                       f' {metadata}'
-            # pprint(command.split(" "))
+            self.print_command(command)
 
         elif output == "pdf":
-            # bug hard code for now
+
+            create_metadata(self.metadata, "./dest/book/metadata.txt", kind="latex")
+
             pdf = path_expand(f"./dest/{filename}").replace(".epub", ".pdf")
             tex = path_expand(f"./dest/{filename}").replace(".epub", ".tex")
             md = path_expand(f"./dest/{filename}").replace(".epub", ".md")
@@ -378,6 +394,7 @@ class Book:
             command = f'pandoc' \
                       f' {files} ' \
                       f' --to=markdown > {md}'
+            self.print_command(command)
             os.system(command)
 
             content = readfile(md)
@@ -387,17 +404,11 @@ class Book:
                 .replace(":o2:","\\faBug")\
                 .replace("\\lstinline!\\faBug!","\\faBug")
             writefile(md, content)
-            try:
-                os.system("sync")
-            except:
-                pass
-            print(content)
-            print(md)
+
             command = f'pandoc -s {options} {pdf_options} {pdffonts}' \
                       f' {bibfile} {latex} {book} {resources} ' \
                       f' {md} ' \
                       f' {metadata} --from=markdown -o {pdf}'
-            os.system(command)
 
         elif output == "html":
             metadata = "./dest/metadata.txt"
@@ -418,25 +429,11 @@ class Book:
             metadata = "./dest/metadata.txt"
             options = "--toc --number-sections"
             command = f'pandoc {options} -o ./dest/book.tex {files}'
-
         else:
             raise ValueError(f"this output format is not yet supported: {output}")
 
-        #if True:
-        #    cwd = os.getcwd()
-        #    command = command.split(";", 1)[1]
-        #    command = command.replace(cwd, ".")
-        #    print()
-        #    print (command)
-        #    print()
-        #    # VERBOSE(command)
-        #    os.system(command)
-        #else:
-        print()
         banner("COMMAND")
-        print (command)
-        print()
-        # VERBOSE(command)
+        self.print_command(command)
         os.system(command)
         try:
             os.system("sync")

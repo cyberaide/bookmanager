@@ -1,12 +1,9 @@
 ---
 title: {title}
-creator:
-- role: editor
-  text: {author}
+subtitle: {subtitle}
+author: {author}, {email}
 description: {description}
-rights: {rights}
-language: en-US
-stylesheet: epub.css
+date: {date}
 cover-image: cover.png
 figureTitle: Figure
 figPrefix: Figure
@@ -20,6 +17,13 @@ fignos-plus-name: Figure
 xnos-number-sections: True
 keywords: {keywords}
 mustache: abbrev.yaml
+titlepage: true
+titlepage-text-color: "7137C8"
+titlepage-rule-color: "7137C8"
+titlepage-rule-height: 2
+titlepage-logo: "logo.pdf"
+logo-width: 30mm
+subtitle-rule-height: 3
 abstract: |
   {abstract}
 ---
