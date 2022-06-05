@@ -65,7 +65,7 @@ patch: clean requirements_dev
 	python setup.py sdist
 	python setup.py bdist_wheel
 	git push
-	# git push origin master --tags
+	# git push origin main --tags
 	twine check dist/*
 	twine upload --repository testpypi  dist/*
 	# $(call banner, "install")
@@ -85,7 +85,7 @@ release: clean
 	@echo "# CLEAN "
 	@echo "############################################################"
 	git tag "v$(VERSION)"
-	git push origin master --tags
+	git push origin main --tags
 	python setup.py sdist bdist_wheel
 	twine check dist/*
 	twine upload --repository pypi dist/*
