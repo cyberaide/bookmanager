@@ -331,7 +331,7 @@ BOOK:
     - "{git.book}/prg/python/fingerprint/fingerprint.md"
     - "{git.book}/prg/python/facedetection/facedetection.md"
   - REFERENCES:
-      - "{git.bookmanager}/empty.md"
+    - "{git.bookmanager}/empty.md"
 ```
 
 ## Alternative Instalations

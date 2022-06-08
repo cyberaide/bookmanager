@@ -269,7 +269,10 @@ def get_file_from_git(url, directory, filename):
             sys.exit()
         r = ""
     else:
-        r = requests.get(url, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
+
+        repo, branch, name, raw, blob = git_raw_url(url)
+
+        r = requests.get(raw, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
 
         if r.status_code == 200:
             output = Path(directory) / filename

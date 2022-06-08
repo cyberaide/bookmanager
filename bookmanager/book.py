@@ -5,7 +5,6 @@ from pathlib import Path
 from pprint import pprint
 from shutil import copyfile
 
-
 import pkg_resources
 import requests
 from bookmanager.cover import Cover
@@ -28,9 +27,10 @@ debug = False
 class Book:
 
     def print_command(self, command):
-        banner("COMMAND")
-        _command = "\n".join(shlex.split(command))
-        print(_command)
+        if self.verbose:
+            banner("COMMAND")
+            _command = "\n".join(shlex.split(command))
+            print(_command)
 
 
     def __init__(self, arguments):
@@ -186,6 +186,7 @@ class Book:
 
                 page_download(entry.uri, entry.destination, entry.level, force, self.docs.variables)
 
+
                 print()
             elif entry.kind == 'header':
                 print(entry.level * "   ", entry.counter, entry.title)
@@ -299,7 +300,8 @@ class Book:
 
         from cloudmesh.common.Shell import Shell
         r = Shell.cat("./dest/book/metadata.txt")
-        banner(r)
+        if self.verbose:
+            banner(r)
 
         create_css(self.metadata, "./dest/book/epub.css")
 
@@ -309,7 +311,7 @@ class Book:
 
         for file in ["report.bib", "references.bib"]:
             try:
-                copyfile(f"{file}", f"dest/{file}")
+                copyfile(file, f"dest/{file}")
             except:
                 pass
         cat_bibfiles("./dest", "./dest/all.bib")
@@ -317,7 +319,7 @@ class Book:
         bib = path_expand("./dest/all.bib")
         csl = path_expand("./dest/book/ieee-with-url.csl")
 
-        bibfile = f" --citeproc --metadata link-citations=true --bibliography={bib} --csl={csl}"
+        bibfile = f" --metadata link-citations=true --bibliography={bib} --csl={csl}"
         all_bibs = readfile("./dest/all.bib")
         css_style = pkg_resources.resource_filename("bookmanager",
                                                     'template/epub/ieee-with-url.csl')
@@ -327,11 +329,19 @@ class Book:
         if "@" not in all_bibs:
             bibfile = ""
 
-        options = "--toc --toc-depth=6  --number-sections -F pandoc-crossref --from markdown-smart"
+        for f in ['template/latex/listings-setup.tex',
+                  'template/latex/eisvogel.latex',
+                  'template/empty.md'
+                  ]:
+            source = pkg_resources.resource_filename("bookmanager", f)
+            _filename = os.path.basename(source)
+            copyfile(source, f"dest/{_filename}")
+
+        options = "--toc --toc-depth=6  --number-sections --citeproc -F pandoc-crossref --from markdown-smart"
         resources = f"--resource-path={directories}"
-        markdown = "--verbose --filter pandoc-crossref -f markdown+emoji+smart --indented-code-classes=bash,python,yaml"
+        markdown = "--verbose --citeproc --filter pandoc-crossref -f markdown+emoji+smart --indented-code-classes=bash,python,yaml"
         pdf_options = "--verbose -f markdown+emoji+smart --indented-code-classes=bash,python,yaml" \
-                      " --include-in-header ../../latex/listings-setup.tex --template ../../latex/eisvogel --listings"
+                      " --include-in-header ./dest/listings-setup.tex --template ./dest/eisvogel --listings"
 
         # GGGG markdown = "--verbose -f markdown+emoji --indented-code-classes=bash,python,yaml"
         # fonts = '-V mainfonts="DejaVu Sans"'
@@ -375,7 +385,8 @@ class Book:
                       f' {epubfonts} {resources} {bibfile} ' \
                       f' -o {epub} {files}' \
                       f' {metadata}'
-            self.print_command(command)
+            if self.verbose:
+                self.print_command(command)
 
         elif output == "pdf":
 
@@ -433,8 +444,9 @@ class Book:
         else:
             raise ValueError(f"this output format is not yet supported: {output}")
 
-        banner("COMMAND")
-        self.print_command(command)
+        if self.verbose:
+            banner("COMMAND")
+            self.print_command(command)
         os.system(command)
         try:
             os.system("sync")

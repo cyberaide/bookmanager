@@ -3,3 +3,4 @@ include bookmanager/template/epub/cover/*.png
 include bookmanager/template/epub/fonts/*.ttf
 include bookmanager/template/epub/*.*
 include bookmanager/template/*.*
+include bookmanager/latex/*.*
