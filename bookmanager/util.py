@@ -51,6 +51,7 @@ def git_raw_url(url: str, branch="main"):
         blob = f"https://github.com/{repo}/blob/{branch}/{name}"
     elif url.startswith('https://raw.githubusercontent.com/'):
         _url = url.replace("https://raw.githubusercontent.com/", "")
+
         repo, name = _url.split(f"/{branch}/", 1)
         raw = f"https://raw.githubusercontent.com/{repo}/{branch}/{name}"
         blob = f"https://github.com/{repo}/blob/{branch}/{name}"
@@ -306,6 +307,8 @@ class Result(object):
 def add_link_to_file(url, filename, variables):
     lines = readfile(Path(f"{filename}"))
     lines = lines.splitlines()
+    if len(lines) == 0:
+        lines.append("\n")
 
     repo, branch, name, raw, link = git_raw_url(url)
 
