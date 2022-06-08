@@ -55,28 +55,14 @@ def git_raw_url(url: str, branch="main"):
         raw = f"https://raw.githubusercontent.com/{repo}/{branch}/{name}"
         blob = f"https://github.com/{repo}/blob/{branch}/{name}"
     elif url.startswith("file:"):
-        print("BBBB-----------------", branch)
-
         repo = Git.repo(url)
         blob = Git.blob(url)
         name = Git.name(url)
         root = Git.root(url)
         branch = Git.branch(url)
         filename = Git.filename(url)
-
         raw = f"https://raw.githubusercontent.com/{name}/{branch}/{filename}"
 
-        print("ROOT", root)
-        print("NAME", name)
-        print("REPO", repo)
-        print("BRANCH", branch)
-
-
-        print("URL", url)
-
-        print("RAW", raw)
-        print("BLOB", blob)
-        
     else:
         repo = None
         branch = None
@@ -319,7 +305,6 @@ def add_link_to_file(url, filename, variables):
     lines = lines.splitlines()
 
     repo, branch, name, raw, link = git_raw_url(url)
-    print ("LLLL", link)
 
     if "{" in lines[0]:
         headline, ref = lines[0].split("{", 1)
@@ -334,7 +319,6 @@ def add_link_to_file(url, filename, variables):
 
     if 'file.base' in variables and "file.github" in variables:
         path = str(Path(variables["file.base"]).resolve())
-        print ("RRRRR", path,  variables["file.github"])
         lines[0] = lines[0].replace(path, variables["file.github"])
 
     lines = '\n'.join(lines)

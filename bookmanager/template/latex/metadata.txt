@@ -12,6 +12,7 @@ secPrefix: Section
 tblPrefix: Table
 linkReferences: True
 nameInLink: True
+colorlinks: True
 fignos-caption-name: Figure
 fignos-plus-name: Figure
 xnos-number-sections: True
