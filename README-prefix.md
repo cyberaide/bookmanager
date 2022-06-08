@@ -27,13 +27,10 @@ Implemented Features:
   (we assume the images are relative to the document, http links will not be modified)
 * Automatic generation of a cover page
 * Output is generated in a dest directory
-
-Planed enhancements:
-
-* integration of References via pandoc citeref
+* integration of references via pandoc citeref
 * integration of Section, Table, Image references via pandoc crossref
 
-If you like to help get in contact with Gregor von Laszewski
+If you like to help improving it get in contact with Gregor von Laszewski
 <laszewski@gmail.com>
 
 ```bash

@@ -1,3 +1,4 @@
+
 # Bookmanager
 
 [![Version](https://img.shields.io/pypi/v/cyberaide-bookmanager.svg)](https://pypi.python.org/pypi/cyberaide-bookmanager)
@@ -26,13 +27,10 @@ Implemented Features:
   (we assume the images are relative to the document, http links will not be modified)
 * Automatic generation of a cover page
 * Output is generated in a dest directory
-
-Planed enhancements:
-
-* integration of References via pandoc citeref
+* integration of references via pandoc citeref
 * integration of Section, Table, Image references via pandoc crossref
 
-If you like to help get in contact with Gregor von Laszewski
+If you like to help improving it get in contact with Gregor von Laszewski
 <laszewski@gmail.com>
 
 ```bash
@@ -54,6 +52,8 @@ Usage:
   bookmanager YAML epub [--force]
   bookmanager YAML pdf [--force]
   bookmanager YAML html
+  bookmanager YAML md
+  bookmanager YAML tex
   bookmanager YAML docx
   bookmanager YAML check [--format=FORMAT]
   bookmanager YAML urls [--format=FORMAT]
@@ -152,10 +152,7 @@ Description:
 
 ## Cover Page 
 
-Book manager can create a simple cover page for you.
-
-and example is given at 
-
+Book manager can create a simple cover page for you. An example is given at 
 
 * <https://github.com/cyberaide/bookmanager/blob/master/tests/exmaple/cover.png>
 
@@ -174,86 +171,19 @@ $ open dest/book.epub
 
 ## References
 
-* Example Yaml file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
+* Example YAML file: <https://github.com/cyberaide/bookmanager/blob/master/tests/python.yml>
 * Home page: <https://github.com/cyberaide/bookmanager>
 
 ## Requirements
 
-Book manager requires the existence of some cloudmesh yaml files, In future releases we intend to remove them.
-Simply do 
+We require 
 
-```bash
-$ mkdir -p ~/.cloudmesh
-$ wget -P ~/.cloudmesh https://raw.githubusercontent.com/cloudmesh/cloudmesh-configuration/master/cloudmesh/configuration/etc/cloudmesh.yaml
-```
+* pandoc (2.18)
+* pandoc-citeproc (installed from source via stack install)
+* LaTeX such as texlive full
+* an epub reader such as calibre on Windows or Linux
 
-In addition we require an up to date version of pandoc. Please consult with the
-pandoc documentation on how to do this. Unfortunately the versions distributed
-with ubuntu are outdated. On ubuntu you can say:
-
-```bash
-wget -q https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-1-amd64.deb
-sudo dpkg -i pandoc-2.9.1.1-1-amd64.deb
-pandoc --version
-
-wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.6.1b/linux-pandoc_2_9_1_1.tar.gz
-tar xvf linux-pandoc_2_9_1_1.tar.gz
-
-sudo mv pandoc-crossref /usr/local/bin
-```
-
-##  Install on macOS
-
-```bash
-mkdir pandoc
-cd pandoc
-wget https://hackage.haskell.org/package/pandoc-2.10.1/pandoc-2.10.1.tar.gz
-tar xvf pandoc-2.10.1.tar.gz  
-cd pandoc-2.10.1
-stack setup
-stack install
-
-cd ..
-git clone https://github.com/lierdakil/pandoc-crossref.git
-cd pandoc-crossref
-stack install
-```
-
-`~/.local/bin` needs to be added to your PATH
-
-
-
-## Install on Ubuntu
-
-You will need too install pandoc-crossref as follows
-
-```
-wget https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.12.0c/pandoc-crossref-Linux.tar.xz
-tar cvf pandoc-crossref-Linux.tar.xz
-sudo mv pandoc-crossref /usr/local/bin
-```
-
-As ebook reader we recommend calibre. Howver the apt install is installing an incompatible version. Please use instead
-
-```
-sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
-```
-
-## Pandoc Version Requirements
-
-We recommend a version of pandoc and pandoc-crossref greater than 2.10. Older
-versions may not work. Look in our Dockerfile to see how you can install them
-from source.
-
-## Calibre
-
-Calibre is a very good epub browser. It can be installed on Ubuntu with
-
-```
-sudo apt-get install calibre
-```
-
-For other operating systems, please visit the calibre Web page.
+To se how to install it, look in our Dockerfile and adapt for your local install
 
 ## Bookmanager Service
 
@@ -261,8 +191,9 @@ A graphical user interface for selecting chapters and changing their order is av
 
 * <https://github.com/cyberaide/bookmanager-service/blob/master/README.md>
 
+However this has not been updated for a while and may likely not work.
 
-## Example Yaml file
+## Example YAML file
 
 The following is an example for a table of contents yaml file that can be used
 to pull together content from different repositories.
@@ -365,12 +296,12 @@ docker image list
 to run a shell in a container that includes bookmanager, please use 
 
 ```bash
-docker run -v `pwd`:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.30  /bin/bash
+docker run -v `pwd`:/cm -w /cm --rm -it cloudmesh/bookmanager  /bin/bash
 ```
 
 In that shell you can call `bookmanager`
 
-### Instalation for Developers on macOS and Linux
+### Installation for Developers on macOS and Linux
 
 See the next section and execute the commands we give in the Makefile
 targets while completing the variables accordingly. You can also install
@@ -380,7 +311,6 @@ We ar looking a Windows user that can contribute a bat file or a
 packaged .exe, or give us the example command for docker
 
 ### Instalation for Developers on macOS and Linux
- 
 
 Here the preparation steps:
 
@@ -429,4 +359,3 @@ copied some information from my computer:
 | Native | 34.948s |
 | Container with mount of cm in host system | 48.782s |
 | Container with locally checked out book folder | 40.372s |
-

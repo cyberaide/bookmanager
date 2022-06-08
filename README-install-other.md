@@ -29,12 +29,12 @@ docker image list
 to run a shell in a container that includes bookmanager, please use 
 
 ```bash
-docker run -v `pwd`:/cm -w /cm --rm -it cloudmesh/bookmanager:0.2.30  /bin/bash
+docker run -v `pwd`:/cm -w /cm --rm -it cloudmesh/bookmanager  /bin/bash
 ```
 
 In that shell you can call `bookmanager`
 
-### Instalation for Developers on macOS and Linux
+### Installation for Developers on macOS and Linux
 
 See the next section and execute the commands we give in the Makefile
 targets while completing the variables accordingly. You can also install
@@ -44,7 +44,6 @@ We ar looking a Windows user that can contribute a bat file or a
 packaged .exe, or give us the example command for docker
 
 ### Instalation for Developers on macOS and Linux
- 
 
 Here the preparation steps:
 
