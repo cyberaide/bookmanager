@@ -36,6 +36,7 @@ class Book:
     def __init__(self, arguments):
 
         self.docs = Documents()
+        self.verbose = False
 
         self.docs.load(arguments.YAML, "BOOK")
 
@@ -236,8 +237,8 @@ class Book:
 
             elif entry.kind == 'header':
                 entry.documenttitle = entry.title
-
-        pprint (self.docs.entries)
+        if self.verbose:
+            pprint (self.docs.entries)
 
     def urls(self):
 
@@ -452,8 +453,9 @@ class Book:
 
             pandoc_level = entry.level + 1
             tmp = str(Path(self.docs.metadata["dest"]) / "tmp.md")
-            command = "pandoc --base-header-level={pandoc_level} -o {tmp} {destination} > log.txt".format(
+            command = "pandoc --shift-heading-level-by={pandoc_level} -o {tmp} {destination} > log.txt".format(
                 **entry, tmp=tmp, pandoc_level=pandoc_level)
+
             sys.stdout.flush()
 
             os.system(command)

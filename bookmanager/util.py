@@ -4,6 +4,7 @@ import subprocess
 import sys
 from pathlib import Path
 from shutil import copyfile
+import datetime
 
 import markdown
 import oyaml as yaml
@@ -17,6 +18,73 @@ from markdown.treeprocessors import Treeprocessor
 from pprint import pprint
 import copy
 from collections import Counter
+from cloudmesh.git.Git import Git
+
+
+def git_raw_url(url: str, branch="main"):
+    """
+    Converts the url into a raw url and returns a list of
+    repo, branch, name, raw
+
+    example urls are:
+
+    raw = "https://raw.githubusercontent.com/cybertraining-dsc/reu2022/main/project/rivanna.md"
+    url = "https://github.com/cybertraining-dsc/reu2022/blob/main/project/rivanna.md"
+    blob = "https://github.com/cybertraining-dsc/reu2022/blob/main/project/rivanna.md"
+    print (git_raw_url(url))
+    print (git_raw_url(raw))
+
+    Args:
+        url (str): teh URL
+        branch (str): The name of the branch, default main
+
+    Returns:
+
+    """
+
+    if url.startswith("https://github.com/"):
+        _url = url.replace("https://github.com/", "")
+        repo, rest = _url.split("/blob/", 1)
+        print (repo, rest)
+        branch, name = rest.split("/", 1)
+        raw = f"https://raw.githubusercontent.com/{repo}/{branch}/{name}"
+        blob = f"https://github.com/{repo}/blob/{branch}/{name}"
+    elif url.startswith('https://raw.githubusercontent.com/'):
+        _url = url.replace("https://raw.githubusercontent.com/", "")
+        repo, name = _url.split(f"/{branch}/", 1)
+        raw = f"https://raw.githubusercontent.com/{repo}/{branch}/{name}"
+        blob = f"https://github.com/{repo}/blob/{branch}/{name}"
+    elif url.startswith("file:"):
+        print("BBBB-----------------", branch)
+
+        repo = Git.repo(url)
+        blob = Git.blob(url)
+        name = Git.name(url)
+        root = Git.root(url)
+        branch = Git.branch(url)
+        filename = Git.filename(url)
+
+        raw = f"https://raw.githubusercontent.com/{name}/{branch}/{filename}"
+
+        print("ROOT", root)
+        print("NAME", name)
+        print("REPO", repo)
+        print("BRANCH", branch)
+
+
+        print("URL", url)
+
+        print("RAW", raw)
+        print("BLOB", blob)
+        
+    else:
+        repo = None
+        branch = None
+        name = None
+        blob = url
+        raw = url
+
+    return repo, branch, name, raw, blob
 
 def filewrap(path, prefix, postfix):
     content = readfile(path)
@@ -83,6 +151,9 @@ def create_metadata(metadata, location, kind="epub"):
         f'template/{kind}/metadata.txt')
 
     meta = copy.deepcopy(metadata)
+    if "date" not in meta:
+        meta["date"] = str(datetime.datetime.now())
+
     for field in ["author", "title"]:
         meta[field] = meta[field].replace("\n", " ")
 
@@ -247,18 +318,23 @@ def add_link_to_file(url, filename, variables):
     lines = readfile(Path(f"{filename}"))
     lines = lines.splitlines()
 
+    repo, branch, name, raw, link = git_raw_url(url)
+    print ("LLLL", link)
+
     if "{" in lines[0]:
         headline, ref = lines[0].split("{", 1)
-        lines[0] = headline + f" [:cloud:]({url}) " + "{" + ref
+        lines[0] = headline + f" [:cloud:]({link}) " + "{" + ref
     else:
-        lines[0] = lines[0] + f" [:cloud:]({url})"
+        lines[0] = lines[0] + f" [:cloud:]({link})"
 
-    lines[0] = lines[0].replace("raw.githubusercontent.com", "github.com")
-    #lines[0] = lines[0].replace("/master/", "/master/master/")
-    lines[0] = lines[0].replace("/master/", "/blob/master/")
+
+    #lines[0] = lines[0].replace("raw.githubusercontent.com", "github.com")
+    ##lines[0] = lines[0].replace("/master/", "/master/master/")
+    #lines[0] = lines[0].replace("/master/", "/blob/master/")
 
     if 'file.base' in variables and "file.github" in variables:
         path = str(Path(variables["file.base"]).resolve())
+        print ("RRRRR", path,  variables["file.github"])
         lines[0] = lines[0].replace(path, variables["file.github"])
 
     lines = '\n'.join(lines)
@@ -271,7 +347,7 @@ def get_file_from_local(url, directory, filename):
 
     output = Path(directory) / filename
 
-    source = Path(url.replace("file://", "")).resolve()
+    source = Path(url.replace("file:", "")).resolve()
 
     copyfile(source, output)
 
