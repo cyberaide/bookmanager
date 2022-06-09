@@ -464,6 +464,7 @@ class Book:
             #    filewrap(f"./dest/book/{destination}", "```", "```")
 
             pandoc_level = entry.level + 1
+            pandoc_level = entry.level
             tmp = str(Path(self.docs.metadata["dest"]) / "tmp.md")
             command = "pandoc --shift-heading-level-by={pandoc_level} -o {tmp} {destination} > log.txt".format(
                 **entry, tmp=tmp, pandoc_level=pandoc_level)
