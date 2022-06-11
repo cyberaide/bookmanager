@@ -340,8 +340,8 @@ class Book:
         options = "--toc --toc-depth=6  --number-sections --citeproc -F pandoc-crossref --from markdown-smart"
         resources = f"--resource-path={directories}"
         markdown = "--verbose --citeproc --filter pandoc-crossref -f markdown+emoji+smart --indented-code-classes=bash,python,yaml"
-        pdf_options = "--verbose -f markdown+emoji+smart --indented-code-classes=bash,python,yaml" \
-                      " --include-in-header ./dest/listings-setup.tex --template ./dest/eisvogel --listings"
+        pdf_options = "--verbose -f markdown+emoji+smart --listings --indented-code-classes=bash,python,yaml" \
+                      " --include-in-header ./dest/listings-setup.tex --template ./dest/eisvogel "
 
         # GGGG markdown = "--verbose -f markdown+emoji --indented-code-classes=bash,python,yaml"
         # fonts = '-V mainfonts="DejaVu Sans"'
