@@ -5,7 +5,7 @@ colorama
 tabulate
 munch
 pillow
-markdown
+markdown==3.0
 cloudmesh-common
 ebooklib
 pandoc-xnos

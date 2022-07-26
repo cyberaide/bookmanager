@@ -196,7 +196,9 @@ class ImgExtExtension(Extension):
 # Finally create an instance of the Markdown class with the new extension
 
 def find_images(content):
+    print ("FFFFFFFFFFFFFFFFFF")
     md = markdown.Markdown(extensions=[ImgExtExtension()])
+    print ("KKKKKKKKKKKKKKKKKKKKK")
     html = md.convert(content)
     return md.images
 
