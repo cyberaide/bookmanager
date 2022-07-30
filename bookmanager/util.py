@@ -19,6 +19,7 @@ from pprint import pprint
 import copy
 from collections import Counter
 from cloudmesh.git.Git import Git
+from cloudmesh.common.console import Console
 
 
 def git_raw_url(url: str, branch="main"):
@@ -196,9 +197,7 @@ class ImgExtExtension(Extension):
 # Finally create an instance of the Markdown class with the new extension
 
 def find_images(content):
-    print ("FFFFFFFFFFFFFFFFFF")
     md = markdown.Markdown(extensions=[ImgExtExtension()])
-    print ("KKKKKKKKKKKKKKKKKKKKK")
     html = md.convert(content)
     return md.images
 
@@ -261,42 +260,46 @@ def reduce_headers(content, level, indent=1):
 
 
 def get_file_from_git(url, directory, filename):
-    d = Path(directory)
-    d.mkdir(parents=True, exist_ok=True)
+    try:
+        d = Path(directory)
+        d.mkdir(parents=True, exist_ok=True)
 
-    if url.startswith("/"):
-        try:
-            copyfile(url, Path(f"{directory}/{filename}"))
-        except FileNotFoundError:
-            print(f"\n\nERROR:\n{directory}/{filename} could not be found\n\n")
-            sys.exit()
-        r = ""
-    else:
-
-        repo, branch, name, raw, blob = git_raw_url(url)
-
-        r = requests.get(raw, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
-
-        if r.status_code == 200:
-            output = Path(directory) / filename
-            with open(output, 'wb') as f:
-                # if url.endswith(".bib"):
-                #    VERBOSE(url)
-                #    VERBOSE(output)
-                #    VERBOSE(r.content)
-                #    f.write(b"% " + url.encode('ascii') + "\n" +
-                #            b"% " + output.encode('ascii') + "\n" +
-                #            r.content)
-                #    f.write("%" + url + "\n" + r.content)
-                # else:
-                f.write(r.content)
+        if url.startswith("/"):
+            try:
+                copyfile(url, Path(f"{directory}/{filename}"))
+            except FileNotFoundError:
+                print(f"\n\nERROR:\n{directory}/{filename} could not be found\n\n")
+                sys.exit(1)
+            r = ""
         else:
-            if not url.endswith(".bib"):
-                print()
-                print("can not find")
-                print()
-                print(url)
-                print("   ", directory, filename)
+
+            repo, branch, name, raw, blob = git_raw_url(url)
+
+            r = requests.get(raw, allow_redirects=True, headers={'Cache-Control': 'no-cache'})
+
+            if r.status_code == 200:
+                output = Path(directory) / filename
+                with open(output, 'wb') as f:
+                    # if url.endswith(".bib"):
+                    #    VERBOSE(url)
+                    #    VERBOSE(output)
+                    #    VERBOSE(r.content)
+                    #    f.write(b"% " + url.encode('ascii') + "\n" +
+                    #            b"% " + output.encode('ascii') + "\n" +
+                    #            r.content)
+                    #    f.write("%" + url + "\n" + r.content)
+                    # else:
+                    f.write(r.content)
+            else:
+                if not url.endswith(".bib"):
+                    print()
+                    print("can not find")
+                    print()
+                    print(url)
+                    print("   ", directory, filename)
+    except Exception as e:
+        Console.error(e, traceflag=True)
+        sys.exit(1)
     return r
 
 
@@ -334,18 +337,22 @@ def add_link_to_file(url, filename, variables):
 
 
 def get_file_from_local(url, directory, filename):
-    d = Path(directory)
-    d.mkdir(parents=True, exist_ok=True)
+    try:
+        d = Path(directory)
+        d.mkdir(parents=True, exist_ok=True)
 
-    output = Path(directory) / filename
+        output = Path(directory) / filename
 
-    source = Path(url.replace("file:", "")).resolve()
+        source = Path(url.replace("file:", "")).resolve()
 
-    copyfile(source, output)
+        copyfile(source, output)
 
-    r = Result()
-    r.content = readfile(output).encode()
-    r.status_code = "200"
+        r = Result()
+        r.content = readfile(output).encode()
+        r.status_code = "200"
+    except Exception as e:
+        Console.error(e, traceflag=True)
+        sys.exit(1)
     return r
 
 
@@ -394,22 +401,27 @@ def download(url, destination, level=0, force=False, spec=None):
 
         dirurl = os.path.dirname(url)
         for image in images:
-            if not image.startswith("http"):
-                print('   ' * (level + 2), "Download", image, end=" ")
-                image_name = os.path.basename(image)
-                image_url = f"{dirurl}/{image}"
+            try:
+                if not image.startswith("http"):
+                    print('   ' * (level + 2), "Download", image, end=" ")
+                    image_name = os.path.basename(image)
+                    image_url = f"{dirurl}/{image}"
 
-                destination = f"{directory}"
-                image_dir = os.path.dirname(f"{destination}/{image}")
+                    destination = f"{directory}"
+                    image_dir = os.path.dirname(f"{destination}/{image}")
 
-                d = Path(image_dir)
-                d.mkdir(parents=True, exist_ok=True)
+                    d = Path(image_dir)
+                    d.mkdir(parents=True, exist_ok=True)
 
-                r = get_file_from_git(image_url, image_dir, image_name)
-                print("...")
-            else:
-                print('   ' * (level + 2), "Skipping", image)
+                    r = get_file_from_git(image_url, image_dir, image_name)
 
+                    print("...")
+                else:
+                    print('   ' * (level + 2), "Skipping", image)
+
+            except Exception as e:
+                Console.error(e, traceflag=True)
+                sys.exit(1)
     #
     # DOWNLOAD BIB from guessed bibfile
     #
@@ -456,6 +468,7 @@ def download(url, destination, level=0, force=False, spec=None):
             print('   ' * (level + 2), "Download",
                   os.path.basename(bib_filename_guess))
     except Exception as e:
+        Console.error(e, traceflag=True)
         print(e)
 
     add_link_to_file(url, filename, spec)

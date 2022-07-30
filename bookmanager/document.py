@@ -111,7 +111,7 @@ class Documents(object):
                     entry.title, entry.format = entry.basename.split(".")
                 except:
                     print ("ERROR: no title found in ", entry.uri)
-                    sys.exit()
+                    sys.exit(1)
                 entry.format = entry.format.lower()
                 entry.path = '/'.join(path_list[:entry.level])
 
