@@ -42,6 +42,7 @@ munch
 pillow
 markdown==3.0
 cloudmesh-common
+cloudmesh-git
 ebooklib
 """.splitlines()
 
