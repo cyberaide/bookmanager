@@ -352,3 +352,9 @@ been made available for the creation of courses.
    <https://pypi.org/project/cyberaide-bookmanager/>
 10. G. von Laszewski, <https://github.com/cloudmesh-community>
 11. G. von Laszewski, <https://github.com/cloudmesh>
+
+## Acknowledgements
+
+Continued work was in part funded by the NSF
+CyberTraining: CIC: CyberTraining for Students and Technologies
+from Generation Z with the awadrd numbers 1829704 and 2200409.
