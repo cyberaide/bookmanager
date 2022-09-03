@@ -353,7 +353,7 @@ been made available for the creation of courses.
 10. G. von Laszewski, <https://github.com/cloudmesh-community>
 11. G. von Laszewski, <https://github.com/cloudmesh>
 
-## Acknowledgements
+## Acknowledgments
 
 Continued work was in part funded by the NSF
 CyberTraining: CIC: CyberTraining for Students and Technologies
