@@ -5,7 +5,7 @@ colorama
 tabulate
 munch
 pillow
-markdown==3.0
+markdown==3.8.1
 cloudmesh-common
 cloudmesh-git
 ebooklib
